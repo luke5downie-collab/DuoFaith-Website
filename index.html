@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DuoFaith — Put Faith Before the Feed</title>
+  <meta name="description" content="DuoFaith locks your most distracting apps until you complete a short daily devotional. Solo or as a couple. Download free on iOS and Android.">
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #7C6BB5;
+      --primary-dark: #5E4F99;
+      --primary-light: #B5A8D9;
+      --primary-glow: rgba(124,107,181,0.12);
+      --accent: #E8A0BF;
+      --accent-warm: #D4976A;
+      --green: #34c77b;
+      --bg-hero: #F7F3FF;
+      --bg-peach: #FFF5F0;
+      --bg-lavender: #F0EBFF;
+      --dark-bg: #1A1430;
+      --dark-card: #251E3A;
+      --text: #1a1a2e;
+      --text-mid: #555;
+      --text-light: #888;
+      --white: #fff;
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(124,107,181,0.06);
+      padding: 0 3rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 9px; }
+    .nav-logo span { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+    .nav-cta {
+      background: var(--primary); color: var(--white); border: none;
+      padding: 0.6rem 1.4rem; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(124,107,181,0.2);
+    }
+    .nav-cta:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124,107,181,0.3); }
+
+    /* ── SCROLL ANIM ── */
+    .anim {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+    }
+    .anim.show { opacity: 1; transform: none; }
+    .anim-d1 { transition-delay: .1s; }
+    .anim-d2 { transition-delay: .2s; }
+    .anim-d3 { transition-delay: .3s; }
+    .big-text {
+      color: #d5d0e0;
+      transition: color 0.6s ease;
+    }
+    .big-text.show { color: var(--text); }
+    .big-text-white {
+      color: rgba(255,255,255,0.12);
+      transition: color 0.6s ease;
+    }
+    .big-text-white.show { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero-wrap {
+      background: linear-gradient(160deg, var(--bg-hero) 0%, var(--bg-lavender) 55%, var(--bg-peach) 100%);
+    }
+    .hero {
+      padding: 10rem 3rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-text h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.4rem;
+    }
+    .hero-text .sub {
+      font-size: 1.08rem; color: var(--text-mid);
+      line-height: 1.65; margin-bottom: 1.6rem; max-width: 440px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(52,199,123,0.08); border: 1px solid rgba(52,199,123,0.15);
+      padding: 0.3rem 0.8rem; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 600; color: #2aa55f;
+      margin-bottom: 1.6rem;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+    .store-btns {
+      display: flex; gap: 0.7rem; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .store-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--text); color: var(--white);
+      padding: 0.7rem 1.3rem; border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(26,26,46,0.12);
+    }
+    .store-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,26,46,0.18); }
+    .store-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+    .store-btn .store-label { display: flex; flex-direction: column; line-height: 1.2; }
+    .store-btn .store-label .sm { font-size: 0.58rem; font-weight: 400; opacity: 0.7; }
+    .store-btn .store-label .lg { font-size: 0.88rem; font-weight: 600; }
+    .hero-free { font-size: 0.82rem; color: var(--text-light); }
+    .hero-free strong { color: var(--text-mid); font-weight: 600; }
+
+    .hero-phone { display: flex; justify-content: center; }
+
+    /* ── PHONE ── */
+    .phone {
+      width: 280px;
+      background: #fff;
+      border-radius: 42px;
+      border: 5px solid #1a1a2e;
+      position: relative; overflow: hidden;
+      box-shadow: 0 30px 60px rgba(26,24,50,0.15), 0 10px 24px rgba(124,107,181,0.08);
+    }
+    .phone-notch {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 110px; height: 26px; background: #1a1a2e;
+      border-radius: 0 0 16px 16px; z-index: 2;
+    }
+    .phone-screen {
+      padding: 2.8rem 1rem 1.4rem;
+      min-height: 530px;
+      display: flex; flex-direction: column; align-items: center;
+      background: linear-gradient(180deg, #F8F5FF 0%, #F0EBFF 100%);
+    }
+
+    .s-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0.6rem 0 0.6rem;
+    }
+    .s-icon svg { width: 22px; height: 22px; fill: #fff; }
+    .s-badge {
+      font-size: 0.62rem; font-weight: 700; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      background: rgba(124,107,181,0.08); padding: 0.22rem 0.7rem;
+      border-radius: 16px; margin-bottom: 0.6rem;
+    }
+    .s-apps {
+      display: flex; gap: 0.35rem; margin-bottom: 0.7rem; flex-wrap: wrap; justify-content: center;
+    }
+    .s-app {
+      background: rgba(124,107,181,0.05); border: 1px solid rgba(124,107,181,0.08);
+      border-radius: 8px; padding: 0.22rem 0.55rem;
+      font-size: 0.58rem; font-weight: 500; color: var(--text-mid);
+      display: flex; align-items: center; gap: 0.22rem;
+    }
+    .s-dot { width: 5px; height: 5px; border-radius: 50%; background: #e74c3c; }
+    .s-card {
+      background: #fff; border-radius: 14px;
+      padding: 0.9rem 1rem; width: 100%;
+      margin-bottom: 0.55rem;
+      box-shadow: 0 1px 8px rgba(124,107,181,0.05);
+    }
+    .s-card .verse {
+      font-size: 0.78rem; line-height: 1.5; color: var(--text);
+      font-style: italic; margin-bottom: 0.3rem;
+    }
+    .s-card .ref { font-size: 0.66rem; color: var(--primary); font-weight: 700; }
+    .s-card .lbl {
+      font-size: 0.56rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.25rem;
+    }
+    .s-card .prompt { font-size: 0.72rem; color: var(--text-mid); line-height: 1.4; }
+    .s-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff; border: none;
+      padding: 0.6rem; border-radius: 12px;
+      font-size: 0.72rem; font-weight: 700;
+      width: 100%; margin-top: auto; cursor: default;
+    }
+
+    /* partner screen */
+    .ps-title { font-size: 1rem; font-weight: 800; margin-top: 0.5rem; margin-bottom: 0.15rem; }
+    .ps-sub { font-size: 0.64rem; color: var(--text-light); margin-bottom: 0.8rem; }
+    .ps-row {
+      background: #fff; border-radius: 12px;
+      padding: 0.7rem 0.8rem; width: 100%;
+      margin-bottom: 0.4rem;
+      display: flex; align-items: center; gap: 0.55rem;
+      box-shadow: 0 1px 6px rgba(124,107,181,0.04);
+    }
+    .ps-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .ps-avatar.a1 { background: var(--primary); }
+    .ps-avatar.a2 { background: var(--accent); }
+    .ps-info { flex: 1; text-align: left; }
+    .ps-info .n { font-size: 0.72rem; font-weight: 700; }
+    .ps-info .st { font-size: 0.58rem; color: var(--text-light); }
+    .ps-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ps-check.done { background: var(--green); }
+    .ps-check.wait { background: rgba(124,107,181,0.1); }
+    .ps-check svg { width: 12px; height: 12px; }
+    .ps-msg {
+      background: rgba(124,107,181,0.05); border-radius: 10px;
+      padding: 0.6rem 0.8rem; width: 100%; margin: 0.3rem 0 0.6rem;
+    }
+    .ps-msg p { font-size: 0.64rem; color: var(--text-mid); line-height: 1.4; }
+    .ps-streak {
+      background: #fff; border-radius: 12px;
+      padding: 0.65rem 0.8rem; width: 100%;
+      text-align: center; margin-top: auto;
+      box-shadow: 0 1px 6px rgba(124,107,181,0.04);
+    }
+    .ps-streak .sl { font-size: 0.56rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-warm); margin-bottom: .15rem; }
+    .ps-streak .sn { font-size: 1.3rem; font-weight: 900; color: var(--primary); }
+    .ps-streak .su { font-size: 0.64rem; color: var(--text-light); }
+
+    /* ── SOCIAL PROOF STRIP ── */
+    .proof {
+      padding: 2.5rem 3rem;
+      background: var(--white);
+      border-bottom: 1px solid rgba(124,107,181,0.06);
+    }
+    .proof-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+      text-align: center;
+    }
+    .proof-stat .num {
+      font-size: 1.6rem; font-weight: 900; color: var(--primary);
+      line-height: 1.2;
+    }
+    .proof-stat .lbl {
+      font-size: 0.78rem; color: var(--text-light); margin-top: 0.2rem;
+    }
+
+    /* ── THREE STEPS ── */
+    .steps {
+      padding: 6rem 3rem;
+      text-align: center;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .steps h2 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      margin-bottom: 3.5rem;
+    }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .step {
+      background: var(--bg-hero);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(124,107,181,0.08); }
+    .step-icon {
+      width: 52px; height: 52px;
+      background: rgba(124,107,181,0.08);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .step-icon svg { width: 24px; height: 24px; }
+    .step-n {
+      font-size: 0.9rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 0.6rem;
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.55; }
+
+    /* ── DARK SHOWCASE ── */
+    .showcase {
+      padding: 7rem 3rem;
+      background: var(--dark-bg);
+      text-align: center;
+    }
+    .showcase h2 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      margin-bottom: 0.8rem;
+    }
+    .showcase .sub {
+      font-size: 1rem; color: rgba(255,255,255,0.5);
+      max-width: 500px; margin: 0 auto 4rem; line-height: 1.6;
+    }
+    .showcase-phones {
+      display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .showcase .phone {
+      border-color: #332b4a;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.35);
+      width: 260px;
+    }
+    .showcase .phone .phone-notch { background: #332b4a; }
+    .showcase .phone .phone-screen { min-height: 490px; }
+
+    /* ── COMPARISON ── */
+    .compare {
+      padding: 6rem 3rem;
+      text-align: center;
+      max-width: 1000px; margin: 0 auto;
+    }
+    .compare h2 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+    }
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .compare-card {
+      border-radius: 18px; padding: 2rem 2rem;
+      text-align: left;
+    }
+    .compare-card.gray-card { background: #f5f4f7; }
+    .compare-card.brand-card {
+      background: var(--bg-lavender);
+      border: 1.5px solid rgba(124,107,181,0.12);
+    }
+    .compare-card h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .compare-card.brand-card h3 { color: var(--primary); }
+    .compare-row {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row .ci {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .gray-card .ci { background: rgba(0,0,0,0.06); }
+    .brand-card .ci { background: rgba(124,107,181,0.12); }
+    .ci svg { width: 12px; height: 12px; }
+    .compare-row p { font-size: 0.92rem; color: var(--text-mid); }
+
+    /* ── PRICING ── */
+    .pricing {
+      padding: 5rem 3rem;
+      text-align: center;
+      max-width: 880px; margin: 0 auto;
+    }
+    .pricing h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900; letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+    .pricing .pricing-sub {
+      font-size: 1rem; color: var(--text-mid); margin-bottom: 2.5rem;
+    }
+    .pricing-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .price-card {
+      border-radius: 18px; padding: 2rem 1.8rem;
+      text-align: left; position: relative;
+      border: 1.5px solid rgba(124,107,181,0.08);
+      background: var(--white);
+    }
+    .price-card.featured {
+      background: linear-gradient(160deg, var(--bg-lavender), var(--bg-peach));
+      border-color: var(--primary-light);
+      box-shadow: 0 8px 32px rgba(124,107,181,0.1);
+    }
+    .price-tag {
+      position: absolute; top: -10px; right: 1.5rem;
+      background: var(--primary); color: #fff;
+      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.7rem; border-radius: 8px;
+    }
+    .price-card .tier {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+    .price-card.featured .tier { color: var(--primary); }
+    .price-card .amount {
+      font-size: 2.2rem; font-weight: 900; color: var(--text);
+      margin-bottom: 0.2rem; line-height: 1.1;
+    }
+    .price-card .amount .per { font-size: 0.85rem; font-weight: 500; color: var(--text-light); }
+    .price-card .desc {
+      font-size: 0.82rem; color: var(--text-light); margin-bottom: 1.4rem;
+    }
+    .price-feature {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 0;
+    }
+    .price-feature svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .price-feature span { font-size: 0.85rem; color: var(--text-mid); }
+    .price-cta {
+      display: block; text-align: center; margin-top: 1.4rem;
+      padding: 0.7rem; border-radius: 12px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .price-cta.outline {
+      border: 1.5px solid rgba(124,107,181,0.2);
+      color: var(--primary); background: transparent;
+    }
+    .price-cta.outline:hover { background: rgba(124,107,181,0.04); }
+    .price-cta.filled {
+      background: var(--primary); color: #fff; border: none;
+      box-shadow: 0 4px 16px rgba(124,107,181,0.2);
+    }
+    .price-cta.filled:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(124,107,181,0.3); }
+
+    /* ── FAQ ── */
+    .faq {
+      padding: 5rem 3rem;
+      max-width: 720px; margin: 0 auto;
+    }
+    .faq h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900; letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    .faq-item { border-bottom: 1px solid #eee; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.3rem 0; cursor: pointer; user-select: none;
+    }
+    .faq-q h3 { font-size: 0.98rem; font-weight: 600; }
+    .faq-q span {
+      font-size: 1.4rem; color: var(--text-light);
+      transition: transform .3s; line-height: 1;
+    }
+    .faq-item.open .faq-q span { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 1.2rem; }
+    .faq-a p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.6; }
+
+    /* ── FINAL CTA ── */
+    .cta {
+      padding: 7rem 3rem;
+      text-align: center;
+      background: linear-gradient(180deg, var(--white) 0%, var(--bg-lavender) 40%, var(--bg-peach) 100%);
+    }
+    .cta h2 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      margin-bottom: 0.8rem;
+    }
+    .cta p.cta-sub { font-size: 1.05rem; color: var(--text-mid); margin-bottom: 2rem; }
+    .cta .store-btns { justify-content: center; margin-bottom: 0.8rem; }
+    .cta .hero-free { text-align: center; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 3rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+    .f-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; }
+    .f-tag { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1rem; }
+    .f-links { display: flex; justify-content: center; gap: 1.2rem; margin-bottom: 0.8rem; }
+    .f-links a { font-size: 0.85rem; color: var(--text-mid); text-decoration: none; }
+    .f-links a:hover { color: var(--primary); }
+    .f-support { font-size: 0.82rem; color: var(--text-mid); margin-bottom: 0.5rem; }
+    .f-support a { color: var(--primary); text-decoration: none; }
+    .f-priv { font-size: 0.78rem; color: var(--text-light); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 7.5rem 1.5rem 3rem;
+        text-align: center;
+      }
+      .hero-text .sub { margin-left: auto; margin-right: auto; }
+      .hero-badge { margin-left: auto; margin-right: auto; }
+      .store-btns { justify-content: center; }
+      .hero-free { text-align: center; }
+      .hero-phone { order: -1; margin-bottom: 1rem; }
+      .hero-phone .phone { width: 220px; }
+      .proof-inner { gap: 2rem; }
+      .steps, .compare, .faq, .pricing { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .steps-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+      .showcase { padding: 5rem 1.5rem; }
+      .showcase-phones { flex-direction: column; align-items: center; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+      .cta { padding: 5rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-text h1 { font-size: 2.2rem; }
+      .store-btns { flex-direction: column; align-items: center; }
+      .store-btn { width: 100%; max-width: 220px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="app-icon.png" alt="DuoFaith">
+      <span>DuoFaith</span>
+    </a>
+    <a href="#download" class="nav-cta">Download free</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero-wrap">
+    <section class="hero">
+      <div class="hero-text">
+        <h1 class="anim">Lock the scroll. Unlock your faith.</h1>
+        <p class="sub anim anim-d1">DuoFaith blocks your most distracting apps until you complete a short daily devotional — so you never start the day on autopilot.</p>
+        <div class="hero-badge anim anim-d1"><span class="dot"></span> Available now on iOS & Android</div>
+        <div class="store-btns anim anim-d2">
+          <a href="#" class="store-btn">
+            <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="store-label"><span class="sm">Download on the</span><span class="lg">App Store</span></span>
+          </a>
+          <a href="#" class="store-btn">
+            <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-1.907 1.106-2.56-2.56 2.165-2.228zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+            <span class="store-label"><span class="sm">Get it on</span><span class="lg">Google Play</span></span>
+          </a>
+        </div>
+        <p class="hero-free anim anim-d3"><strong>Free to use</strong> — Pro features for $4.99/mo</p>
+      </div>
+      <div class="hero-phone anim">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="s-icon">
+              <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+            </div>
+            <div class="s-badge">Apps Locked</div>
+            <div class="s-apps">
+              <div class="s-app"><span class="s-dot"></span> Instagram</div>
+              <div class="s-app"><span class="s-dot"></span> TikTok</div>
+              <div class="s-app"><span class="s-dot"></span> YouTube</div>
+            </div>
+            <div class="s-card">
+              <p class="verse">"Be still, and know that I am God."</p>
+              <p class="ref">Psalm 46:10</p>
+            </div>
+            <div class="s-card">
+              <p class="lbl">Reflect</p>
+              <p class="prompt">What does stillness look like in your life today?</p>
+            </div>
+            <button class="s-btn">Complete & Unlock</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof anim">
+    <div class="proof-inner">
+      <div class="proof-stat">
+        <p class="num">2 min</p>
+        <p class="lbl">Daily devotional</p>
+      </div>
+      <div class="proof-stat">
+        <p class="num">100%</p>
+        <p class="lbl">Free to start</p>
+      </div>
+      <div class="proof-stat">
+        <p class="num">Solo + Duo</p>
+        <p class="lbl">Use alone or as a couple</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE STEPS -->
+  <section class="steps">
+    <h2 class="big-text anim">Three steps to a clearer morning.</h2>
+    <div class="steps-grid">
+      <div class="step anim">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+        </div>
+        <p class="step-n">01</p>
+        <h3>Pick your distractions</h3>
+        <p>Choose which apps to lock — Instagram, TikTok, YouTube, or anything that pulls you in.</p>
+      </div>
+      <div class="step anim anim-d1">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        </div>
+        <p class="step-n">02</p>
+        <h3>Read and reflect</h3>
+        <p>A Bible verse and reflection prompt. Two minutes to center your day on what matters.</p>
+      </div>
+      <div class="step anim anim-d2">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <p class="step-n">03</p>
+        <h3>Apps unlock</h3>
+        <p>Done. Your apps are yours. Come back tomorrow and the habit builds itself.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DARK SHOWCASE -->
+  <section class="showcase">
+    <h2 class="big-text-white anim">Your faith first, every morning.</h2>
+    <p class="sub anim">Solo or as a couple. DuoFaith puts a two-minute devotional between you and the scroll — and keeps you accountable.</p>
+    <div class="showcase-phones">
+      <div class="phone anim">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="s-icon">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+          </div>
+          <div class="s-badge">Apps Locked</div>
+          <div class="s-apps">
+            <div class="s-app"><span class="s-dot"></span> Instagram</div>
+            <div class="s-app"><span class="s-dot"></span> TikTok</div>
+          </div>
+          <div class="s-card">
+            <p class="verse">"Trust in the Lord with all your heart and lean not on your own understanding."</p>
+            <p class="ref">Proverbs 3:5</p>
+          </div>
+          <div class="s-card">
+            <p class="lbl">Reflect</p>
+            <p class="prompt">Where are you trying to control something you should surrender?</p>
+          </div>
+          <button class="s-btn">Complete & Unlock</button>
+        </div>
+      </div>
+      <div class="phone anim anim-d1">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <p class="ps-title">Partner Status</p>
+          <p class="ps-sub">Duo Lock Active</p>
+          <div class="ps-row">
+            <div class="ps-avatar a1">You</div>
+            <div class="ps-info">
+              <p class="n">You</p>
+              <p class="st">Devotional complete</p>
+            </div>
+            <div class="ps-check done">
+              <svg viewBox="0 0 24 24" fill="#fff"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+          </div>
+          <div class="ps-row">
+            <div class="ps-avatar a2">S</div>
+            <div class="ps-info">
+              <p class="n">Sarah</p>
+              <p class="st">Not yet started</p>
+            </div>
+            <div class="ps-check wait">
+              <svg viewBox="0 0 24 24" fill="#b0acc0"><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>
+          <div class="ps-msg">
+            <p>Apps stay locked until Sarah finishes her devotional too.</p>
+          </div>
+          <div class="ps-streak">
+            <p class="sl">Duo Streak</p>
+            <span class="sn">14</span> <span class="su">days</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="compare">
+    <h2 class="big-text anim">Stop scrolling first.</h2>
+    <div class="compare-grid">
+      <div class="compare-card gray-card anim">
+        <h3>Willpower alone</h3>
+        <div class="compare-row">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="#aaa"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
+          <p>Tell yourself you'll read your Bible first</p>
+        </div>
+        <div class="compare-row">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="#aaa"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
+          <p>Open Instagram "just to check"</p>
+        </div>
+        <div class="compare-row">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="#aaa"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
+          <p>Feel guilty, promise to do better tomorrow</p>
+        </div>
+      </div>
+      <div class="compare-card brand-card anim anim-d1">
+        <h3>DuoFaith</h3>
+        <div class="compare-row">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          <p>Apps locked until you engage with Scripture</p>
+        </div>
+        <div class="compare-row">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          <p>Two-minute devotional, then your phone is yours</p>
+        </div>
+        <div class="compare-row">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          <p>Your partner holds you accountable</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <h2 class="big-text anim">Start free. Grow deeper.</h2>
+    <p class="pricing-sub anim">Everything you need to build the habit. Upgrade when you're ready.</p>
+    <div class="pricing-grid">
+      <div class="price-card anim">
+        <p class="tier">Free</p>
+        <p class="amount">$0</p>
+        <p class="desc">Everything to get started</p>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>App blocking</span>
+        </div>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Daily Bible verse + reflection</span>
+        </div>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Unlimited app locks</span>
+        </div>
+        <a href="#download" class="price-cta outline">Download free</a>
+      </div>
+      <div class="price-card featured anim anim-d1">
+        <div class="price-tag">Most Popular</div>
+        <p class="tier">Pro</p>
+        <p class="amount">$4.99<span class="per">/mo</span></p>
+        <p class="desc">For serious habit builders</p>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Everything in Free</span>
+        </div>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Guided prayer prompts</span>
+        </div>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Streak tracking</span>
+        </div>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Partner pairing + Duo Lock</span>
+        </div>
+        <div class="price-feature">
+          <svg viewBox="0 0 24 24" fill="var(--green)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span>Push notifications to nudge your partner</span>
+        </div>
+        <a href="#download" class="price-cta filled">Get Pro</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2 class="big-text anim">Questions, answered.</h2>
+    <div class="faq-item anim">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <h3>How does the app blocking work?</h3>
+        <span>+</span>
+      </div>
+      <div class="faq-a">
+        <p>DuoFaith uses your device's built-in screen time controls to block apps you choose. Each morning, they stay locked behind a Bible verse and reflection prompt. Complete it, and your apps unlock for the day.</p>
+      </div>
+    </div>
+    <div class="faq-item anim">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <h3>Do I need a partner to use DuoFaith?</h3>
+        <span>+</span>
+      </div>
+      <div class="faq-a">
+        <p>No. DuoFaith works great solo. The couples feature is a Pro perk — pair up if you want mutual accountability, or use it on your own.</p>
+      </div>
+    </div>
+    <div class="faq-item anim">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <h3>Is my data private?</h3>
+        <span>+</span>
+      </div>
+      <div class="faq-a">
+        <p>Your data stays on your device. We don't sell your information. The only thing shared is your completion status with your paired partner, if you choose to pair.</p>
+      </div>
+    </div>
+    <div class="faq-item anim">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <h3>Can I cancel Pro anytime?</h3>
+        <span>+</span>
+      </div>
+      <div class="faq-a">
+        <p>Yes. Cancel anytime through your App Store or Google Play subscription settings. You'll keep Pro features until the end of your billing period.</p>
+      </div>
+    </div>
+    <div class="faq-item anim">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        <h3>What happens if I don't finish my devotional?</h3>
+        <span>+</span>
+      </div>
+      <div class="faq-a">
+        <p>Your selected apps stay locked until you complete it. That's the whole point — DuoFaith gives you the structure that willpower alone can't.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta" id="download">
+    <h2 class="big-text anim">Put faith before the feed.</h2>
+    <p class="cta-sub anim">Download DuoFaith free and start tomorrow differently.</p>
+    <div class="store-btns anim">
+      <a href="#" class="store-btn">
+        <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <span class="store-label"><span class="sm">Download on the</span><span class="lg">App Store</span></span>
+      </a>
+      <a href="#" class="store-btn">
+        <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-1.907 1.106-2.56-2.56 2.165-2.228zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+        <span class="store-label"><span class="sm">Get it on</span><span class="lg">Google Play</span></span>
+      </a>
+    </div>
+    <p class="hero-free anim">Free to download. No credit card required.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="f-name">DuoFaith</p>
+    <p class="f-tag">Put Faith Before the Feed.</p>
+    <div class="f-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+    <p class="f-support">Need help? <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
+    <p class="f-priv">Your data stays on your device. We don't sell your information.</p>
+  </footer>
+
+  <script>
+    const els = document.querySelectorAll('.anim, .big-text, .big-text-white');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+    els.forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
