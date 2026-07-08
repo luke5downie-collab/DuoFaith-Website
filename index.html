@@ -982,11 +982,37 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
     els.forEach(el => obs.observe(el));
 
+    function showSuccess(box, msg) {
+      box.querySelector('.signup-form').style.display = 'none';
+      box.querySelector('.signup-incentive').style.display = 'none';
+      var note = box.querySelector('.signup-note');
+      if (note) note.style.display = 'none';
+      var success = box.querySelector('.signup-success');
+      if (msg) success.querySelector('p').textContent = msg;
+      success.style.display = 'block';
+    }
+
+    function getSignedUp() {
+      try { return JSON.parse(localStorage.getItem('duofaith_signups') || '[]'); } catch(e) { return []; }
+    }
+
+    function saveSignedUp(email) {
+      var list = getSignedUp();
+      list.push(email.toLowerCase());
+      localStorage.setItem('duofaith_signups', JSON.stringify(list));
+    }
+
     function handleSignup(e, form) {
       e.preventDefault();
       var box = form.closest('.signup-box');
-      var email = form.querySelector('input[type="email"]').value;
+      var email = form.querySelector('input[type="email"]').value.trim();
       var btn = form.querySelector('button');
+
+      if (getSignedUp().indexOf(email.toLowerCase()) !== -1) {
+        showSuccess(box, "You're already signed up! We'll send your Pro code at launch.");
+        return;
+      }
+
       btn.textContent = 'Sending...';
       btn.disabled = true;
 
@@ -996,11 +1022,8 @@
         body: JSON.stringify({ email: email })
       }).then(function(res) {
         if (res.ok) {
-          box.querySelector('.signup-form').style.display = 'none';
-          box.querySelector('.signup-incentive').style.display = 'none';
-          var note = box.querySelector('.signup-note');
-          if (note) note.style.display = 'none';
-          box.querySelector('.signup-success').style.display = 'block';
+          saveSignedUp(email);
+          showSuccess(box);
         } else {
           btn.textContent = 'Try again';
           btn.disabled = false;
