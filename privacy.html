@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — DuoFaith</title>
+  <meta name="description" content="DuoFaith Privacy Policy. Your data stays on your device.">
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #A292D6;
+      --primary-dark: #5B4A8A;
+      --primary-light: #C4B8E8;
+      --gold: #D4A843;
+      --gold-dark: #B8903A;
+      --bg-soft: #F4F2F8;
+      --text: #5B4A8A;
+      --text-body: #4A4460;
+      --text-mid: #6B6380;
+      --text-light: #8E87A0;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text-body);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(162,146,214,0.08);
+      padding: 0 3rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 9px; }
+    .nav-logo span { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+    .nav-cta {
+      background: var(--gold); color: var(--white); border: none;
+      padding: 0.6rem 1.4rem; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(212,168,67,0.25);
+    }
+    .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(212,168,67,0.35); }
+
+    .legal {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 7rem 2rem 4rem;
+    }
+    .legal h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .legal .effective {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      margin-bottom: 2rem;
+    }
+    .legal .intro {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .legal h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .legal p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .legal ul {
+      margin: 0.5rem 0 1.5rem 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+    .legal ul li { margin-bottom: 0.3rem; }
+    .legal a { color: var(--primary-dark); text-decoration: none; }
+    .legal a:hover { text-decoration: underline; }
+
+    footer {
+      padding: 2.5rem 3rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+    .f-name { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
+    .f-tag { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1rem; }
+    .f-links { display: flex; justify-content: center; gap: 1.2rem; margin-bottom: 0.8rem; }
+    .f-links a { font-size: 0.85rem; color: var(--text-mid); text-decoration: none; }
+    .f-links a:hover { color: var(--primary-dark); }
+    .f-support { font-size: 0.82rem; color: var(--text-mid); margin-bottom: 0.5rem; }
+    .f-support a { color: var(--primary-dark); text-decoration: none; }
+    .f-priv { font-size: 0.78rem; color: var(--text-light); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .legal { padding: 6rem 1.5rem 3rem; }
+      .legal h1 { font-size: 1.8rem; }
+      footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="app-icon.png" alt="DuoFaith">
+      <span>DuoFaith</span>
+    </a>
+    <a href="index.html#pricing" class="nav-cta">Get Pro free</a>
+  </nav>
+
+  <main class="legal">
+    <h1>Privacy Policy</h1>
+    <p class="effective">Effective Date: July 17, 2026</p>
+
+    <p class="intro">DuoFaith ("the App") is developed by Luke Downie ("we," "us," or "our"). This Privacy Policy explains how the App handles your information. We built DuoFaith with privacy as a core principle — your data stays on your device.</p>
+
+    <h2>Information We Collect</h2>
+    <p>DuoFaith stores the following information locally on your device only:</p>
+    <ul>
+      <li>Your first name (entered during onboarding)</li>
+      <li>Your chosen lock time (hour and minute)</li>
+      <li>Devotional progress (current streak, total devotionals completed, date of last devotional)</li>
+      <li>Onboarding completion status</li>
+      <li>Pro/Free plan status</li>
+    </ul>
+    <p>This data is stored using Apple's SwiftData framework and never leaves your device.</p>
+
+    <h2>Screen Time and Family Controls</h2>
+    <p>DuoFaith uses Apple's Screen Time API (Family Controls / Managed Settings) to shield selected apps until you complete your daily devotional. The App requests your authorization to use these system frameworks. App-shielding selections are handled entirely by Apple's on-device APIs — we never see or transmit which apps you choose to shield.</p>
+
+    <h2>Notifications</h2>
+    <p>The App may request permission to send local notifications to remind you of your daily devotional. These notifications are scheduled on-device and are not sent through any external server.</p>
+
+    <h2>Data We Do NOT Collect</h2>
+    <p>DuoFaith does not:</p>
+    <ul>
+      <li>Collect or transmit any personal data to external servers</li>
+      <li>Use analytics, tracking, or advertising SDKs</li>
+      <li>Require account creation, sign-up, or authentication</li>
+      <li>Collect email addresses, location data, or device identifiers</li>
+      <li>Share data with third parties</li>
+      <li>Use cookies or web-based tracking</li>
+    </ul>
+
+    <h2>Data Retention and Deletion</h2>
+    <p>All data is stored on your device for as long as the App is installed. You can delete all your progress data at any time using the "Reset Progress" option in Settings. To delete all data completely, uninstall the App from your device — this removes all stored information.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>DuoFaith does not knowingly collect personal information from children under 13. The App does not collect personal information from any user.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after changes constitutes acceptance of the revised policy.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have questions about this Privacy Policy, contact us at:<br>
+    <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
+    <p>© 2026 DuoFaith. All rights reserved.</p>
+  </main>
+
+  <footer>
+    <p class="f-name">DuoFaith</p>
+    <p class="f-tag">Read Before You Scroll.</p>
+    <div class="f-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <p class="f-support">Need help? <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
+    <p class="f-priv">Your data stays on your device. We don't sell your information.</p>
+  </footer>
+
+</body>
+</html>

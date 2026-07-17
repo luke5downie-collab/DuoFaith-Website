@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — DuoFaith</title>
+  <meta name="description" content="DuoFaith Terms of Service.">
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #A292D6;
+      --primary-dark: #5B4A8A;
+      --primary-light: #C4B8E8;
+      --gold: #D4A843;
+      --gold-dark: #B8903A;
+      --bg-soft: #F4F2F8;
+      --text: #5B4A8A;
+      --text-body: #4A4460;
+      --text-mid: #6B6380;
+      --text-light: #8E87A0;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text-body);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(162,146,214,0.08);
+      padding: 0 3rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 9px; }
+    .nav-logo span { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+    .nav-cta {
+      background: var(--gold); color: var(--white); border: none;
+      padding: 0.6rem 1.4rem; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(212,168,67,0.25);
+    }
+    .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(212,168,67,0.35); }
+
+    .legal {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 7rem 2rem 4rem;
+    }
+    .legal h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .legal .effective {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      margin-bottom: 2rem;
+    }
+    .legal .intro {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .legal h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .legal p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .legal a { color: var(--primary-dark); text-decoration: none; }
+    .legal a:hover { text-decoration: underline; }
+
+    footer {
+      padding: 2.5rem 3rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+    .f-name { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
+    .f-tag { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1rem; }
+    .f-links { display: flex; justify-content: center; gap: 1.2rem; margin-bottom: 0.8rem; }
+    .f-links a { font-size: 0.85rem; color: var(--text-mid); text-decoration: none; }
+    .f-links a:hover { color: var(--primary-dark); }
+    .f-support { font-size: 0.82rem; color: var(--text-mid); margin-bottom: 0.5rem; }
+    .f-support a { color: var(--primary-dark); text-decoration: none; }
+    .f-priv { font-size: 0.78rem; color: var(--text-light); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .legal { padding: 6rem 1.5rem 3rem; }
+      .legal h1 { font-size: 1.8rem; }
+      footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="app-icon.png" alt="DuoFaith">
+      <span>DuoFaith</span>
+    </a>
+    <a href="index.html#pricing" class="nav-cta">Get Pro free</a>
+  </nav>
+
+  <main class="legal">
+    <h1>Terms of Service</h1>
+    <p class="effective">Effective Date: July 17, 2026</p>
+
+    <p class="intro">These Terms of Service ("Terms") govern your use of the DuoFaith mobile application ("the App"), developed by Luke Downie ("we," "us," or "our"). By downloading or using the App, you agree to these Terms.</p>
+
+    <h2>Use of the App</h2>
+    <p>DuoFaith is a faith-based productivity app that uses Apple's Screen Time API to shield selected apps until you complete a short daily Bible devotional. The App is provided for personal, non-commercial use.</p>
+    <p>You agree to use the App only for its intended purpose and in compliance with all applicable laws and Apple's usage terms.</p>
+
+    <h2>Screen Time Authorization</h2>
+    <p>The App requires your authorization to use Apple's Family Controls and Managed Settings frameworks to shield and unshield apps. You may revoke this authorization at any time through your device's Settings. Revoking authorization will prevent the App from shielding apps but will not affect your devotional progress.</p>
+
+    <h2>Content</h2>
+    <p>The App includes Bible passages and devotional prompts for personal reflection. This content is provided for spiritual encouragement and is not a substitute for professional counseling, therapy, or medical advice.</p>
+
+    <h2>No Account Required</h2>
+    <p>The App does not require account creation or authentication. All data is stored locally on your device. We are not responsible for data loss resulting from device failure, App deletion, or operating system updates.</p>
+
+    <h2>Intellectual Property</h2>
+    <p>The App, including its design, code, and original content, is the property of Luke Downie. You may not copy, modify, distribute, reverse-engineer, or create derivative works from the App.</p>
+
+    <h2>Disclaimer of Warranties</h2>
+    <p>The App is provided "as is" and "as available" without warranties of any kind, whether express or implied. We do not guarantee that the App will be error-free, uninterrupted, or compatible with all devices or operating system versions.</p>
+
+    <h2>Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, Luke Downie shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the App, including but not limited to missed notifications, app-shielding failures, or data loss.</p>
+
+    <h2>Termination</h2>
+    <p>You may stop using the App at any time by uninstalling it from your device. We reserve the right to discontinue the App at any time without notice.</p>
+
+    <h2>Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after changes constitutes acceptance of the revised Terms.</p>
+
+    <h2>Governing Law</h2>
+    <p>These Terms are governed by the laws of the jurisdiction in which the developer resides, without regard to conflict of law principles.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have questions about these Terms, contact us at:<br>
+    <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
+    <p>© 2026 DuoFaith. All rights reserved.</p>
+  </main>
+
+  <footer>
+    <p class="f-name">DuoFaith</p>
+    <p class="f-tag">Read Before You Scroll.</p>
+    <div class="f-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+    <p class="f-support">Need help? <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
+    <p class="f-priv">Your data stays on your device. We don't sell your information.</p>
+  </footer>
+
+</body>
+</html>
