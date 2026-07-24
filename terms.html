@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --primary: #7B68AE;
       --primary-dark: #2D1B5E;
@@ -25,16 +24,13 @@
       --text-light: #8078A0;
       --white: #FFFFFF;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', -apple-system, sans-serif;
       color: var(--text-body);
       background: var(--white);
       -webkit-font-smoothing: antialiased;
     }
-
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: rgba(255,255,255,0.92);
@@ -56,7 +52,6 @@
       box-shadow: 0 2px 12px rgba(201,168,76,0.25);
     }
     .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
-
     .legal {
       max-width: 720px;
       margin: 0 auto;
@@ -90,9 +85,14 @@
       line-height: 1.75;
       margin-bottom: 1rem;
     }
+    .legal ul {
+      margin: 0.5rem 0 1.5rem 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+    .legal ul li { margin-bottom: 0.3rem; }
     .legal a { color: var(--primary-dark); text-decoration: none; }
     .legal a:hover { text-decoration: underline; }
-
     footer {
       padding: 2.5rem 3rem;
       text-align: center;
@@ -106,7 +106,6 @@
     .f-support { font-size: 0.82rem; color: var(--text-mid); margin-bottom: 0.5rem; }
     .f-support a { color: var(--primary-dark); text-decoration: none; }
     .f-priv { font-size: 0.78rem; color: var(--text-light); }
-
     @media (max-width: 768px) {
       nav { padding: 0 1.2rem; }
       .legal { padding: 6rem 1.5rem 3rem; }
@@ -127,7 +126,7 @@
 
   <main class="legal">
     <h1>Terms of Service</h1>
-    <p class="effective">Effective Date: July 17, 2026</p>
+    <p class="effective">Effective Date: July 23, 2026</p>
 
     <p class="intro">These Terms of Service ("Terms") govern your use of the DuoFaith mobile application ("the App"), developed by Luke Downie ("we," "us," or "our"). By downloading or using the App, you agree to these Terms.</p>
 
@@ -141,8 +140,22 @@
     <h2>Content</h2>
     <p>The App includes Bible passages and devotional prompts for personal reflection. This content is provided for spiritual encouragement and is not a substitute for professional counseling, therapy, or medical advice.</p>
 
-    <h2>No Account Required</h2>
-    <p>The App does not require account creation or authentication. All data is stored locally on your device. We are not responsible for data loss resulting from device failure, App deletion, or operating system updates.</p>
+    <h2>Accounts and Data</h2>
+    <p>DuoFaith does not require you to create an account with an email address or password. Core app data (your name, devotional progress, lock time settings) is stored locally on your device. We are not responsible for data loss resulting from device failure, App deletion, or operating system updates.</p>
+    <p>If you use Couples Mode (a Pro feature), the App creates an anonymous session to sync data between you and your partner via a secure server. No personal account credentials are involved. See our <a href="privacy.html">Privacy Policy</a> for details on what data is transmitted.</p>
+
+    <h2>Subscriptions and Purchases</h2>
+    <p>DuoFaith offers a free tier and optional paid subscriptions ("DuoFaith Pro") through Apple's App Store. By purchasing a subscription, you agree to Apple's terms for in-app purchases and auto-renewable subscriptions.</p>
+    <ul>
+      <li>Payment is charged to your Apple ID account at confirmation of purchase.</li>
+      <li>Subscriptions automatically renew unless canceled at least 24 hours before the end of the current period.</li>
+      <li>You can manage or cancel your subscription in your device's Settings under Subscriptions.</li>
+      <li>No refunds are provided for unused portions of a subscription period. Refund requests should be directed to Apple.</li>
+    </ul>
+
+    <h2>Couples Mode</h2>
+    <p>Couples Mode allows two users to pair via an invite code and track shared devotional progress. By using Couples Mode, you agree that limited data (anonymous identifiers, completion records, and nudge notifications) will be transmitted to our server to enable the feature. You may unpair or delete your data at any time from within the App.</p>
+    <p>You are responsible for sharing your invite code only with your intended partner. We are not liable for any issues arising from codes shared with unintended recipients.</p>
 
     <h2>Intellectual Property</h2>
     <p>The App, including its design, code, and original content, is the property of Luke Downie. You may not copy, modify, distribute, reverse-engineer, or create derivative works from the App.</p>
@@ -154,7 +167,7 @@
     <p>To the fullest extent permitted by law, Luke Downie shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the App, including but not limited to missed notifications, app-shielding failures, or data loss.</p>
 
     <h2>Termination</h2>
-    <p>You may stop using the App at any time by uninstalling it from your device. We reserve the right to discontinue the App at any time without notice.</p>
+    <p>You may stop using the App at any time by uninstalling it from your device. If you have an active subscription, uninstalling does not cancel it — you must cancel through your device's Settings. We reserve the right to discontinue the App at any time without notice.</p>
 
     <h2>Changes to These Terms</h2>
     <p>We may update these Terms from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after changes constitutes acceptance of the revised Terms.</p>
@@ -165,7 +178,7 @@
     <h2>Contact Us</h2>
     <p>If you have questions about these Terms, contact us at:<br>
     <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
-    <p>© 2026 DuoFaith. All rights reserved.</p>
+    <p>&copy; 2026 DuoFaith. All rights reserved.</p>
   </main>
 
   <footer>
@@ -176,7 +189,7 @@
       <a href="terms.html">Terms of Service</a>
     </div>
     <p class="f-support">Need help? <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
-    <p class="f-priv">Your data stays on your device. We don't sell your information.</p>
+    <p class="f-priv">We collect only what's needed and never sell your information.</p>
   </footer>
 
 </body>

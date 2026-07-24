@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — DuoFaith</title>
-  <meta name="description" content="DuoFaith Privacy Policy. Your data stays on your device.">
+  <meta name="description" content="DuoFaith Privacy Policy. Learn how we handle your data.">
   <link rel="icon" type="image/png" href="app-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --primary: #7B68AE;
       --primary-dark: #2D1B5E;
@@ -25,16 +24,13 @@
       --text-light: #8078A0;
       --white: #FFFFFF;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', -apple-system, sans-serif;
       color: var(--text-body);
       background: var(--white);
       -webkit-font-smoothing: antialiased;
     }
-
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: rgba(255,255,255,0.92);
@@ -56,7 +52,6 @@
       box-shadow: 0 2px 12px rgba(201,168,76,0.25);
     }
     .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
-
     .legal {
       max-width: 720px;
       margin: 0 auto;
@@ -98,7 +93,6 @@
     .legal ul li { margin-bottom: 0.3rem; }
     .legal a { color: var(--primary-dark); text-decoration: none; }
     .legal a:hover { text-decoration: underline; }
-
     footer {
       padding: 2.5rem 3rem;
       text-align: center;
@@ -112,7 +106,6 @@
     .f-support { font-size: 0.82rem; color: var(--text-mid); margin-bottom: 0.5rem; }
     .f-support a { color: var(--primary-dark); text-decoration: none; }
     .f-priv { font-size: 0.78rem; color: var(--text-light); }
-
     @media (max-width: 768px) {
       nav { padding: 0 1.2rem; }
       .legal { padding: 6rem 1.5rem 3rem; }
@@ -133,43 +126,62 @@
 
   <main class="legal">
     <h1>Privacy Policy</h1>
-    <p class="effective">Effective Date: July 17, 2026</p>
+    <p class="effective">Effective Date: July 23, 2026</p>
 
-    <p class="intro">DuoFaith ("the App") is developed by Luke Downie ("we," "us," or "our"). This Privacy Policy explains how the App handles your information. We built DuoFaith with privacy as a core principle — your data stays on your device.</p>
+    <p class="intro">DuoFaith ("the App") is developed by Luke Downie ("we," "us," or "our"). This Privacy Policy explains how the App handles your information. We built DuoFaith with privacy as a core principle — we collect only what is necessary to make the App work, and we never sell your data.</p>
 
-    <h2>Information We Collect</h2>
-    <p>DuoFaith stores the following information locally on your device only:</p>
+    <h2>Information Stored on Your Device</h2>
+    <p>DuoFaith stores the following information locally on your device using Apple's SwiftData framework:</p>
     <ul>
       <li>Your first name (entered during onboarding)</li>
       <li>Your chosen lock time (hour and minute)</li>
       <li>Devotional progress (current streak, total devotionals completed, date of last devotional)</li>
+      <li>Reading plan progress</li>
       <li>Onboarding completion status</li>
       <li>Pro/Free plan status</li>
     </ul>
-    <p>This data is stored using Apple's SwiftData framework and never leaves your device.</p>
+    <p>This on-device data is not transmitted to any external server.</p>
+
+    <h2>Couples Mode (Pro Feature)</h2>
+    <p>If you choose to use Couples Mode, the App connects to a secure server (hosted by Supabase) to enable pairing and shared progress with a partner. When you use Couples Mode, the following data is transmitted and stored on our server:</p>
+    <ul>
+      <li>An anonymous user identifier (no email, phone number, or personal account is created)</li>
+      <li>Couple pairing records (linking two anonymous users)</li>
+      <li>Daily devotional completion records (so your partner can see when you've finished)</li>
+      <li>Nudge records (when one partner sends a reminder to the other)</li>
+      <li>A shared streak counter</li>
+    </ul>
+    <p>This data is associated with an anonymous identifier only. We do not link it to your name, email, or any other personally identifiable information. If you do not use Couples Mode, no data is sent to any server.</p>
+
+    <h2>Push Notifications</h2>
+    <p>If you enable Couples Mode, the App may register a device token with Apple's Push Notification service to deliver nudge notifications from your partner. This device token is stored on our server and is used solely for delivering notifications. The App also schedules local notifications (reminders and streak alerts) that are handled entirely on your device.</p>
 
     <h2>Screen Time and Family Controls</h2>
     <p>DuoFaith uses Apple's Screen Time API (Family Controls / Managed Settings) to shield selected apps until you complete your daily devotional. The App requests your authorization to use these system frameworks. App-shielding selections are handled entirely by Apple's on-device APIs — we never see or transmit which apps you choose to shield.</p>
 
-    <h2>Notifications</h2>
-    <p>The App may request permission to send local notifications to remind you of your daily devotional. These notifications are scheduled on-device and are not sent through any external server.</p>
+    <h2>Subscriptions</h2>
+    <p>DuoFaith uses RevenueCat to manage in-app subscriptions. RevenueCat processes your subscription status through Apple's App Store and may receive an anonymous app user identifier to manage entitlements. RevenueCat does not receive your name or any other personal information from DuoFaith. For more information, see <a href="https://www.revenuecat.com/privacy">RevenueCat's Privacy Policy</a>.</p>
+
+    <h2>Bible Passages</h2>
+    <p>The App may fetch Bible passages from a third-party API (bible-api.com) to display daily devotional content. These requests do not include any personal or identifying information. If the service is unavailable, the App uses built-in devotional content instead.</p>
 
     <h2>Data We Do NOT Collect</h2>
     <p>DuoFaith does not:</p>
     <ul>
-      <li>Collect or transmit any personal data to external servers</li>
+      <li>Require you to create an account with an email, phone number, or password</li>
       <li>Use analytics, tracking, or advertising SDKs</li>
-      <li>Require account creation, sign-up, or authentication</li>
-      <li>Collect email addresses, location data, or device identifiers</li>
-      <li>Share data with third parties</li>
+      <li>Collect location data</li>
+      <li>Share or sell data with third parties for advertising or marketing</li>
       <li>Use cookies or web-based tracking</li>
+      <li>Track which apps you choose to shield</li>
     </ul>
 
     <h2>Data Retention and Deletion</h2>
-    <p>All data is stored on your device for as long as the App is installed. You can delete all your progress data at any time using the "Reset Progress" option in Settings. To delete all data completely, uninstall the App from your device — this removes all stored information.</p>
+    <p>On-device data is stored for as long as the App is installed. You can delete your on-device progress at any time using the "Reset Progress" option in Settings. To delete all local data, uninstall the App.</p>
+    <p>If you have used Couples Mode, you can unpair from your partner within the App, which removes the active couple relationship. You can also delete your account entirely from Settings, which removes all server-side data associated with your anonymous identifier, including completion records, nudge history, and device tokens.</p>
 
     <h2>Children's Privacy</h2>
-    <p>DuoFaith does not knowingly collect personal information from children under 13. The App does not collect personal information from any user.</p>
+    <p>DuoFaith does not knowingly collect personal information from children under 13. The App's Couples Mode uses anonymous authentication and does not require any information typically associated with children's privacy concerns (no email, no real name transmitted, no location).</p>
 
     <h2>Changes to This Policy</h2>
     <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after changes constitutes acceptance of the revised policy.</p>
@@ -177,7 +189,7 @@
     <h2>Contact Us</h2>
     <p>If you have questions about this Privacy Policy, contact us at:<br>
     <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
-    <p>© 2026 DuoFaith. All rights reserved.</p>
+    <p>&copy; 2026 DuoFaith. All rights reserved.</p>
   </main>
 
   <footer>
@@ -188,7 +200,7 @@
       <a href="terms.html">Terms of Service</a>
     </div>
     <p class="f-support">Need help? <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
-    <p class="f-priv">Your data stays on your device. We don't sell your information.</p>
+    <p class="f-priv">We collect only what's needed and never sell your information.</p>
   </footer>
 
 </body>
