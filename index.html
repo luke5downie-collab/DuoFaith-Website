@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="app-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -79,7 +79,7 @@
       align-items: center;
     }
     .phone-wrap {
-      background: #7B68AE;
+      background: linear-gradient(145deg, #2D1B5E, #1A0E3E);
       border-radius: 32px;
       padding: 2.5rem 2rem;
       display: flex;
@@ -90,93 +90,177 @@
     }
     .phone {
       width: 260px;
-      background: #fff;
+      background: #1A0E3E;
       border-radius: 42px;
-      border: 4px solid #222;
+      border: 4px solid #333;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
     .phone-notch {
       position: absolute; top: 0; left: 50%; transform: translateX(-50%);
       width: 100px; height: 24px; background: #222;
       border-radius: 0 0 14px 14px; z-index: 2;
     }
+
+    /* App screen - matching the actual app */
     .phone-screen {
-      padding: 2.6rem 0.9rem 1.2rem;
+      padding: 2.4rem 1rem 0.8rem;
       min-height: 500px;
       display: flex; flex-direction: column; align-items: center;
-      background: linear-gradient(180deg, #FAF8FF 0%, #E8E4F5 100%);
+      background: linear-gradient(180deg, #1E1240 0%, #150D30 50%, #1A0F38 100%);
     }
 
-    /* Phone screen elements */
-    .s-icon {
-      width: 40px; height: 40px;
-      background: linear-gradient(135deg, #7B68AE, #2D1B5E);
-      border-radius: 12px;
+    /* Lock icon with rings */
+    .lock-rings {
+      position: relative;
+      width: 100px; height: 100px;
       display: flex; align-items: center; justify-content: center;
-      margin: 0.4rem 0 0.5rem;
+      margin: 0.5rem 0 1rem;
     }
-    .s-icon svg { width: 20px; height: 20px; fill: #fff; }
-    .s-badge {
-      font-size: 0.58rem; font-weight: 700; color: #2D1B5E;
-      text-transform: uppercase; letter-spacing: 0.12em;
-      background: rgba(123,104,174,0.1); padding: 0.2rem 0.6rem;
-      border-radius: 14px; margin-bottom: 0.5rem;
+    .lock-rings::before {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      border: 2px solid rgba(123,104,174,0.25);
     }
-    .s-apps {
-      display: flex; gap: 0.3rem; margin-bottom: 0.6rem; flex-wrap: wrap; justify-content: center;
+    .lock-rings::after {
+      content: '';
+      position: absolute;
+      width: 75%; height: 75%;
+      border-radius: 50%;
+      border: 2px solid rgba(123,104,174,0.15);
     }
-    .s-app {
-      background: rgba(123,104,174,0.06); border: 1px solid rgba(123,104,174,0.1);
-      border-radius: 7px; padding: 0.18rem 0.5rem;
-      font-size: 0.54rem; font-weight: 500; color: #5C5078;
-      display: flex; align-items: center; gap: 0.2rem;
+    .lock-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #D4884A, #C96B3A);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1;
     }
-    .s-dot { width: 4px; height: 4px; border-radius: 50%; background: #e74c3c; }
-    .s-card {
-      background: #fff; border-radius: 12px;
-      padding: 0.8rem 0.9rem; width: 100%;
+    .lock-icon svg { width: 18px; height: 18px; fill: #fff; }
+
+    /* App title */
+    .app-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #F0E6D0;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.1rem;
+    }
+    .app-over {
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: rgba(240,230,208,0.5);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: 0.1rem;
+    }
+    .app-distraction {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #C9A84C;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       margin-bottom: 0.5rem;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
     }
-    .s-card .reading-label {
-      font-size: 0.52rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: #A8893A; margin-bottom: 0.3rem;
+    .app-tagline {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.9rem;
     }
-    .s-card .passage {
-      font-size: 0.78rem; font-weight: 700; color: #2D1B5E;
-      margin-bottom: 0.25rem;
-    }
-    .s-card .excerpt {
-      font-size: 0.68rem; line-height: 1.45; color: #5C5078;
-      font-style: italic;
-    }
-    .s-card .lbl {
-      font-size: 0.52rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: #A8893A; margin-bottom: 0.2rem;
-    }
-    .s-card .prompt { font-size: 0.68rem; color: #5C5078; line-height: 1.4; }
-    .s-progress { width: 100%; margin-bottom: 0.5rem; }
-    .s-progress .prog-label {
-      display: flex; justify-content: space-between; margin-bottom: 0.25rem;
-    }
-    .s-progress .prog-label span { font-size: 0.54rem; color: #8078A0; font-weight: 500; }
-    .s-progress .prog-bar {
-      height: 4px; background: rgba(123,104,174,0.15); border-radius: 2px;
-      overflow: hidden;
-    }
-    .s-progress .prog-fill {
-      height: 100%; background: linear-gradient(90deg, #7B68AE, #C9A84C);
-      border-radius: 2px; width: 65%;
-    }
-    .s-btn {
+
+    /* Devotional button */
+    .app-btn-primary {
       background: linear-gradient(135deg, #C9A84C, #A8893A);
-      color: #fff; border: none;
-      padding: 0.55rem; border-radius: 10px;
-      font-size: 0.68rem; font-weight: 700;
-      width: 100%; margin-top: auto; cursor: default;
+      color: #fff;
+      border: none;
+      padding: 0.55rem 1.6rem;
+      border-radius: 22px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      cursor: default;
+      display: flex; align-items: center; gap: 0.4rem;
+      margin-bottom: 0.35rem;
     }
+    .app-btn-primary svg { width: 14px; height: 14px; fill: #fff; }
+    .app-btn-sub {
+      font-size: 0.5rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.7rem;
+    }
+
+    /* Browse plans button */
+    .app-btn-outline {
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      padding: 0.45rem 1.4rem;
+      border-radius: 22px;
+      font-size: 0.62rem;
+      font-weight: 600;
+      cursor: default;
+      display: flex; align-items: center; gap: 0.35rem;
+      margin-bottom: 0.8rem;
+    }
+    .app-btn-outline svg { width: 12px; height: 12px; fill: rgba(255,255,255,0.5); }
+
+    /* Week calendar */
+    .app-calendar {
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 0.5rem 0.6rem;
+      width: 100%;
+      margin-bottom: 0.6rem;
+    }
+    .cal-days {
+      display: flex; justify-content: space-between;
+      margin-bottom: 0.3rem;
+    }
+    .cal-days span {
+      font-size: 0.48rem; font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      width: 24px; text-align: center;
+    }
+    .cal-days span.today { color: #C9A84C; }
+    .cal-dots {
+      display: flex; justify-content: space-between;
+    }
+    .cal-dot {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-dot.active::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #C9A84C;
+    }
+
+    /* Bottom nav */
+    .app-nav {
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 0.5rem 1.2rem;
+      width: 85%;
+      display: flex; justify-content: space-around; align-items: center;
+      margin-top: auto;
+    }
+    .app-nav-item {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .app-nav-item.active {
+      background: rgba(201,168,76,0.2);
+    }
+    .app-nav-item svg { width: 16px; height: 16px; }
 
     /* ── FEATURES ── */
     .features {
@@ -353,11 +437,13 @@
       }
       .hero-text { order: 2; }
       .hero-text .sub { margin-left: auto; margin-right: auto; }
-      .hero-text .app-badge { display: inline-block; }
       .hero-phone { order: 1; margin-bottom: 1rem; }
       .phone-wrap { max-width: 340px; margin: 0 auto; padding: 1.8rem 1.5rem; }
       .phone { width: 220px; }
-      .phone-screen { min-height: 420px; }
+      .phone-screen { min-height: 420px; padding: 2rem 0.8rem 0.6rem; }
+      .lock-rings { width: 80px; height: 80px; }
+      .app-title { font-size: 1.2rem; }
+      .app-distraction { font-size: 1.3rem; }
       .features, .pricing, .faq { padding-left: 2rem; padding-right: 2rem; }
       .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
@@ -392,32 +478,61 @@
         <div class="phone">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <div class="s-icon">
-              <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
-            </div>
-            <div class="s-badge">Apps Locked</div>
-            <div class="s-apps">
-              <div class="s-app"><span class="s-dot"></span> Instagram</div>
-              <div class="s-app"><span class="s-dot"></span> TikTok</div>
-              <div class="s-app"><span class="s-dot"></span> YouTube</div>
-            </div>
-            <div class="s-card">
-              <p class="reading-label">Today's Reading</p>
-              <p class="passage">Philippians 4:4-9</p>
-              <p class="excerpt">"Rejoice in the Lord always. I will say it again: Rejoice! Let your gentleness be evident to all..."</p>
-            </div>
-            <div class="s-progress">
-              <div class="prog-label">
-                <span>Reading progress</span>
-                <span>65%</span>
+
+            <!-- Lock icon with rings -->
+            <div class="lock-rings">
+              <div class="lock-icon">
+                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
               </div>
-              <div class="prog-bar"><div class="prog-fill"></div></div>
             </div>
-            <div class="s-card">
-              <p class="lbl">Reflect</p>
-              <p class="prompt">What would change if you approached today with gentleness?</p>
+
+            <!-- App title -->
+            <p class="app-title">FAITH</p>
+            <p class="app-over">OVER</p>
+            <p class="app-distraction">DISTRACTION</p>
+            <p class="app-tagline">Lock your phone, not your faith.</p>
+
+            <!-- Buttons -->
+            <button class="app-btn-primary">
+              <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1z"/></svg>
+              Daily Devotional
+            </button>
+            <p class="app-btn-sub">A fresh verse every day — no plan needed</p>
+
+            <button class="app-btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+              Browse Plans
+            </button>
+
+            <!-- Week calendar -->
+            <div class="app-calendar">
+              <div class="cal-days">
+                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span class="today">F</span><span>S</span>
+              </div>
+              <div class="cal-dots">
+                <div class="cal-dot"></div>
+                <div class="cal-dot"></div>
+                <div class="cal-dot"></div>
+                <div class="cal-dot"></div>
+                <div class="cal-dot"></div>
+                <div class="cal-dot active"></div>
+                <div class="cal-dot"></div>
+              </div>
             </div>
-            <button class="s-btn">Finish Reading & Unlock</button>
+
+            <!-- Bottom nav -->
+            <div class="app-nav">
+              <div class="app-nav-item active">
+                <svg viewBox="0 0 24 24" fill="#C9A84C"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              </div>
+              <div class="app-nav-item">
+                <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.3)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              </div>
+              <div class="app-nav-item">
+                <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.3)"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
