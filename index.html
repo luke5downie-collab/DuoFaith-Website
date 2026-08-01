@@ -114,25 +114,37 @@
       min-height: 480px;
     }
     .hero-phone {
-      border-radius: 0 0 28px 28px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
       position: absolute;
+      width: 230px;
+      background: #000;
+      border-radius: 36px;
+      padding: 10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    .hero-phone::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 22px;
+      background: #000;
+      border-radius: 0 0 14px 14px;
+      z-index: 2;
     }
     .hero-phone img {
       display: block;
       width: 100%;
       height: auto;
-      margin-top: -60px;
+      border-radius: 26px;
     }
     .hero-phone.phone-left {
-      width: 230px;
       left: 10%;
       top: 40px;
       z-index: 1;
     }
     .hero-phone.phone-right {
-      width: 230px;
       left: 35%;
       top: 0;
       z-index: 2;
@@ -455,10 +467,10 @@
         </div>
         <div class="hero-phones">
           <div class="hero-phone phone-left">
-            <img src="App Photos/IMG_4585.PNG" alt="DuoFaith daily devotional">
+            <img src="App Photos/prayer.png" alt="DuoFaith guided prayer">
           </div>
           <div class="hero-phone phone-right">
-            <img src="App Photos/IMG_4582.PNG" alt="DuoFaith home screen">
+            <img src="App Photos/home.png" alt="DuoFaith home screen">
           </div>
         </div>
       </div>
