@@ -108,23 +108,6 @@
     .app-badge:hover { transform: scale(1.05); }
     .app-badge svg { height: 48px; width: auto; }
 
-    /* Phone screenshot */
-    .hero-phone {
-      display: flex;
-      justify-content: center;
-      margin: 0 auto;
-    }
-    .phone-frame {
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
-      width: 260px;
-    }
-    .phone-frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
 
     /* ── FEATURES ── */
     .features {
@@ -197,52 +180,6 @@
       line-height: 1.65;
     }
 
-    /* ── SHOWCASE (screenshot + text rows) ── */
-    .showcase {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .showcase-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      margin-bottom: 5rem;
-    }
-    .showcase-row.reverse { direction: rtl; }
-    .showcase-row.reverse > * { direction: ltr; }
-    .showcase-img {
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
-    }
-    .showcase-img img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-    .showcase-text .eyebrow {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.6rem;
-    }
-    .showcase-text h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 0.8rem;
-      line-height: 1.2;
-    }
-    .showcase-text p {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
 
     /* ── HOW IT WORKS ── */
     .how {
@@ -380,13 +317,6 @@
       padding: 5rem 2rem;
       text-align: center;
     }
-    .cta-icon {
-      width: 80px; height: 80px;
-      border-radius: 20px; overflow: hidden;
-      margin: 0 auto 1.5rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .cta-icon img { width: 100%; height: 100%; }
     .cta-banner h2 {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(1.6rem, 3vw, 2.2rem);
@@ -427,18 +357,13 @@
       nav { padding: 0 1.2rem; }
       .hero { padding: 7rem 1.5rem 3rem; }
       .hero h1 { font-size: 2.6rem; }
-      .phone-frame { width: 220px; }
       .feat-grid { grid-template-columns: 1fr; }
-      .showcase-row,
-      .showcase-row.reverse { grid-template-columns: 1fr; gap: 1.5rem; }
-      .showcase-img { max-width: 280px; margin: 0 auto; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
       .features, .how, .pricing, .faq { padding-left: 1.5rem; padding-right: 1.5rem; }
     }
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.1rem; }
       .hero .sub { font-size: 1rem; }
-      .phone-frame { width: 200px; }
     }
   </style>
 </head>
@@ -468,11 +393,6 @@
           </g>
         </svg>
       </a>
-    </div>
-    <div class="hero-phone">
-      <div class="phone-frame">
-        <img src="App Photos/IMG_4582.PNG" alt="DuoFaith home screen — Faith Over Distraction">
-      </div>
     </div>
   </section>
 
@@ -513,39 +433,6 @@
     </div>
   </section>
 
-  <!-- SHOWCASE -->
-  <section class="showcase">
-    <div class="showcase-row">
-      <div class="showcase-img">
-        <img src="App Photos/IMG_4585.PNG" alt="Daily devotional reading in DuoFaith">
-      </div>
-      <div class="showcase-text">
-        <p class="eyebrow">Daily Devotional</p>
-        <h3>Start every morning in Scripture</h3>
-        <p>Each day brings a new Bible passage with a guided reflection and prayer. No rushing through a quick verse — spend real time in the Word before your phone takes over.</p>
-      </div>
-    </div>
-    <div class="showcase-row reverse">
-      <div class="showcase-img">
-        <img src="App Photos/IMG_4586.PNG" alt="Couples mode in DuoFaith">
-      </div>
-      <div class="showcase-text">
-        <p class="eyebrow">Couples Mode</p>
-        <h3>Pair with your partner.<br>Grow together.</h3>
-        <p>Neither phone unlocks until you've both finished the devotional. Send nudge reminders when your partner hasn't read yet. One subscription covers both of you.</p>
-      </div>
-    </div>
-    <div class="showcase-row">
-      <div class="showcase-img">
-        <img src="App Photos/IMG_4587.PNG" alt="Guided prayer in DuoFaith">
-      </div>
-      <div class="showcase-text">
-        <p class="eyebrow">Guided Prayer</p>
-        <h3>Read. Reflect. Pray. Unlock.</h3>
-        <p>Every devotional ends with a guided prayer written for the day's passage. Finish the full experience and your apps unlock — no shortcuts.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- HOW IT WORKS -->
   <section class="how">
@@ -686,9 +573,6 @@
 
   <!-- CTA BANNER -->
   <section class="cta-banner">
-    <div class="cta-icon">
-      <img src="app-icon.png" alt="DuoFaith">
-    </div>
     <h2>Start your faith journey today</h2>
     <p class="cta-sub">Put Scripture before scrolling. Free to start, no commitment required.</p>
     <div class="cta-badges">
