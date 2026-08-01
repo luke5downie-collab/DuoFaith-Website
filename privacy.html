@@ -8,64 +8,65 @@
   <link rel="icon" type="image/png" href="app-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --primary: #7B68AE;
-      --primary-dark: #2D1B5E;
-      --primary-light: #9B8BC8;
+      --bg: #111111;
+      --bg-card: #1a1a1a;
+      --white: #ffffff;
       --gold: #C9A84C;
-      --gold-dark: #A8893A;
-      --bg-soft: #F0EDF6;
-      --text: #2D1B5E;
-      --text-body: #3A2D5C;
-      --text-mid: #5C5078;
-      --text-light: #8078A0;
-      --white: #FFFFFF;
+      --text: #e5e5e5;
+      --text-dim: #999999;
+      --text-faint: #666666;
+      --border: rgba(255,255,255,0.08);
     }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      color: var(--text-body);
-      background: var(--white);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
       -webkit-font-smoothing: antialiased;
     }
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(123,104,174,0.08);
-      padding: 0 3rem;
+      background: rgba(17,17,17,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
       height: 64px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-    .nav-logo img { width: 36px; height: 36px; border-radius: 9px; }
-    .nav-logo span { font-weight: 700; font-size: 1.15rem; color: var(--text); }
-    .nav-cta {
-      background: var(--gold); color: var(--white); border: none;
-      padding: 0.6rem 1.4rem; border-radius: 10px;
-      font-size: 0.88rem; font-weight: 600; cursor: pointer; text-decoration: none;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px rgba(201,168,76,0.25);
+    .nav-left {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none;
     }
-    .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
+    .nav-left img { width: 34px; height: 34px; border-radius: 9px; }
+    .nav-left span { font-weight: 700; font-size: 1.1rem; color: var(--white); }
+    .nav-cta {
+      background: var(--white); color: var(--bg);
+      padding: 0.55rem 1.3rem; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .nav-cta:hover { transform: scale(1.03); opacity: 0.9; }
     .legal {
       max-width: 720px;
       margin: 0 auto;
       padding: 7rem 2rem 4rem;
     }
     .legal h1 {
+      font-family: 'DM Serif Display', serif;
       font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--text);
+      font-weight: 400;
+      color: var(--white);
       margin-bottom: 0.5rem;
     }
     .legal .effective {
       font-size: 0.9rem;
-      color: var(--text-mid);
+      color: var(--text-faint);
       margin-bottom: 2rem;
     }
     .legal .intro {
@@ -74,9 +75,10 @@
       margin-bottom: 2rem;
     }
     .legal h2 {
+      font-family: 'DM Serif Display', serif;
       font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text);
+      font-weight: 400;
+      color: var(--white);
       margin-top: 2rem;
       margin-bottom: 0.75rem;
     }
@@ -84,44 +86,47 @@
       font-size: 0.95rem;
       line-height: 1.75;
       margin-bottom: 1rem;
+      color: var(--text-dim);
     }
     .legal ul {
       margin: 0.5rem 0 1.5rem 1.5rem;
       font-size: 0.95rem;
       line-height: 1.75;
+      color: var(--text-dim);
     }
     .legal ul li { margin-bottom: 0.3rem; }
-    .legal a { color: var(--primary-dark); text-decoration: none; }
+    .legal a { color: var(--gold); text-decoration: none; }
     .legal a:hover { text-decoration: underline; }
     footer {
-      padding: 2.5rem 3rem;
+      padding: 2.5rem 2rem;
       text-align: center;
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--border);
     }
-    .f-name { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
-    .f-tag { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1rem; }
-    .f-links { display: flex; justify-content: center; gap: 1.2rem; margin-bottom: 0.8rem; }
-    .f-links a { font-size: 0.85rem; color: var(--text-mid); text-decoration: none; }
-    .f-links a:hover { color: var(--primary-dark); }
-    .f-support { font-size: 0.82rem; color: var(--text-mid); margin-bottom: 0.5rem; }
-    .f-support a { color: var(--primary-dark); text-decoration: none; }
-    .f-priv { font-size: 0.78rem; color: var(--text-light); }
+    .f-links {
+      display: flex; justify-content: center; gap: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .f-links a {
+      font-size: 0.82rem; color: var(--text-faint);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .f-links a:hover { color: var(--white); }
+    .f-copy { font-size: 0.78rem; color: var(--text-faint); }
     @media (max-width: 768px) {
       nav { padding: 0 1.2rem; }
       .legal { padding: 6rem 1.5rem 3rem; }
       .legal h1 { font-size: 1.8rem; }
-      footer { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">
+    <a href="index.html" class="nav-left">
       <img src="app-icon.png" alt="DuoFaith">
       <span>DuoFaith</span>
     </a>
-    <a href="index.html#pricing" class="nav-cta">Get Pro free</a>
+    <a href="https://apps.apple.com/us/app/duofaith/id6792354251" class="nav-cta" target="_blank" rel="noopener">Download Free</a>
   </nav>
 
   <main class="legal">
@@ -193,14 +198,12 @@
   </main>
 
   <footer>
-    <p class="f-name">DuoFaith</p>
-    <p class="f-tag">Read Before You Scroll.</p>
     <div class="f-links">
-      <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:duofaithsupport@gmail.com">Contact</a>
     </div>
-    <p class="f-support">Need help? <a href="mailto:duofaithsupport@gmail.com">duofaithsupport@gmail.com</a></p>
-    <p class="f-priv">We collect only what's needed and never sell your information.</p>
+    <p class="f-copy">&copy; 2026 DuoFaith. All rights reserved.</p>
   </footer>
 
 </body>
