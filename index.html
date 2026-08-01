@@ -32,7 +32,8 @@
     body {
       font-family: 'DM Sans', -apple-system, sans-serif;
       color: var(--text);
-      background: var(--bg);
+      background: linear-gradient(180deg, #2D1B5E 0%, #1a0e3a 30%, #111111 60%);
+      background-attachment: fixed;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -40,7 +41,7 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(17,17,17,0.85);
+      background: rgba(45,27,94,0.7);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
@@ -107,34 +108,22 @@
     .app-badge:hover { transform: scale(1.05); }
     .app-badge svg { height: 48px; width: auto; }
 
-    /* Phone screenshots */
-    .hero-phones {
+    /* Phone screenshot */
+    .hero-phone {
       display: flex;
       justify-content: center;
-      align-items: flex-end;
-      gap: 1.5rem;
-      max-width: 800px;
       margin: 0 auto;
     }
     .phone-frame {
       border-radius: 28px;
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
-      flex-shrink: 0;
+      width: 260px;
     }
     .phone-frame img {
       display: block;
       width: 100%;
       height: auto;
-    }
-    .phone-frame.main {
-      width: 240px;
-      z-index: 2;
-    }
-    .phone-frame.side {
-      width: 200px;
-      opacity: 0.8;
-      z-index: 1;
     }
 
     /* ── FEATURES ── */
@@ -438,9 +427,7 @@
       nav { padding: 0 1.2rem; }
       .hero { padding: 7rem 1.5rem 3rem; }
       .hero h1 { font-size: 2.6rem; }
-      .hero-phones { gap: 0.8rem; }
-      .phone-frame.main { width: 180px; }
-      .phone-frame.side { width: 150px; }
+      .phone-frame { width: 220px; }
       .feat-grid { grid-template-columns: 1fr; }
       .showcase-row,
       .showcase-row.reverse { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -451,8 +438,7 @@
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.1rem; }
       .hero .sub { font-size: 1rem; }
-      .phone-frame.main { width: 160px; }
-      .phone-frame.side { width: 130px; }
+      .phone-frame { width: 200px; }
     }
   </style>
 </head>
@@ -483,15 +469,9 @@
         </svg>
       </a>
     </div>
-    <div class="hero-phones">
-      <div class="phone-frame side">
-        <img src="App Photos/IMG_4585.PNG" alt="DuoFaith daily devotional screen">
-      </div>
-      <div class="phone-frame main">
+    <div class="hero-phone">
+      <div class="phone-frame">
         <img src="App Photos/IMG_4582.PNG" alt="DuoFaith home screen — Faith Over Distraction">
-      </div>
-      <div class="phone-frame side">
-        <img src="App Photos/IMG_4586.PNG" alt="DuoFaith couples mode — Better Together">
       </div>
     </div>
   </section>
