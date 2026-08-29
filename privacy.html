@@ -155,65 +155,95 @@
 
   <main class="legal">
     <h1>Privacy Policy</h1>
-    <p class="effective">Effective Date: July 23, 2026</p>
+    <p class="effective">Effective Date: August 29, 2026</p>
 
-    <p class="intro">DuoFaith ("the App") is developed by Luke Downie ("we," "us," or "our"). This Privacy Policy explains how the App handles your information. We built DuoFaith with privacy as a core principle — we collect only what is necessary to make the App work, and we never sell your data.</p>
+    <p class="intro">DuoFaith ("the App") is developed by Luke Downie ("we," "us," or "our"). This Privacy Policy explains what the App stores, what it sends to our servers, and what it never touches at all. We collect only what the App needs in order to work, and we never sell your data.</p>
+
+    <h2>The Short Version</h2>
+    <ul>
+      <li>There is no sign-up. No email address, no phone number, no password.</li>
+      <li>Your name, your streak and your settings stay on your device.</li>
+      <li>Every install is given a random anonymous ID, which is what lets the App load each day's devotional, redeem access codes and pair you with a partner.</li>
+      <li>We never see which apps you choose to shield. Apple's frameworks are built so that we cannot.</li>
+      <li>There are no adverts in the App and no third-party analytics.</li>
+    </ul>
 
     <h2>Information Stored on Your Device</h2>
-    <p>DuoFaith stores the following information locally on your device using Apple's SwiftData framework:</p>
+    <p>DuoFaith stores the following on your device using Apple's SwiftData framework:</p>
     <ul>
-      <li>Your first name (entered during onboarding)</li>
+      <li>Your first name, entered during onboarding</li>
       <li>Your chosen lock time (hour and minute)</li>
-      <li>Devotional progress (current streak, total devotionals completed, date of last devotional)</li>
-      <li>Reading plan progress</li>
-      <li>Onboarding completion status</li>
-      <li>Pro/Free plan status</li>
+      <li>Devotional progress: current streak, total devotionals completed, and the date of your last devotional</li>
+      <li>Which of the last 60 days you completed a devotional, so the week view can be drawn</li>
+      <li>Whether you have finished onboarding</li>
+      <li>Your Pro or Free status, including whether Pro came from an access code</li>
+      <li>A copy of the devotionals you have already been shown, so the App still works with no signal</li>
     </ul>
-    <p>This on-device data is not transmitted to any external server.</p>
+    <p>None of this is transmitted to us. Deleting the App deletes all of it.</p>
+    <p>During onboarding the App asks for your age range. That answer is used only to choose the wording on the following screen. It is held in memory for that session and is never saved to your device or sent anywhere.</p>
 
-    <h2>Couples Mode (Pro Feature)</h2>
-    <p>If you choose to use Couples Mode, the App connects to a secure server (hosted by Supabase) to enable pairing and shared progress with a partner. When you use Couples Mode, the following data is transmitted and stored on our server:</p>
-    <ul>
-      <li>An anonymous user identifier (no email, phone number, or personal account is created)</li>
-      <li>Couple pairing records (linking two anonymous users)</li>
-      <li>Daily devotional completion records (so your partner can see when you've finished)</li>
-      <li>Nudge records (when one partner sends a reminder to the other)</li>
-      <li>A shared streak counter</li>
-    </ul>
-    <p>This data is associated with an anonymous identifier only. We do not link it to your name, email, or any other personally identifiable information. If you do not use Couples Mode, no data is sent to any server.</p>
+    <h2>Your Anonymous ID</h2>
+    <p>The first time you open DuoFaith, the App creates an anonymous account on our server, which is hosted by Supabase. This happens for everyone, not only people who use Couples Mode, because it is what lets the App fetch each day's devotional, redeem access codes and pair you with a partner if you choose to.</p>
+    <p>An anonymous account is exactly what it sounds like: a randomly generated identifier and nothing else. No email address, phone number, password or name is involved, and we have no way to connect that identifier back to you as a person.</p>
+
+    <h2>Devotional Content</h2>
+    <p>Daily devotionals are written in advance and stored on our server. The App requests them using your anonymous identifier and keeps a local copy of the ones you have already seen so it works offline. These requests carry no name and no personal information. Bible passages are quoted from the World English Bible, a public domain translation.</p>
 
     <h2>Push Notifications</h2>
-    <p>If you enable Couples Mode, the App may register a device token with Apple's Push Notification service to deliver nudge notifications from your partner. This device token is stored on our server and is used solely for delivering notifications. The App also schedules local notifications (reminders and streak alerts) that are handled entirely on your device.</p>
+    <p>On launch, the App registers a device token with Apple's Push Notification service and stores that token on our server against your anonymous identifier. The token is used only to deliver notifications from DuoFaith, such as a nudge from your partner in Couples Mode. It cannot be used to identify you, and it is removed when you delete your account.</p>
+    <p>Reminder and streak notifications are scheduled locally and never leave your device. You can turn notifications off at any time in your device's Settings.</p>
+
+    <h2>Couples Mode (Pro Feature)</h2>
+    <p>If you pair with a partner, the following is stored on our server, all against anonymous identifiers only:</p>
+    <ul>
+      <li>The invite code you generated and its expiry time (codes expire after 24 hours)</li>
+      <li>A couple record linking two anonymous identifiers</li>
+      <li>The date each of you completed a devotional, so your partner can see when you have finished</li>
+      <li>Nudge records: who sent a reminder, to whom, and when</li>
+      <li>A shared streak counter</li>
+    </ul>
+    <p>Your name, your lock time and your app selections are never sent to your partner or to us. Your partner sees only whether you have completed today's devotional and the streak the two of you share.</p>
 
     <h2>Screen Time and Family Controls</h2>
-    <p>DuoFaith uses Apple's Screen Time API (Family Controls / Managed Settings) to shield selected apps until you complete your daily devotional. The App requests your authorization to use these system frameworks. App-shielding selections are handled entirely by Apple's on-device APIs — we never see or transmit which apps you choose to shield.</p>
+    <p>DuoFaith uses Apple's Screen Time API (Family Controls and Managed Settings) to shield selected apps until you complete your daily devotional. Your app selections are handled entirely inside Apple's on-device frameworks, which are deliberately designed so that the App is never told which apps you picked. We never see, store or transmit that list. You can revoke Screen Time authorization at any time in your device's Settings.</p>
 
     <h2>Subscriptions</h2>
-    <p>DuoFaith uses RevenueCat to manage in-app subscriptions. RevenueCat processes your subscription status through Apple's App Store and may receive an anonymous app user identifier to manage entitlements. RevenueCat does not receive your name or any other personal information from DuoFaith. For more information, see <a href="https://www.revenuecat.com/privacy">RevenueCat's Privacy Policy</a>.</p>
+    <p>DuoFaith uses RevenueCat to manage in-app subscriptions. RevenueCat receives an anonymous app user identifier and your subscription status from Apple's App Store. It does not receive your name or any other personal information from DuoFaith. For more information, see <a href="https://www.revenuecat.com/privacy">RevenueCat's Privacy Policy</a>.</p>
 
-    <h2>Bible Passages</h2>
-    <p>The App may fetch Bible passages from a third-party API (bible-api.com) to display daily devotional content. These requests do not include any personal or identifying information. If the service is unavailable, the App uses built-in devotional content instead.</p>
+    <h2>Advertising Measurement</h2>
+    <p>If you installed DuoFaith after tapping one of our adverts in the App Store, the App passes Apple's AdServices attribution token to RevenueCat. This tells us which advert or search term led to the install, so we can see which adverts are worth paying for.</p>
+    <p>This is first-party measurement of our own adverts on Apple's platform, provided by Apple. It does not follow you across other companies' apps or websites, it is not shared with any advertising network, and no advert is ever shown inside DuoFaith. It is also why the App does not show an App Tracking Transparency prompt: it is not tracking as Apple defines it.</p>
+
+    <h2>Access Codes</h2>
+    <p>If you redeem an access code to unlock Pro, the redemption is recorded on our server against your anonymous identifier so that the same code cannot be used twice. The App also notes locally that your Pro access came from a code, so it still works offline. Nothing else is collected when you redeem.</p>
 
     <h2>Data We Do NOT Collect</h2>
     <p>DuoFaith does not:</p>
     <ul>
-      <li>Require you to create an account with an email, phone number, or password</li>
-      <li>Use analytics, tracking, or advertising SDKs</li>
-      <li>Collect location data</li>
-      <li>Share or sell data with third parties for advertising or marketing</li>
-      <li>Use cookies or web-based tracking</li>
-      <li>Track which apps you choose to shield</li>
+      <li>Ask you to create an account with an email address, phone number or password</li>
+      <li>Use third-party analytics SDKs</li>
+      <li>Contain adverts or any advertising network SDK</li>
+      <li>Track you across other companies' apps or websites</li>
+      <li>Collect your location</li>
+      <li>Sell or share your data with third parties for advertising or marketing</li>
+      <li>Use cookies or web tracking inside the App</li>
+      <li>See or record which apps you choose to shield</li>
+      <li>Store the age range you give during onboarding</li>
     </ul>
 
+    <h2>Where Your Data Is Stored</h2>
+    <p>Server-side data is held by Supabase, our hosting provider, and by RevenueCat for subscription status. Both act as processors on our behalf and neither is given your name or contact details. Depending on where you live, this may mean your anonymous identifier is stored outside your own country.</p>
+
     <h2>Data Retention and Deletion</h2>
-    <p>On-device data is stored for as long as the App is installed. You can delete your on-device progress at any time using the "Reset Progress" option in Settings. To delete all local data, uninstall the App.</p>
-    <p>If you have used Couples Mode, you can unpair from your partner within the App, which removes the active couple relationship. You can also delete your account entirely from Settings, which removes all server-side data associated with your anonymous identifier, including completion records, nudge history, and device tokens.</p>
+    <p>On-device data is kept for as long as the App is installed. You can clear your progress at any time with "Reset Progress" in Settings, and deleting the App removes everything stored locally.</p>
+    <p>On the server, you can unpair from your partner in Settings, which ends the couple relationship. You can also delete your account from Settings, which removes everything held against your anonymous identifier: the account itself, completion records, nudge history, invite codes and your device token.</p>
+    <p>Because the identifier is anonymous, we cannot recover any of it afterwards, and we cannot look your account up for you by name or email address. That is a deliberate trade: it is the same property that stops us from building a profile of you.</p>
 
     <h2>Children's Privacy</h2>
-    <p>DuoFaith does not knowingly collect personal information from children under 13. The App's Couples Mode uses anonymous authentication and does not require any information typically associated with children's privacy concerns (no email, no real name transmitted, no location).</p>
+    <p>DuoFaith is not directed at children under 13, and we do not knowingly collect personal information from them. The App requires no email address, no real name and no location, and the name entered during onboarding is never transmitted. If you believe a child has provided us with personal information, contact us and we will remove it.</p>
 
     <h2>Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after changes constitutes acceptance of the revised policy.</p>
+    <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. Continued use of the App after a change constitutes acceptance of the revised policy.</p>
 
     <h2>Contact Us</h2>
     <p>If you have questions about this Privacy Policy, contact us at:<br>
