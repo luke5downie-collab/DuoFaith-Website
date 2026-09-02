@@ -1,949 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DuoFaith - Scripture before scrolling.</title>
-  <meta name="description" content="A Christian app blocker for iPhone. DuoFaith locks your distracting apps until you finish a short daily Bible devotional, on your own or with your partner.">
-  <meta name="theme-color" content="#040404">
-  <link rel="icon" type="image/png" href="icon-128.png">
-  <link rel="apple-touch-icon" href="icon-512.png">
-  <link rel="canonical" href="https://duofaith.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bible App Blocker for iPhone &amp; Couples | DuoFaith</title>
+<meta name="description" content="DuoFaith is a Bible app blocker for iPhone. Apps stay locked until you finish a 2-minute devotional, solo or as a couple. Free to download, free trial.">
+<link rel="canonical" href="https://duofaith.com/">
+<meta name="theme-color" content="#040404">
+<link rel="icon" type="image/png" href="/icon-128.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" as="image" href="/img/app/locked.jpg" imagesrcset="/img/app/locked-sm.jpg 414w, /img/app/locked.jpg 828w" imagesizes="(max-width: 880px) 300px, 360px">
+<link rel="stylesheet" href="/site.css">
+<script>document.documentElement.className+=' js';</script>
+<meta property="og:title" content="Bible App Blocker for iPhone &amp; Couples | DuoFaith">
+<meta property="og:description" content="DuoFaith locks your distracting apps until you've spent time in the Word. Alone, or with the person you love.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://duofaith.com/">
+<meta property="og:site_name" content="DuoFaith">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://duofaith.com/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DuoFaith: your apps stay locked until you read.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bible App Blocker for iPhone &amp; Couples | DuoFaith">
+<meta name="twitter:description" content="DuoFaith locks your distracting apps until you've spent time in the Word. Alone, or with the person you love.">
+<meta name="twitter:image" content="https://duofaith.com/og-card.jpg">
+<meta name="apple-itunes-app" content="app-id=6792354251">
 
-  <meta property="og:title" content="DuoFaith - Scripture before scrolling.">
-  <meta property="og:description" content="DuoFaith locks your distracting apps until you've spent time in the Word. Alone, or with the person you love.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://duofaith.com/">
-  <meta property="og:site_name" content="DuoFaith">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://duofaith.com/og-card.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="DuoFaith: your apps stay locked until you read.">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DuoFaith - Scripture before scrolling.">
-  <meta name="twitter:description" content="DuoFaith locks your distracting apps until you've spent time in the Word. Alone, or with the person you love.">
-  <meta name="twitter:image" content="https://duofaith.com/og-card.jpg">
-
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #040404;
-      --white: #ffffff;
-      --dim: rgba(255,255,255,0.62);
-      --faint: rgba(255,255,255,0.38);
-      --line: rgba(255,255,255,0.10);
-      --line-soft: rgba(255,255,255,0.06);
-      --card: rgba(255,255,255,0.035);
-      --gold: #E0B450;
-      --violet: #7C5CFF;
-      --rose: #E0685A;
-
-      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      --max: 1180px;
-      --pad: 2rem;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-      background: var(--bg);
-    }
-
-    body {
-      font-family: var(--font);
-      background: transparent;
-      color: var(--white);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* ─────────────  GLOBAL STARFIELD  ─────────────
-       Two parallax layers fixed behind the whole page. */
-    .starfield {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    /* Two composited layers, each only slightly larger than the viewport.
-       They drift a short distance on transform and ease back, which is
-       GPU-only: no repaint per frame, and no oversized backing texture.
-       At these speeds the reversal is imperceptible. */
-    .star-layer {
-      position: absolute;
-      inset: -90px;
-      display: block;
-      background-repeat: repeat;
-    }
-
-    /* Deep layer: mid-size and far motes together, slow */
-    .sl-deep {
-      opacity: 0.38;
-      background-size: 660px 660px, 940px 940px;
-      animation: drift-deep 96s ease-in-out infinite alternate;
-      background-image:
-        /* mid */
-        radial-gradient(1.8px 1.8px at 22% 11%, rgba(214,206,255,0.85), transparent),
-        radial-gradient(1px 1px     at 58% 26%, rgba(255,255,255,0.6),  transparent),
-        radial-gradient(1.4px 1.4px at 84% 14%, rgba(255,241,214,0.7),  transparent),
-        radial-gradient(1px 1px     at 35% 52%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(2px 2px     at 68% 58%, rgba(214,206,255,0.75), transparent),
-        radial-gradient(1px 1px     at 9%  74%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(1.5px 1.5px at 46% 82%, rgba(255,241,214,0.6),  transparent),
-        radial-gradient(1px 1px     at 79% 93%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.3px 1.3px at 96% 68%, rgba(255,255,255,0.55), transparent),
-        radial-gradient(1px 1px     at 15% 36%, rgba(255,255,255,0.45), transparent),
-        /* far */
-        radial-gradient(3px 3px     at 17% 29%, rgba(124,92,255,0.55),  transparent),
-        radial-gradient(2.4px 2.4px at 62% 12%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(3.4px 3.4px at 88% 41%, rgba(224,180,80,0.42),  transparent),
-        radial-gradient(2px 2px     at 31% 63%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(3px 3px     at 73% 77%, rgba(124,92,255,0.45),  transparent),
-        radial-gradient(2.2px 2.2px at 8%  89%, rgba(255,255,255,0.4),  transparent),
-        radial-gradient(2.6px 2.6px at 51% 46%, rgba(255,241,214,0.4),  transparent),
-        radial-gradient(2px 2px     at 94% 87%, rgba(255,255,255,0.35), transparent);
-    }
-
-    /* Near layer: brightest, smallest tile, moves further and faster */
-    .sl-near {
-      opacity: 0.55;
-      background-size: 420px 420px;
-      animation: drift-near 58s ease-in-out infinite alternate,
-                 twinkle 9s ease-in-out infinite;
-      background-image:
-        radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,0.95), transparent),
-        radial-gradient(1.2px 1.2px at 47% 8%,  rgba(255,255,255,0.8),  transparent),
-        radial-gradient(1px 1px     at 78% 22%, rgba(255,255,255,0.7),  transparent),
-        radial-gradient(1.4px 1.4px at 92% 47%, rgba(255,255,255,0.85), transparent),
-        radial-gradient(1px 1px     at 63% 38%, rgba(255,255,255,0.6),  transparent),
-        radial-gradient(1.3px 1.3px at 28% 44%, rgba(255,255,255,0.8),  transparent),
-        radial-gradient(1px 1px     at 6%  61%, rgba(255,255,255,0.55), transparent),
-        radial-gradient(1.5px 1.5px at 39% 72%, rgba(255,255,255,0.9),  transparent),
-        radial-gradient(1px 1px     at 71% 66%, rgba(255,255,255,0.6),  transparent),
-        radial-gradient(1.2px 1.2px at 88% 84%, rgba(255,255,255,0.75), transparent),
-        radial-gradient(1px 1px     at 54% 91%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.3px 1.3px at 19% 88%, rgba(255,255,255,0.7),  transparent);
-    }
-
-    @keyframes drift-deep {
-      from { transform: translate3d(-32px, 18px, 0); }
-      to   { transform: translate3d(34px, -20px, 0); }
-    }
-    @keyframes drift-near {
-      from { transform: translate3d(48px, -26px, 0); }
-      to   { transform: translate3d(-50px, 28px, 0); }
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.55; }
-      50%      { opacity: 0.34; }
-    }
-
-    ::selection { background: rgba(224,180,80,0.3); }
-
-    .wrap {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 var(--pad);
-    }
-
-    /* Typography scale: very large, tight, semibold */
-    .display {
-      font-size: clamp(3rem, 8.2vw, 5.1rem);
-      font-weight: 700;
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-    }
-    .h-section {
-      font-size: clamp(2.1rem, 5.4vw, 3.25rem);
-      font-weight: 600;
-      line-height: 1.06;
-      letter-spacing: -0.025em;
-    }
-    .lede {
-      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-      line-height: 1.55;
-      color: var(--dim);
-      font-weight: 400;
-    }
-    .eyebrow {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--faint);
-    }
-
-    /* ─────────────  NAV  ───────────── */
-    .nav {
-      position: fixed;
-      top: 1.1rem; left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      width: calc(100% - 2rem);
-      max-width: 1240px;
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.55rem 0.55rem 0.55rem 1.35rem;
-      border-radius: 100px;
-      background: rgba(18,18,20,0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--line);
-      transition: background .3s ease;
-    }
-    body.scrolled .nav-inner { background: rgba(10,10,12,0.82); }
-
-    .brand {
-      display: flex; align-items: center; gap: 0.6rem;
-      text-decoration: none; color: var(--white);
-      flex-shrink: 0;
-    }
-    .brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
-    .brand span {
-      font-size: 1.12rem; font-weight: 700; letter-spacing: -0.02em;
-    }
-
-    .nav-links {
-      display: flex; align-items: center; gap: 2.1rem;
-    }
-    .nav-links a {
-      font-size: 0.92rem; font-weight: 500;
-      color: rgba(255,255,255,0.78);
-      text-decoration: none;
-      transition: color .2s;
-      white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--white); }
-
-    .nav-cta {
-      background: var(--white);
-      color: #050505;
-      padding: 0.72rem 1.5rem;
-      border-radius: 100px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: transform .18s ease, box-shadow .25s ease;
-      flex-shrink: 0;
-    }
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 26px rgba(255,255,255,0.18);
-    }
-
-    /* Mobile menu toggle */
-    .nav-toggle {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 42px; height: 42px;
-      flex-shrink: 0;
-      margin-left: auto;
-      background: none;
-      border: 1px solid var(--line);
-      border-radius: 100px;
-      cursor: pointer;
-      padding: 0;
-    }
-    .nav-toggle .bars {
-      position: relative;
-      width: 17px; height: 12px;
-    }
-    .nav-toggle .bars span {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 1.8px;
-      border-radius: 2px;
-      background: var(--white);
-      transition: transform .3s ease, opacity .2s ease;
-    }
-    .nav-toggle .bars span:nth-child(1) { top: 0; }
-    .nav-toggle .bars span:nth-child(2) { top: 5.1px; }
-    .nav-toggle .bars span:nth-child(3) { top: 10.2px; }
-    body.menu-open .nav-toggle .bars span:nth-child(1) { transform: translateY(5.1px) rotate(45deg); }
-    body.menu-open .nav-toggle .bars span:nth-child(2) { opacity: 0; }
-    body.menu-open .nav-toggle .bars span:nth-child(3) { transform: translateY(-5.1px) rotate(-45deg); }
-
-    /* Mobile menu panel */
-    .nav-menu {
-      margin-top: 0.6rem;
-      border-radius: 26px;
-      background: rgba(10,10,12,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--line);
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      pointer-events: none;
-      transition: max-height .38s ease, opacity .25s ease;
-    }
-    body.menu-open .nav-menu {
-      max-height: 420px;
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .nav-menu ul { list-style: none; padding: 0.6rem 0; }
-    .nav-menu a {
-      display: block;
-      padding: 0.95rem 1.5rem;
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.82);
-      text-decoration: none;
-      transition: color .2s, background .2s;
-    }
-    .nav-menu a:hover,
-    .nav-menu a:focus-visible { color: var(--white); background: rgba(255,255,255,0.05); }
-
-    /* ─────────────  HERO  ───────────── */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 9rem 0 5rem;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    /* Cinematic layered backdrop */
-    .hero-bg {
-      position: absolute; inset: 0; z-index: -2;
-      background:
-        radial-gradient(ellipse 90% 55% at 50% -8%,  rgba(124,92,255,0.30), transparent 70%),
-        radial-gradient(ellipse 70% 45% at 12% 22%,  rgba(70,40,140,0.34),  transparent 72%),
-        radial-gradient(ellipse 70% 45% at 88% 30%,  rgba(45,27,94,0.42),   transparent 72%),
-        radial-gradient(ellipse 110% 60% at 50% 108%, rgba(224,180,80,0.22), transparent 70%),
-        linear-gradient(180deg, #0a0715 0%, #070510 45%, var(--bg) 100%);
-    }
-    /* Hero starfield: denser and brighter than the global one.
-       Container clips; the two layers inside drift on transform. */
-    .hero-stars {
-      position: absolute; inset: 0; z-index: -1;
-      overflow: hidden;
-    }
-    .hero-stars::before,
-    .hero-stars::after {
-      content: '';
-      position: absolute;
-      inset: -90px;
-      background-repeat: repeat;
-    }
-    .hero-stars::before {
-      opacity: 0.9;
-      background-size: 500px 500px;
-      animation: drift 52s ease-in-out infinite alternate;
-      background-image:
-        radial-gradient(1.6px 1.6px at 8%  14%, rgba(255,255,255,0.95), transparent),
-        radial-gradient(1px 1px     at 21% 5%,  rgba(255,255,255,0.6),  transparent),
-        radial-gradient(1.3px 1.3px at 34% 19%, rgba(255,255,255,0.8),  transparent),
-        radial-gradient(1px 1px     at 47% 9%,  rgba(255,255,255,0.55), transparent),
-        radial-gradient(1.8px 1.8px at 61% 16%, rgba(255,255,255,1),    transparent),
-        radial-gradient(1px 1px     at 74% 6%,  rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.4px 1.4px at 88% 21%, rgba(255,255,255,0.85), transparent),
-        radial-gradient(1px 1px     at 4%  33%, rgba(255,255,255,0.55), transparent),
-        radial-gradient(1.5px 1.5px at 27% 38%, rgba(255,255,255,0.9),  transparent),
-        radial-gradient(1px 1px     at 41% 30%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.2px 1.2px at 56% 43%, rgba(255,255,255,0.75), transparent),
-        radial-gradient(1.7px 1.7px at 69% 34%, rgba(255,255,255,0.95), transparent),
-        radial-gradient(1px 1px     at 83% 41%, rgba(255,255,255,0.55), transparent),
-        radial-gradient(1.3px 1.3px at 96% 31%, rgba(255,255,255,0.8),  transparent),
-        radial-gradient(1px 1px     at 13% 55%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.6px 1.6px at 31% 62%, rgba(255,255,255,0.9),  transparent),
-        radial-gradient(1px 1px     at 45% 51%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(1.4px 1.4px at 59% 68%, rgba(255,255,255,0.8),  transparent),
-        radial-gradient(1px 1px     at 76% 57%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.5px 1.5px at 91% 66%, rgba(255,255,255,0.85), transparent),
-        radial-gradient(1px 1px     at 6%  79%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(1.3px 1.3px at 24% 87%, rgba(255,255,255,0.75), transparent),
-        radial-gradient(1px 1px     at 38% 76%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(1.6px 1.6px at 52% 93%, rgba(255,255,255,0.85), transparent),
-        radial-gradient(1px 1px     at 67% 81%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(1.2px 1.2px at 81% 90%, rgba(255,255,255,0.7),  transparent),
-        radial-gradient(1px 1px     at 97% 78%, rgba(255,255,255,0.45), transparent);
-    }
-    /* Second hero layer at a different scale for parallax depth */
-    .hero-stars::after {
-      background-size: 810px 810px;
-      opacity: 0.7;
-      animation: drift-slow 88s ease-in-out infinite alternate;
-      background-image:
-        radial-gradient(2.4px 2.4px at 16% 23%, rgba(214,206,255,0.8),  transparent),
-        radial-gradient(1.8px 1.8px at 43% 12%, rgba(255,241,214,0.7),  transparent),
-        radial-gradient(2.8px 2.8px at 72% 29%, rgba(255,255,255,0.65), transparent),
-        radial-gradient(2px 2px     at 89% 9%,  rgba(214,206,255,0.6),  transparent),
-        radial-gradient(2.6px 2.6px at 29% 49%, rgba(255,255,255,0.6),  transparent),
-        radial-gradient(1.9px 1.9px at 58% 61%, rgba(255,241,214,0.55), transparent),
-        radial-gradient(2.9px 2.9px at 84% 72%, rgba(124,92,255,0.6),   transparent),
-        radial-gradient(2.1px 2.1px at 11% 84%, rgba(255,255,255,0.5),  transparent),
-        radial-gradient(2.4px 2.4px at 48% 88%, rgba(214,206,255,0.5),  transparent);
-    }
-    @keyframes drift {
-      from { transform: translate3d(-52px, 28px, 0); }
-      to   { transform: translate3d(54px, -30px, 0); }
-    }
-    @keyframes drift-slow {
-      from { transform: translate3d(38px, -22px, 0); }
-      to   { transform: translate3d(-40px, 24px, 0); }
-    }
-    /* Vignette + fade into page */
-    .hero::after {
-      content: '';
-      position: absolute; inset: 0; z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 78% 62% at 50% 45%, transparent 30%, rgba(0,0,0,0.55) 100%),
-        linear-gradient(180deg, transparent 55%, var(--bg) 100%);
-    }
-
-    .hero .display { max-width: 15ch; margin: 0 auto; }
-    .hero .lede {
-      max-width: 34rem;
-      margin: 1.6rem auto 0;
-    }
-
-    .store-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      margin-top: 2.4rem;
-    }
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.7rem;
-      background: var(--white);
-      color: #050505;
-      padding: 0.72rem 1.4rem;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: transform .18s ease, box-shadow .25s ease;
-    }
-    .store-badge:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 34px rgba(0,0,0,0.55);
-    }
-    .store-badge svg { width: 26px; height: 26px; fill: #050505; flex-shrink: 0; }
-    .store-badge .sb-text { text-align: left; line-height: 1.15; }
-    .store-badge .sb-small {
-      display: block;
-      font-size: 0.63rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      opacity: 0.75;
-    }
-    .store-badge .sb-big {
-      display: block;
-      font-size: 1.06rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-
-    .hero-note {
-      margin-top: 1.6rem;
-      font-size: 0.87rem;
-      color: var(--faint);
-    }
-
-    /* Scroll cue */
-    .scroll-cue {
-      position: absolute;
-      bottom: 2.2rem; left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.28);
-      animation: bob 2.6s ease-in-out infinite;
-    }
-    @keyframes bob {
-      0%,100% { transform: translate(-50%, 0); opacity: .45; }
-      50%     { transform: translate(-50%, 6px); opacity: .9; }
-    }
-
-    /* ─────────────  STATEMENT  ───────────── */
-    .statement {
-      padding: 10rem 0 8rem;
-      text-align: center;
-    }
-    .statement p {
-      max-width: 21ch;
-      margin: 0 auto;
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      font-weight: 600;
-      line-height: 1.14;
-      letter-spacing: -0.025em;
-    }
-    .statement p .muted { color: rgba(255,255,255,0.32); }
-    .statement .sub {
-      margin: 2rem auto 0;
-      max-width: 36rem;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: var(--dim);
-    }
-
-    /* ─────────────  FEATURE BLOCKS  ───────────── */
-    .feature {
-      padding: 6.5rem 0;
-      overflow: hidden;
-    }
-    .feature-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 4.5rem;
-    }
-    .feature.reverse .feature-copy { order: 2; }
-    .feature.reverse .feature-media { order: 1; }
-
-    .feature-copy .eyebrow { margin-bottom: 1.1rem; display: block; }
-    .feature-copy .h-section { margin-bottom: 1.2rem; }
-    .feature-copy p {
-      font-size: 1.06rem;
-      line-height: 1.65;
-      color: var(--dim);
-      max-width: 30rem;
-    }
-    .feature-points {
-      list-style: none;
-      margin-top: 1.8rem;
-      display: grid;
-      gap: 0.75rem;
-    }
-    .feature-points li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-      font-size: 0.97rem;
-      color: rgba(255,255,255,0.72);
-      line-height: 1.5;
-    }
-    .feature-points svg {
-      width: 18px; height: 18px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      fill: currentColor;
-      opacity: 0.9;
-    }
-
-    /* Glowing phone */
-    .feature-media {
-      position: relative;
-      display: flex;
-      justify-content: center;
-    }
-    .glow {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 150%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      opacity: 1;
-      z-index: 0;
-      pointer-events: none;
-      /* No filter: blur() here on purpose. A multi-stop radial gradient
-         gives the same soft falloff without an offscreen blur pass. */
-    }
-    .glow-gold {
-      background: radial-gradient(circle,
-        rgba(224,180,80,0.62) 0%,  rgba(224,180,80,0.50) 12%, rgba(224,180,80,0.34) 24%,
-        rgba(224,180,80,0.19) 36%, rgba(224,180,80,0.09) 48%, rgba(224,180,80,0.03) 60%, transparent 72%);
-    }
-    .glow-violet {
-      background: radial-gradient(circle,
-        rgba(124,92,255,0.60) 0%,  rgba(124,92,255,0.48) 12%, rgba(124,92,255,0.33) 24%,
-        rgba(124,92,255,0.18) 36%, rgba(124,92,255,0.09) 48%, rgba(124,92,255,0.03) 60%, transparent 72%);
-    }
-    .glow-rose {
-      background: radial-gradient(circle,
-        rgba(224,104,90,0.56) 0%,  rgba(224,104,90,0.45) 12%, rgba(224,104,90,0.30) 24%,
-        rgba(224,104,90,0.17) 36%, rgba(224,104,90,0.08) 48%, rgba(224,104,90,0.03) 60%, transparent 72%);
-    }
-    .glow-ice {
-      background: radial-gradient(circle,
-        rgba(120,170,255,0.56) 0%, rgba(120,170,255,0.45) 12%, rgba(120,170,255,0.30) 24%,
-        rgba(120,170,255,0.17) 36%, rgba(120,170,255,0.08) 48%, rgba(120,170,255,0.03) 60%, transparent 72%);
-    }
-
-    /* iPhone frame */
-    .phone {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 288px;
-      background: #0b0b0d;
-      border-radius: 46px;
-      padding: 9px;
-      box-shadow:
-        0 0 0 1.5px rgba(255,255,255,0.14),
-        0 34px 80px rgba(0,0,0,0.7),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
-    }
-    .phone-screen {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 852 / 1846; /* full-bleed app screenshot */
-      border-radius: 38px;
-      overflow: hidden;
-      background: #1b1230;
-    }
-    .phone-screen img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-    .phone-island {
-      position: absolute;
-      top: 10px; left: 50%;
-      transform: translateX(-50%);
-      width: 33%;
-      height: 26px;
-      background: #000;
-      border-radius: 100px;
-      z-index: 2;
-    }
-
-    /* ─────────────  AVAILABILITY  ───────────── */
-    .availability {
-      padding: 8rem 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .availability::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 130%;
-      height: 100%;
-      background: radial-gradient(ellipse 50% 55% at 50% 40%, rgba(124,92,255,0.20), transparent 70%);
-      pointer-events: none;
-    }
-    .availability .wrap { position: relative; }
-    .availability .lede {
-      max-width: 38rem;
-      margin: 1.4rem auto 0;
-    }
-    .availability .store-row { margin-top: 2.4rem; }
-
-    .device-cluster {
-      margin-top: 4.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 1.4rem;
-    }
-    .device-cluster .phone { max-width: 230px; }
-    .device-cluster .phone:nth-child(1),
-    .device-cluster .phone:nth-child(3) {
-      max-width: 196px;
-      opacity: 0.62;
-      margin-bottom: 2.2rem;
-    }
-
-    /* ─────────────  PRICING  ───────────── */
-    .pricing { padding: 8rem 0; }
-    .section-head { text-align: center; margin-bottom: 3.5rem; }
-    .section-head .lede { max-width: 36rem; margin: 1.1rem auto 0; }
-
-    .price-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 1.4rem;
-      max-width: 840px;
-      margin: 0 auto;
-    }
-    .price-card {
-      position: relative;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 2.4rem 2rem;
-      display: flex;
-      flex-direction: column;
-    }
-    .price-card.featured {
-      border-color: rgba(224,180,80,0.42);
-      background:
-        radial-gradient(ellipse 120% 60% at 50% 0%, rgba(224,180,80,0.10), transparent 70%),
-        var(--card);
-    }
-    .price-flag {
-      position: absolute;
-      top: -0.7rem; left: 2rem;
-      background: var(--gold);
-      color: #120d02;
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.8rem;
-      border-radius: 100px;
-    }
-    .price-card .tier {
-      font-size: 0.76rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 0.9rem;
-    }
-    .price-card.featured .tier { color: var(--gold); }
-    .price-card .amount {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      line-height: 1;
-    }
-    .price-card .amount .per {
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 0;
-      color: var(--faint);
-    }
-    .price-card .desc {
-      margin-top: 0.6rem;
-      font-size: 0.9rem;
-      color: var(--faint);
-      margin-bottom: 1.9rem;
-    }
-    .price-list {
-      list-style: none;
-      display: grid;
-      gap: 0.7rem;
-      margin-bottom: 2.2rem;
-    }
-    .price-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.74);
-      line-height: 1.45;
-    }
-    .price-list svg {
-      width: 17px; height: 17px;
-      flex-shrink: 0; margin-top: 2px;
-      fill: var(--gold);
-    }
-    .price-btn {
-      margin-top: auto;
-      display: block;
-      text-align: center;
-      padding: 0.95rem;
-      border-radius: 100px;
-      font-size: 0.97rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform .18s ease, background .2s, box-shadow .25s;
-    }
-    .price-btn.ghost {
-      border: 1px solid var(--line);
-      color: var(--white);
-    }
-    .price-btn.ghost:hover { background: rgba(255,255,255,0.06); }
-    .price-btn.solid {
-      background: var(--white);
-      color: #050505;
-    }
-    .price-btn.solid:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(255,255,255,0.16);
-    }
-
-    /* ─────────────  FAQ  ───────────── */
-    .faq { padding: 8rem 0; }
-    .faq-list { max-width: 760px; margin: 0 auto; }
-    .faq-item { border-bottom: 1px solid var(--line-soft); }
-    .faq-item:first-child { border-top: 1px solid var(--line-soft); }
-    .faq-q {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 1.6rem 0;
-      background: none;
-      border: none;
-      color: var(--white);
-      font-family: inherit;
-      font-size: 1.08rem;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      text-align: left;
-      cursor: pointer;
-    }
-    .faq-q .plus {
-      position: relative;
-      width: 18px; height: 18px;
-      flex-shrink: 0;
-      transition: transform .3s ease;
-    }
-    .faq-q .plus::before,
-    .faq-q .plus::after {
-      content: '';
-      position: absolute;
-      background: var(--faint);
-      border-radius: 2px;
-      transition: background .2s;
-    }
-    .faq-q .plus::before { top: 8px; left: 0; width: 18px; height: 2px; }
-    .faq-q .plus::after  { left: 8px; top: 0; width: 2px; height: 18px; }
-    .faq-item.open .faq-q .plus { transform: rotate(135deg); }
-    .faq-item.open .faq-q .plus::before,
-    .faq-item.open .faq-q .plus::after { background: var(--gold); }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .38s ease;
-    }
-    .faq-item.open .faq-a { max-height: 420px; }
-    .faq-a p {
-      padding-bottom: 1.7rem;
-      font-size: 1rem;
-      line-height: 1.65;
-      color: var(--dim);
-      max-width: 60ch;
-    }
-
-    /* ─────────────  CLOSING CTA  ───────────── */
-    .closer {
-      position: relative;
-      padding: 11rem 0 10rem;
-      text-align: center;
-      overflow: hidden;
-    }
-    .closer::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 60% at 50% 100%, rgba(224,180,80,0.28), transparent 70%),
-        radial-gradient(ellipse 70% 55% at 50% 10%,  rgba(124,92,255,0.20), transparent 70%);
-      pointer-events: none;
-    }
-    .closer .wrap { position: relative; }
-    .closer .display { max-width: 16ch; margin: 0 auto; }
-    .closer .lede { max-width: 32rem; margin: 1.5rem auto 0; }
-
-    /* ─────────────  FOOTER  ───────────── */
-    footer {
-      border-top: 1px solid var(--line-soft);
-      padding: 4.5rem 0 2.5rem;
-    }
-    .foot-grid {
-      display: grid;
-      grid-template-columns: 1.6fr repeat(3, 1fr);
-      gap: 3rem;
-      margin-bottom: 4rem;
-    }
-    .foot-brand .brand { margin-bottom: 1rem; }
-    .foot-brand p {
-      font-size: 0.92rem;
-      line-height: 1.6;
-      color: var(--faint);
-      max-width: 26ch;
-    }
-    .foot-col h4 {
-      font-size: 0.76rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 1.15rem;
-    }
-    .foot-col ul { list-style: none; display: grid; gap: 0.75rem; }
-    .foot-col a {
-      font-size: 0.93rem;
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      transition: color .2s;
-    }
-    .foot-col a:hover { color: var(--white); }
-
-    .foot-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding-top: 2rem;
-      border-top: 1px solid var(--line-soft);
-      font-size: 0.85rem;
-      color: var(--faint);
-    }
-    .foot-social { display: flex; gap: 1.3rem; }
-    .foot-social a { color: var(--faint); transition: color .2s; display: inline-flex; }
-    .foot-social a:hover { color: var(--white); }
-    .foot-social svg { width: 19px; height: 19px; fill: currentColor; }
-
-    /* ─────────────  REVEAL  ───────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
-    }
-    .reveal.in { opacity: 1; transform: none; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .hero-stars::before, .hero-stars::after, .star-layer, .scroll-cue { animation: none; }
-      .hero-stars::before, .hero-stars::after, .star-layer { will-change: auto; }
-      html { scroll-behavior: auto; }
-    }
-
-    /* ─────────────  RESPONSIVE  ───────────── */
-    @media (max-width: 940px) {
-      .nav-links { display: none; }
-      .nav-toggle { display: inline-flex; }
-      .feature-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .feature.reverse .feature-copy,
-      .feature.reverse .feature-media { order: initial; }
-      .feature-copy { text-align: center; }
-      .feature-copy p { margin-left: auto; margin-right: auto; }
-      .feature-points { max-width: 26rem; margin-left: auto; margin-right: auto; text-align: left; }
-      .foot-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-      .device-cluster .phone:nth-child(1),
-      .device-cluster .phone:nth-child(3) { display: none; }
-    }
-    @media (max-width: 680px) {
-      :root { --pad: 1.35rem; }
-      .nav { top: 0.7rem; width: calc(100% - 1.4rem); }
-      .nav-inner { padding: 0.5rem 0.5rem 0.5rem 1.1rem; }
-      .nav-cta { padding: 0.65rem 1.2rem; font-size: 0.87rem; }
-      .hero { padding: 8rem 0 6rem; }
-      .statement { padding: 6.5rem 0 5rem; }
-      .feature { padding: 4.5rem 0; }
-      .availability, .pricing, .faq { padding: 5.5rem 0; }
-      .closer { padding: 7rem 0 6rem; }
-      .price-grid { grid-template-columns: 1fr; }
-      .price-card { padding: 2rem 1.6rem; }
-      .foot-grid { grid-template-columns: 1fr; gap: 2.2rem; }
-      .foot-bottom { flex-direction: column; align-items: flex-start; }
-      .phone { max-width: 250px; }
-    }
-  </style>
-
-  <script type="application/ld+json">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -953,22 +38,12 @@
   "email": "duofaithsupport@gmail.com",
   "slogan": "Scripture before scrolling.",
   "description": "DuoFaith makes an iPhone app that locks your distracting apps until you have finished a short daily Bible devotional, on your own or paired with your partner.",
-  "logo": {
-    "@type": "ImageObject",
-    "url": "https://duofaith.com/icon-512.png",
-    "width": 512,
-    "height": 512
-  },
-  "founder": {
-    "@type": "Person",
-    "name": "Luke Downie"
-  },
-  "sameAs": [
-    "https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251"
-  ]
+  "logo": { "@type": "ImageObject", "url": "https://duofaith.com/img/app-icon-1024.png", "width": 1024, "height": 1024 },
+  "founder": { "@type": "Person", "name": "Luke Downie" },
+  "sameAs": [ "https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" ]
 }
-  </script>
-  <script type="application/ld+json">
+</script>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -976,520 +51,376 @@
   "name": "DuoFaith",
   "url": "https://duofaith.com/",
   "inLanguage": "en",
-  "publisher": {
-    "@id": "https://duofaith.com/#organization"
-  }
+  "publisher": { "@id": "https://duofaith.com/#organization" }
 }
-  </script>
-  <script type="application/ld+json">
+</script>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "MobileApplication",
   "@id": "https://duofaith.com/#app",
   "name": "DuoFaith: Bible App Blocker",
-  "operatingSystem": "iOS",
+  "alternateName": "DuoFaith",
+  "operatingSystem": "iOS 26.2 or later",
   "applicationCategory": "LifestyleApplication",
+  "applicationSubCategory": "Christian app blocker",
   "url": "https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251",
   "installUrl": "https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251",
-  "description": "A Christian app blocker for iPhone. DuoFaith locks the apps you choose until you finish a short daily Bible devotional. Duo Lock pairs two phones so neither unlocks until both partners have read.",
-  "publisher": {
-    "@id": "https://duofaith.com/#organization"
-  },
+  "downloadUrl": "https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251",
+  "description": "A Christian app blocker for iPhone. DuoFaith locks the apps you choose each morning until you finish a short daily Bible devotional. Couples Mode pairs two phones so neither unlocks until both partners have read.",
+  "image": "https://duofaith.com/img/app-icon-1024.png",
+  "screenshot": [
+    "https://duofaith.com/img/app/locked.jpg",
+    "https://duofaith.com/img/app/together.jpg",
+    "https://duofaith.com/img/app/reading.jpg",
+    "https://duofaith.com/img/app/reflect.jpg",
+    "https://duofaith.com/img/app/pray.jpg"
+  ],
+  "featureList": [
+    "Locks the apps you choose using Apple Screen Time",
+    "A fresh daily Bible devotional: passage, lesson, one question, prayer",
+    "Set your own daily lock time",
+    "Streak tracking with milestone reminders",
+    "Couples Mode: two phones, neither unlocks until both have read",
+    "Live partner status and one nudge a day"
+  ],
+  "author": { "@type": "Person", "name": "Luke Downie" },
+  "publisher": { "@id": "https://duofaith.com/#organization" },
   "offers": [
-    {
-      "@type": "Offer",
-      "name": "Free",
-      "price": "0",
-      "priceCurrency": "USD",
-      "category": "free"
-    },
-    {
-      "@type": "Offer",
-      "name": "Pro Monthly",
-      "price": "9.99",
-      "priceCurrency": "USD"
-    },
-    {
-      "@type": "Offer",
-      "name": "Pro Yearly",
-      "price": "49.99",
-      "priceCurrency": "USD"
-    }
+    { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD", "category": "free" },
+    { "@type": "Offer", "name": "DuoFaith Pro Monthly", "price": "9.99", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "DuoFaith Pro Yearly", "price": "49.99", "priceCurrency": "USD" }
   ]
 }
-  </script>
+</script>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Is there an app that locks your apps until you read the Bible?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. DuoFaith locks the iPhone apps you choose every morning at a time you set, and keeps them shielded until you finish a short devotional of about two minutes. It uses Apple's own Screen Time controls, so there is no Ignore button. Finish the passage, one reflection question and a prayer, and your apps unlock for the day. Learn more: https://duofaith.com/guides/app-that-locks-apps-until-you-read-the-bible.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does Bible before phone mean?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Bible before phone means you open Scripture before you open anything else on your phone. No messages, no news, no feeds until you have read. Justin Whitmel Earley calls it Scripture before phone in The Common Rule. The idea is that whatever you take in first shapes your whole morning, so you let God speak before the world does. Learn more: https://duofaith.com/guides/bible-before-phone.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I stop scrolling and read the Bible instead?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Do not try to quit scrolling. Replace it. Keep the cue, which is picking up your phone, and swap the routine for one short passage. Keep your apps as the reward afterwards. Make the reading tiny so you can do it on a bad day. If the swap keeps failing, DuoFaith locks the apps you pick until you have read, with no Ignore button. Learn more: https://duofaith.com/guides/read-the-bible-instead-of-scrolling.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can an app really help with phone addiction as a Christian?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, for one specific part of the problem. An app cannot change your heart, and it is not a recovery program. What it can do is remove the 7am argument. DuoFaith keeps the apps you choose locked each morning until you finish a short devotional. There is no Ignore button. You decide once, at night, and the morning follows. Learn more: https://duofaith.com/guides/how-to-stop-phone-addiction-as-a-christian.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is there a screen time app for couples that locks both partners' apps?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. DuoFaith has a Couples Mode that links two iPhones. Each of you picks the apps that distract you and a lock time. Every morning those apps stay locked until you have both finished a short Christian devotional, about two minutes each. Nobody watches anybody. You just see whether your partner has read yet, and you can send one nudge a day. Learn more: https://duofaith.com/guides/screen-time-app-for-couples.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is there a Bible app for long distance couples?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. DuoFaith's Couples Mode links two iPhones anywhere in the world. You both read the same short daily devotional on your own phones, about two minutes each. You can see whether your partner has read today and send one nudge a day. Neither partner's distracting apps unlock until you have both finished. Couples Mode is part of Pro, with a free trial. Learn more: https://duofaith.com/guides/devotional-app-for-long-distance-couples.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is there a Lent challenge couples can do together on their phones?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. The simplest one is a shared fast: for the 40 days of Lent, neither of you opens social media until you have both read Scripture. DuoFaith Couples Mode does the locking for you. Both phones shield the apps you each pick every morning, and neither unlocks until you have both finished a devotional of about two minutes. Couples Mode is part of Pro, which starts with a free trial. Learn more: https://duofaith.com/guides/lent-challenge-for-couples.html"
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is DuoFaith free?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "DuoFaith is free to download from the App Store. Pro is $9.99 a month, which starts with a free trial, or $49.99 a year. You can cancel any time in your Apple ID settings."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What apps does DuoFaith block?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Only the ones you pick. Instagram, TikTok, YouTube, X, games, whatever pulls you in. Calls, texts, Maps and every app you did not choose stay open all morning. You can change the list any time in Settings."
+   }
+  }
+ ]
+}</script>
 </head>
 <body>
-
-  <!-- ══════════  GLOBAL STARFIELD  ══════════ -->
-  <div class="starfield" aria-hidden="true">
-    <span class="star-layer sl-deep"></span>
-    <span class="star-layer sl-near"></span>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="starfield" aria-hidden="true"><span class="star-layer sl-deep"></span><span class="star-layer sl-near"></span></div>
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand"><img src="/img/app-icon-256.png" alt="" width="256" height="256"><span>DuoFaith</span></a>
+    <nav class="nav-links" aria-label="Main"><a href="/#how-it-works">How it works</a><a href="/#screenshots">Screenshots</a><a href="/guides/index.html">Guides</a><a href="/#faq">FAQ</a><a href="/#download">Download</a></nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span class="bars" aria-hidden="true"><span></span><span></span><span></span></span></button>
+    <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="nav-cta" target="_blank" rel="noopener">Get the app</a>
   </div>
+  <div class="nav-menu" id="nav-menu"><ul><li><a href="/#how-it-works">How it works</a></li><li><a href="/#screenshots">Screenshots</a></li><li><a href="/guides/index.html">Guides</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/#download">Download</a></li><li><a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" target="_blank" rel="noopener">Get the app, free</a></li></ul></div>
+</header>
 
-  <!-- ══════════  NAV  ══════════ -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="/" class="brand">
-        <img src="icon-128.png" alt="" width="128" height="128">
-        <span>DuoFaith</span>
-      </a>
-      <nav class="nav-links">
-        <a href="#how">How it works</a>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-        <a href="mailto:duofaithsupport@gmail.com">Support</a>
-      </nav>
-      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
-        <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
-      </button>
-      <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="nav-cta" target="_blank" rel="noopener">Try for free</a>
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">You only meant to check one thing.</span>
+          <h1 class="display">A Bible app blocker that locks your apps<br><span class="gold">until you've read.</span></h1>
+          <p class="lede">Pick the apps that eat your morning: Instagram, TikTok, YouTube, whatever it is for you. DuoFaith is a Bible app blocker for iPhone. It locks those apps at the time you set. They stay locked until you finish a short devotional, about two minutes. Then your day is yours.</p>
+          <ul class="hero-points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Apple Screen Time. No skip button, no early unlock.</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>New passage, one question, one prayer. About two minutes.</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Couples Mode (Pro): neither iPhone unlocks until both read.</span></li></ul>
+          <div class="store-row">
+            <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="store-badge" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.12M14.5 4.6c.71-.87 1.19-2.07 1.06-3.27-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.99-1.08 3.16 1.14.09 2.31-.58 3.02-1.43"/></svg><span class="sb-text"><span class="sb-small">Download on the</span><span class="sb-big">App Store</span></span></a>
+            <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+          </div>
+          <p class="store-note">Free to download. No account, no email, no password.</p>
+        </div>
+        <div class="hero-shot">
+          <div class="device"><img src="/img/app/locked.jpg" srcset="/img/app/locked-sm.jpg 414w, /img/app/locked.jpg 828w" sizes="(max-width: 880px) 300px, 360px" width="828" height="1794" alt="DuoFaith on iPhone: read the Bible to unlock your apps. Your apps are locked until you finish." fetchpriority="high" decoding="async"></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="nav-menu" id="nav-menu">
+  <section class="trust" aria-label="Key facts">
+    <div class="wrap">
       <ul>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="mailto:duofaithsupport@gmail.com">Support</a></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Uses Apple's own Screen Time controls</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>No sign-up, no email, no password</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Calls, texts and Maps are never blocked</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Free daily Scripture, World English Bible</li>
       </ul>
     </div>
-  </header>
-
-  <!-- ══════════  HERO  ══════════ -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-stars"></div>
-    <div class="wrap">
-      <h1 class="display">Scripture before scrolling.</h1>
-      <p class="lede">DuoFaith locks your distracting apps until you've spent time in the Word. On your own, or with the person you love.</p>
-
-      <div class="store-row">
-        <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="store-badge" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.12M14.5 4.6c.71-.87 1.19-2.07 1.06-3.27-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.99-1.08 3.16 1.14.09 2.31-.58 3.02-1.43"/></svg>
-          <span class="sb-text">
-            <span class="sb-small">Download on the</span>
-            <span class="sb-big">App Store</span>
-          </span>
-        </a>
-      </div>
-
-      <p class="hero-note">Free to start. 3-day free trial on Pro. Cancel anytime.</p>
-    </div>
-    <div class="scroll-cue">Scroll</div>
   </section>
 
-  <!-- ══════════  STATEMENT  ══════════ -->
-  <section class="statement">
-    <div class="wrap reveal">
-      <p>You reach for your phone <span class="muted">before you reach for your Bible.</span></p>
-      <p class="sub">Every morning, the same order. DuoFaith flips it. Your apps stay shut until you've read, reflected and prayed, so the first thing you give your attention to is the thing that matters most.</p>
-    </div>
-  </section>
-
-  <!-- ══════════  FEATURE 1 · DAILY DEVOTIONAL  ══════════ -->
-  <section class="feature" id="features">
-    <div class="wrap">
-      <div class="feature-inner">
-        <div class="feature-copy reveal">
-          <span class="eyebrow">Daily Devotional</span>
-          <h2 class="h-section">Ten minutes that set the day</h2>
-          <p>A fresh Bible passage every morning with a short reflection and a written prayer. Read it, sit with it, pray it. Then your day opens up.</p>
-          <ul class="feature-points">
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>A new passage daily, no plan required</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Guided reflection written for real life</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Finishes with prayer, then unlocks</span>
-            </li>
-          </ul>
-        </div>
-        <div class="feature-media reveal">
-          <div class="glow glow-gold"></div>
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="phone-island"></div>
-              <img src="App%20Photos/web/app-passage.jpg" alt="Today’s passage in DuoFaith, Psalm 139" width="640" height="1386" loading="lazy" decoding="async">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════  FEATURE 2 · FAITH LOCK  ══════════ -->
-  <section class="feature reverse" id="how">
-    <div class="wrap">
-      <div class="feature-inner">
-        <div class="feature-copy reveal">
-          <span class="eyebrow">Faith Lock</span>
-          <h2 class="h-section">Your apps stay shut until you're done</h2>
-          <p>Choose exactly what distracts you. Instagram, TikTok, YouTube, the news, the games. DuoFaith holds them closed until the devotional is finished. Not a reminder you can swipe away. A locked door.</p>
-          <ul class="feature-points">
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Block any app on your phone</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Built on Apple Screen Time, so it actually holds</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Set the hours it switches on</span>
-            </li>
-          </ul>
-        </div>
-        <div class="feature-media reveal">
-          <div class="glow glow-rose"></div>
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="phone-island"></div>
-              <img src="App%20Photos/web/app-locked.jpg" alt="DuoFaith holding your apps locked until the reading is finished" width="640" height="1386" loading="lazy" decoding="async">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════  FEATURE 3 · DUO LOCK  ══════════ -->
-  <section class="feature">
-    <div class="wrap">
-      <div class="feature-inner">
-        <div class="feature-copy reveal">
-          <span class="eyebrow">Duo Lock</span>
-          <h2 class="h-section">Neither phone unlocks alone</h2>
-          <p>Pair with your partner and your two phones move together. Neither of you gets your apps back until you've both been in the Word. It takes ten seconds to set up and it changes the whole morning.</p>
-          <ul class="feature-points">
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>See when your partner has finished</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Send a nudge when they haven't</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>One subscription covers you both</span>
-            </li>
-          </ul>
-        </div>
-        <div class="feature-media reveal">
-          <div class="glow glow-violet"></div>
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="phone-island"></div>
-              <img src="App%20Photos/web/app-together.jpg" alt="The Together screen showing you and your partner’s progress" width="640" height="1386" loading="lazy" decoding="async">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════  FEATURE 4 · READING PLANS  ══════════ -->
-  <section class="feature reverse">
-    <div class="wrap">
-      <div class="feature-inner">
-        <div class="feature-copy reveal">
-          <span class="eyebrow">Reading Plans</span>
-          <h2 class="h-section">Pick a journey, not just a verse</h2>
-          <p>When you want direction, choose a plan and let it carry you for a week. Breaking Free, Finding Peace, Who You Are in Christ, The Power of Prayer, Built to Last. Go at your own pace.</p>
-          <ul class="feature-points">
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Seven-day plans built around real struggles</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Pause and pick up where you left off</span>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              <span>Streaks that track every day you show up</span>
-            </li>
-          </ul>
-        </div>
-        <div class="feature-media reveal">
-          <div class="glow glow-ice"></div>
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="phone-island"></div>
-              <img src="App%20Photos/web/app-home.jpg" alt="DuoFaith home screen with the daily streak" width="640" height="1386" loading="lazy" decoding="async">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════  AVAILABILITY  ══════════ -->
-  <section class="availability">
-    <div class="wrap">
-      <div class="reveal">
-        <h2 class="h-section">Available on iPhone</h2>
-        <p class="lede">Better than a reminder you'll ignore. DuoFaith puts the one thing that matters in front of everything else, every single morning.</p>
-        <div class="store-row">
-          <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="store-badge" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.12M14.5 4.6c.71-.87 1.19-2.07 1.06-3.27-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.99-1.08 3.16 1.14.09 2.31-.58 3.02-1.43"/></svg>
-            <span class="sb-text">
-              <span class="sb-small">Download on the</span>
-              <span class="sb-big">App Store</span>
-            </span>
-          </a>
-        </div>
-      </div>
-
-      <div class="device-cluster reveal">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="phone-island"></div>
-            <img src="App%20Photos/web/app-devotional.jpg" alt="" width="640" height="1386" loading="lazy" decoding="async">
-          </div>
-        </div>
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="phone-island"></div>
-            <img src="App%20Photos/web/app-home.jpg" alt="DuoFaith home screen" width="640" height="1386" loading="lazy" decoding="async">
-          </div>
-        </div>
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="phone-island"></div>
-            <img src="App%20Photos/web/app-pray.jpg" alt="" width="640" height="1386" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════  PRICING  ══════════ -->
-  <section class="pricing" id="pricing">
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2 class="h-section">Start free. Stay if it works.</h2>
-        <p class="lede">Pro is free for three days. If it doesn't change your mornings, cancel and keep the free version.</p>
+        <span class="eyebrow">How it works</span>
+        <h2 class="h-section">How the Bible app blocker works</h2>
+        <p class="lede">Set it up once. After that, every morning runs the same way: your apps lock, you read, they open.</p>
       </div>
-
-      <div class="price-grid reveal">
-        <div class="price-card">
-          <p class="tier">Free</p>
-          <p class="amount">$0</p>
-          <p class="desc">Everything you need to start</p>
-          <ul class="price-list">
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>App blocking</span></li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Daily Bible devotional</span></li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Basic streak counter</span></li>
-          </ul>
-          <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="price-btn ghost" target="_blank" rel="noopener">Download free</a>
+      <div class="steps-grid reveal">
+        <div class="step">
+          <span class="num">1</span>
+          <h3>Pick the apps that pull you in</h3>
+          <p>Instagram, TikTok, YouTube, X, games. You choose the list from Apple's own app picker. Anything you do not pick is never touched.</p>
         </div>
-
-        <div class="price-card featured">
-          <span class="price-flag">3-day free trial</span>
-          <p class="tier">Pro</p>
-          <p class="amount">$9.99<span class="per">/mo</span></p>
-          <p class="desc">Or $49.99 a year, about $0.96 a week</p>
-          <ul class="price-list">
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Everything in Free</span></li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Guided prayers and reflections</span></li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Multi-day reading plans</span></li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Duo Lock for couples</span></li>
-            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Smart lock and streak tracking</span></li>
-          </ul>
-          <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="price-btn solid" target="_blank" rel="noopener">Try free for 3 days</a>
+        <div class="step">
+          <span class="num">2</span>
+          <h3>Set your lock time</h3>
+          <p>The default is 8 AM. Every day at that time your chosen apps are shielded. Try to open one and you see a lock screen instead of a feed.</p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3>Read to unlock</h3>
+          <p>Open DuoFaith and read today's devotional: a Bible passage, a short plain-language lesson, one reflection question and a prayer. About two minutes.</p>
+        </div>
+        <div class="step">
+          <span class="num">4</span>
+          <h3>Finish, unlock, keep the streak</h3>
+          <p>Tap Finish and everything opens. Your streak goes up by one. Miss a morning and it resets, so the habit has real weight.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════  FAQ  ══════════ -->
-  <section class="faq" id="faq">
+  <!-- COUPLES -->
+  <section class="feature" id="couples">
+    <div class="wrap">
+      <div class="feature-inner">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">Couples Mode</span>
+          <h2 class="h-section">Couples Mode: neither iPhone unlocks until both have read</h2>
+          <p>Pair two iPhones with an invite code. Both lock each morning, and neither unlocks until you have both finished, so reading first does not free your own apps. You can see whether your partner has read yet and send one gentle nudge a day. It works for married, engaged or dating couples, or any two accountability partners. Couples Mode needs Pro.</p>
+          <ul class="feature-points">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Live status: waiting, partner done, both done</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>One gentle nudge a day, never nagging</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>A shared streak. If one of you skips, it breaks for both</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Married, engaged, dating, or any two accountability partners</span></li>
+          </ul>
+        </div>
+        <div class="feature-media reveal">
+          <div class="device"><img src="/img/app/together.jpg" srcset="/img/app/together-sm.jpg 414w, /img/app/together.jpg 828w" sizes="(max-width: 880px) 280px, 340px" width="828" height="1794" alt="The DuoFaith Together screen: neither of you has read yet today, both partners waiting." loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEVOTIONAL -->
+  <section class="feature reverse" id="devotional">
+    <div class="wrap">
+      <div class="feature-inner">
+        <div class="feature-copy reveal">
+          <span class="eyebrow">The daily devotional</span>
+          <h2 class="h-section">The daily devotional that unlocks your apps</h2>
+          <p>A new one every day: a short passage, a plain lesson, one question to sit with for a moment, and a written prayer. There is nothing to type and nothing is saved. About two minutes, then your apps open.</p>
+          <ul class="feature-points">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Fresh Scripture daily, no plan to fall behind on</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Works offline once the week is loaded</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Two minutes start to finish, then your apps open</span></li>
+          </ul>
+        </div>
+        <div class="feature-media reveal">
+          <div class="device"><img src="/img/app/reflect.jpg" srcset="/img/app/reflect-sm.jpg 414w, /img/app/reflect.jpg 828w" sizes="(max-width: 880px) 280px, 340px" width="828" height="1794" alt="The DuoFaith reflection step: one question and a short pause before you continue." loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section class="section" id="screenshots" style="padding-bottom:3rem">
+    <div class="section-head reveal">
+      <span class="eyebrow">Screenshots</span>
+      <h2 class="h-section">Two minutes, start to finish</h2>
+      <p class="lede">Dark, warm and reverent on purpose. The opposite of a bright, loud feed.</p>
+    </div>
+    <div class="gallery reveal" role="list">
+      <figure role="listitem"><div class="device"><img src="/img/app/locked.jpg" srcset="/img/app/locked-sm.jpg 414w, /img/app/locked.jpg 828w" sizes="(max-width: 1100px) 74vw, 200px" width="828" height="1794" alt="Your apps stay locked until you read. A DuoFaith app screen." loading="lazy" decoding="async"></div><figcaption>Your apps stay locked until you read</figcaption></figure>
+      <figure role="listitem"><div class="device"><img src="/img/app/reading.jpg" srcset="/img/app/reading-sm.jpg 414w, /img/app/reading.jpg 828w" sizes="(max-width: 1100px) 74vw, 200px" width="828" height="1794" alt="Today's passage, in plain English. A DuoFaith app screen." loading="lazy" decoding="async"></div><figcaption>Today's passage, in plain English</figcaption></figure>
+      <figure role="listitem"><div class="device"><img src="/img/app/reflect.jpg" srcset="/img/app/reflect-sm.jpg 414w, /img/app/reflect.jpg 828w" sizes="(max-width: 1100px) 74vw, 200px" width="828" height="1794" alt="One question, every day. A DuoFaith app screen." loading="lazy" decoding="async"></div><figcaption>One question, every day</figcaption></figure>
+      <figure role="listitem"><div class="device"><img src="/img/app/pray.jpg" srcset="/img/app/pray-sm.jpg 414w, /img/app/pray.jpg 828w" sizes="(max-width: 1100px) 74vw, 200px" width="828" height="1794" alt="Finish, then unlock. A DuoFaith app screen." loading="lazy" decoding="async"></div><figcaption>Finish, then unlock</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section class="download" id="download">
+    <div class="wrap">
+      <div class="dl-grid">
+        <div class="dl-copy reveal">
+          <span class="eyebrow">Download</span>
+          <h2 class="h-section">Get DuoFaith on your iPhone</h2>
+          <p class="lede">Free to download from the App Store. Pro is $9.99 a month and starts with a free trial, or $49.99 a year. iPhone only, and there is no account to create.</p>
+          <div class="store-row"><a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="store-badge" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.12M14.5 4.6c.71-.87 1.19-2.07 1.06-3.27-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.99-1.08 3.16 1.14.09 2.31-.58 3.02-1.43"/></svg><span class="sb-text"><span class="sb-small">Download on the</span><span class="sb-big">App Store</span></span></a></div>
+          <p class="store-note">Free to download. Requires an iPhone running iOS 26.2 or later. No Android version yet.</p>
+        </div>
+        <div class="price-grid reveal">
+          <div class="price-card featured">
+            <p class="tier">Monthly, with a free trial</p>
+            <p class="amount">$9.99<span class="per">/month</span></p>
+            <p class="desc">Starts with a free trial. Cancel any time in your Apple ID settings.</p>
+            <ul class="price-list">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Lock the apps you choose, every morning</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>A fresh Bible devotional every day</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Streaks and milestone reminders</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Couples Mode: pair two iPhones, neither unlocks alone</span></li>
+            </ul>
+          </div>
+          <div class="price-card">
+            <p class="tier">Yearly</p>
+            <p class="amount">$49.99<span class="per">/year</span></p>
+            <p class="desc">The same DuoFaith, about $0.96 a week</p>
+            <ul class="price-list">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Everything above</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Best value if the habit sticks</span></li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section class="section" id="guides">
     <div class="wrap">
       <div class="section-head reveal">
+        <span class="eyebrow">Guides</span>
+        <h2 class="h-section">Guides on Christian screen time and app blocking</h2>
+        <p class="lede">Honest answers to the questions people ask before they download, including what Apple&#x27;s built-in Screen Time can already do on its own.</p>
+      </div>
+      <div class="guides-grid reveal">
+        <a class="guide-card" href="/guides/app-that-locks-apps-until-you-read-the-bible.html"><span class="tag">Guide</span><h3>An app that locks your apps until you read the Bible</h3><p>How DuoFaith shields the apps you choose each morning on iPhone, what Apple&#x27;s built-in Screen Time can and cannot do, and how to set it up.</p><span class="more">Read the guide</span></a><a class="guide-card" href="/guides/bible-before-phone.html"><span class="tag">Morning habit guide</span><h3>Bible before phone: the sequence that makes it automatic</h3><p>Why the rule breaks by day three, how to set up Scripture, then prayer, then the phone without any app, and how DuoFaith locks your apps until you have read.</p><span class="more">Read the guide</span></a><a class="guide-card" href="/guides/read-the-bible-instead-of-scrolling.html"><span class="tag">Habit guide</span><h3>Read the Bible instead of scrolling</h3><p>Why willpower keeps losing to the feed, the same-cue swap that works at any time of day, and what to do when the swap keeps failing.</p><span class="more">Read the guide</span></a>
+      </div>
+      <p style="text-align:center;margin-top:2rem"><a class="btn btn-ghost" href="/guides/index.html">Browse all guides</a></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
         <h2 class="h-section">Questions, answered</h2>
       </div>
       <div class="faq-list reveal">
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            What actually gets blocked?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>Only the apps you choose. Instagram, TikTok, YouTube, games, whatever pulls you in. Calls, texts, Maps and everything you didn't pick stay open all morning.</p></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            How long does the devotional take?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>A few minutes. A short passage, a reflection on it, one question to sit with and a prayer. Then your apps open.</p></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            Can't I just delete the app to unlock everything?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>Yes, and that's on purpose. DuoFaith is a commitment you make, not a cage. It removes the reflex to scroll first thing. It doesn't take the choice away from you.</p></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            What happens if I skip a morning?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>Your apps stay shut until you read. Nothing is deleted and nothing is lost, but your streak goes back to zero and you start building it again.</p></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            Which Bible translation do you use?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>The World English Bible. It's a modern, plain-English translation that's free for anyone to use, so every passage is available to you at no cost.</p></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            Do I need a partner to use it?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>No. Reading on your own is the default and works exactly the same. Duo Lock is there for when you want to pair with your spouse, and you can turn it on any time.</p></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false">
-            What if my partner doesn't read?
-            <span class="plus" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a"><p>With Duo Lock on, both phones stay shut until you've both finished. That's the point. You can send them one nudge a day to remind them.</p></div>
-        </div>
-
+        <details class="faq-item"><summary><h3>Is there an app that locks your apps until you read the Bible?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Yes. DuoFaith locks the iPhone apps you choose every morning at a time you set, and keeps them shielded until you finish a short devotional of about two minutes. It uses Apple&#x27;s own Screen Time controls, so there is no Ignore button. Finish the passage, one reflection question and a prayer, and your apps unlock for the day.</p><a class="learn" href="/guides/app-that-locks-apps-until-you-read-the-bible.html">Learn how the lock works</a></div></details><details class="faq-item"><summary><h3>What does Bible before phone mean?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Bible before phone means you open Scripture before you open anything else on your phone. No messages, no news, no feeds until you have read. Justin Whitmel Earley calls it Scripture before phone in The Common Rule. The idea is that whatever you take in first shapes your whole morning, so you let God speak before the world does.</p><a class="learn" href="/guides/bible-before-phone.html">Read the Bible before phone guide</a></div></details><details class="faq-item"><summary><h3>How do I stop scrolling and read the Bible instead?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Do not try to quit scrolling. Replace it. Keep the cue, which is picking up your phone, and swap the routine for one short passage. Keep your apps as the reward afterwards. Make the reading tiny so you can do it on a bad day. If the swap keeps failing, DuoFaith locks the apps you pick until you have read, with no Ignore button.</p><a class="learn" href="/guides/read-the-bible-instead-of-scrolling.html">See the habit swap, step by step</a></div></details><details class="faq-item"><summary><h3>Can an app really help with phone addiction as a Christian?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Yes, for one specific part of the problem. An app cannot change your heart, and it is not a recovery program. What it can do is remove the 7am argument. DuoFaith keeps the apps you choose locked each morning until you finish a short devotional. There is no Ignore button. You decide once, at night, and the morning follows.</p><a class="learn" href="/guides/how-to-stop-phone-addiction-as-a-christian.html">Read the full guide</a></div></details><details class="faq-item"><summary><h3>Is there a screen time app for couples that locks both partners&#x27; apps?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Yes. DuoFaith has a Couples Mode that links two iPhones. Each of you picks the apps that distract you and a lock time. Every morning those apps stay locked until you have both finished a short Christian devotional, about two minutes each. Nobody watches anybody. You just see whether your partner has read yet, and you can send one nudge a day.</p><a class="learn" href="/guides/screen-time-app-for-couples.html">See how Couples Mode works</a></div></details><details class="faq-item"><summary><h3>Is there a Bible app for long distance couples?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Yes. DuoFaith&#x27;s Couples Mode links two iPhones anywhere in the world. You both read the same short daily devotional on your own phones, about two minutes each. You can see whether your partner has read today and send one nudge a day. Neither partner&#x27;s distracting apps unlock until you have both finished. Couples Mode is part of Pro, with a free trial.</p><a class="learn" href="/guides/devotional-app-for-long-distance-couples.html">See how it works across two phones</a></div></details><details class="faq-item"><summary><h3>Is there a Lent challenge couples can do together on their phones?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Yes. The simplest one is a shared fast: for the 40 days of Lent, neither of you opens social media until you have both read Scripture. DuoFaith Couples Mode does the locking for you. Both phones shield the apps you each pick every morning, and neither unlocks until you have both finished a devotional of about two minutes. Couples Mode is part of Pro, which starts with a free trial.</p><a class="learn" href="/guides/lent-challenge-for-couples.html">See the ten Lent ideas</a></div></details><details class="faq-item"><summary><h3>Is DuoFaith free?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>DuoFaith is free to download from the App Store. Pro is $9.99 a month, which starts with a free trial, or $49.99 a year. You can cancel any time in your Apple ID settings.</p><a class="learn" href="#download">See what is in Free and Pro</a></div></details><details class="faq-item"><summary><h3>What apps does DuoFaith block?</h3><span class="plus" aria-hidden="true"></span></summary><div class="faq-a"><p>Only the ones you pick. Instagram, TikTok, YouTube, X, games, whatever pulls you in. Calls, texts, Maps and every app you did not choose stay open all morning. You can change the list any time in Settings.</p><a class="learn" href="#how-it-works">See how the lock works</a></div></details>
       </div>
     </div>
   </section>
 
-  <!-- ══════════  CLOSING CTA  ══════════ -->
-  <section class="closer">
-    <div class="wrap reveal">
-      <h2 class="display">Put the Word first.<br>Every morning.</h2>
-      <p class="lede">Free to start. Nothing to lose but the scroll.</p>
-      <div class="store-row">
-        <a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="store-badge" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.12M14.5 4.6c.71-.87 1.19-2.07 1.06-3.27-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.99-1.08 3.16 1.14.09 2.31-.58 3.02-1.43"/></svg>
-          <span class="sb-text">
-            <span class="sb-small">Download on the</span>
-            <span class="sb-big">App Store</span>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════  FOOTER  ══════════ -->
-  <footer>
+  <!-- CTA -->
+  <section class="closer" id="cta">
     <div class="wrap">
-      <div class="foot-grid">
-        <div class="foot-brand">
-          <a href="/" class="brand">
-            <img src="icon-128.png" alt="" width="128" height="128">
-            <span>DuoFaith</span>
-          </a>
-          <p>Lock your phone. Not your faith.</p>
-        </div>
-
-        <div class="foot-col">
-          <h4>Product</h4>
-          <ul>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#how">How it works</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" target="_blank" rel="noopener">Download</a></li>
-          </ul>
-        </div>
-
-        <div class="foot-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="mailto:duofaithsupport@gmail.com">Contact us</a></li>
-            <li><a href="mailto:duofaithsupport@gmail.com?subject=DuoFaith%20bug%20report">Report a bug</a></li>
-          </ul>
-        </div>
-
-        <div class="foot-col">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="foot-bottom">
-        <p>&copy; 2026 DuoFaith. All rights reserved.</p>
-        <div class="foot-social">
-          <a href="https://www.tiktok.com/@duofaith_official" target="_blank" rel="noopener" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 1 1 .76-5.06V9.69a5.67 5.67 0 0 0-.76-.05A5.7 5.7 0 1 0 15.54 15.4V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.29 4.29 0 0 1-3.24-1.48z"/></svg>
-          </a>
-          <a href="mailto:duofaithsupport@gmail.com" aria-label="Email">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
-          </a>
-        </div>
-      </div>
+      <h2 class="display">Decide tonight.<br>Read tomorrow morning.</h2>
+      <p class="lede">Download DuoFaith, pick your apps and set your lock time. Tomorrow they stay shut until you have spent about two minutes in the Word.</p>
+      <div class="store-row"><a href="https://apps.apple.com/us/app/duofaith-bible-app-blocker/id6792354251" class="store-badge" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.28-1.27 3.13-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.12M14.5 4.6c.71-.87 1.19-2.07 1.06-3.27-1.02.04-2.26.68-3 1.54-.66.76-1.24 1.99-1.08 3.16 1.14.09 2.31-.58 3.02-1.43"/></svg><span class="sb-text"><span class="sb-small">Download on the</span><span class="sb-big">App Store</span></span></a></div>
+      <p class="store-note">Free to download on iPhone. Pro starts with a free trial. Cancel any time.</p>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    // Nav background on scroll
-    const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 20);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Mobile menu
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.getElementById('nav-menu');
-    const setMenu = (open) => {
-      document.body.classList.toggle('menu-open', open);
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    };
-    toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
-    menu.addEventListener('click', (e) => { if (e.target.tagName === 'A') setMenu(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 940) setMenu(false); });
-
-    // Scroll reveal
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-    // FAQ accordion
-    document.querySelectorAll('.faq-q').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const open = item.classList.toggle('open');
-        btn.setAttribute('aria-expanded', String(open));
-      });
-    });
-  </script>
-
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="/" class="brand"><img src="/img/app-icon-256.png" alt="" width="256" height="256"><span>DuoFaith</span></a>
+        <p>The Christian app blocker for iPhone. Your apps stay locked until you have read the Bible. Solo, or as a couple.</p>
+      </div>
+      <div class="foot-col"><h4>Product</h4><ul>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/#screenshots">Screenshots</a></li>
+        <li><a href="/#download">Download</a></li>
+        <li><a href="/guides/index.html">Guides</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Support</h4><ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="mailto:duofaithsupport@gmail.com">Contact us</a></li>
+        <li><a href="mailto:duofaithsupport@gmail.com?subject=DuoFaith%20bug%20report">Report a bug</a></li>
+      </ul></div>
+      <div class="foot-col"><h4>Legal</h4><ul>
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms of Service</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <p>&copy; 2026 DuoFaith. Made by Luke Downie.</p>
+      <p>Apple, the Apple logo, iPhone and Screen Time are trademarks of Apple Inc.</p>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var b=document.body;var on=function(){b.classList.toggle('scrolled',window.scrollY>20)};on();window.addEventListener('scroll',on,{passive:true});
+  var t=document.querySelector('.nav-toggle');if(t){t.addEventListener('click',function(){var o=b.classList.toggle('menu-open');t.setAttribute('aria-expanded',o)});document.querySelectorAll('.nav-menu a').forEach(function(a){a.addEventListener('click',function(){b.classList.remove('menu-open');t.setAttribute('aria-expanded','false')})})}
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
+})();
+</script>
 </body>
 </html>
