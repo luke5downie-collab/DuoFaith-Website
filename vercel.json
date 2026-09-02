@@ -1,0 +1,12 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)\\.(jpg|jpeg|png|webp|avif|svg|ico)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+    },
+    {
+      "source": "/site.css",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    }
+  ]
+}
