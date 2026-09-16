@@ -1,0 +1,34 @@
+/* Legal-page styling, matched to the current DuoFaith website. */
+:root {
+  color-scheme: dark;
+  --bg: #100d17;
+  --white: #faf5ee;
+  --dim: #b4aebc;
+  --faint: #a99ab5;
+  --line: rgba(219,203,238,.14);
+  --line-soft: rgba(219,203,238,.1);
+  --gold: #e8c88a;
+  --font: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+html, body { background: var(--bg); color: var(--white); }
+.nav { top: 0; left: 0; transform: none; width: 100%; max-width: none; background: rgba(16,13,23,.95); border-bottom: 1px solid var(--line); }
+.nav-inner { max-width: 1160px; margin: auto; padding: 20px 24px; min-height: 82px; background: none; border: 0; border-radius: 0; }
+.brand span { font-family: Georgia,'Times New Roman',serif; font-size: 26px; letter-spacing: -1px; }
+.brand img { width: 34px; height: 34px; border-radius: 9px; }
+.nav-cta { padding: 11px 18px; font-size: 12px; border-radius: 7px; background: #e8c88a; color: #211729; }
+.nav-cta:hover { background: #f5dfb1; box-shadow: none; }
+.legal h1 { font-family: Georgia,'Times New Roman',serif; font-size: clamp(42px,6vw,65px); font-weight: 400; letter-spacing: -.055em; }
+.legal h2 { font-family: Georgia,'Times New Roman',serif; font-size: 29px; font-weight: 400; }
+.legal p, .legal li { line-height: 1.9; }
+.legal a { text-decoration: underline; text-underline-offset: 4px; }
+.legal strong { color: #faf5ee; }
+footer { background: var(--bg); border-color: var(--line); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+@media(max-width:580px) {
+  .nav-inner { min-height: 72px; padding: 15px 20px; }
+  .brand span { font-size: 22px; }
+  .brand img { width: 29px; height: 29px; }
+  .nav-cta { font-size: 10px; padding: 10px 13px; }
+  .legal { padding: 110px 22px 55px; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *, *:before, *:after { animation: none!important; transition: none!important; } }
