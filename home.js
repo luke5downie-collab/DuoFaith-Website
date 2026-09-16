@@ -58,6 +58,45 @@ if (reveal) reveal.addEventListener('click', () => {
     ? 'Both answered. Both reflections revealed. One more day in your shared streak.'
     : 'An example from the app. Your actual reflections are written in DuoFaith.';
 });
+// Native <details> snaps open, and its content is hidden by the UA while closed,
+// so CSS transitions cannot reach it. Drive the height ourselves instead, and let
+// it fall back to the plain native toggle when motion is not wanted.
+const faqItems = [...document.querySelectorAll('.faq-list details')];
+const faqEase = 'cubic-bezier(.32,.72,0,1)';
+const allowMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function collapseFaq(item) {
+  if (!allowMotion) { item.open = false; return; }
+  if (item.animation) item.animation.cancel();
+  const body = item.querySelector('.faq-body');
+  item.animation = body.animate(
+    {height: [body.scrollHeight + 'px', '0px'], opacity: [1, 0]},
+    {duration: 240, easing: faqEase}
+  );
+  item.animation.onfinish = () => { item.open = false; item.animation = null; };
+}
+
+function expandFaq(item) {
+  item.open = true;
+  if (!allowMotion) return;
+  if (item.animation) item.animation.cancel();
+  const body = item.querySelector('.faq-body');
+  item.animation = body.animate(
+    {height: ['0px', body.scrollHeight + 'px'], opacity: [0, 1]},
+    {duration: 320, easing: faqEase}
+  );
+  item.animation.onfinish = () => { item.animation = null; };
+}
+
+faqItems.forEach(item => {
+  item.querySelector('summary').addEventListener('click', event => {
+    event.preventDefault();
+    const wasOpen = item.open;
+    faqItems.forEach(other => { if (other !== item && other.open) collapseFaq(other); });
+    if (wasOpen) collapseFaq(item); else expandFaq(item);
+  });
+});
+
 const mobileDownload = document.querySelector('.mobile-download');
 if (mobileDownload && 'IntersectionObserver' in window) {
   let heroVisible = true, closingVisible = false;
