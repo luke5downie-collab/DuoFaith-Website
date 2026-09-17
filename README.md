@@ -18,7 +18,7 @@ Open http://localhost:8080. Serve the folder rather than opening `index.html` di
 
 - `index.html` — homepage, plus search and social metadata.
 - `home.css` — the whole design system: surfaces, device frame, layout, responsive rules.
-- `home.js` — mobile nav, the devotional screenshot switcher, the Couples Mode reveal demo, and the mobile download bar.
+- `home.js` — the devotional screenshot switcher (and its self-playing tour), the FAQ open/close animation, the Couples Mode reveal demo, the held smoke, and the mobile download bar.
 - `refresh.css` — theme overlay for `privacy.html` and `terms.html`, which keep their own inline styles.
 - `img/current/` — the app screenshots used across the site.
 
@@ -38,15 +38,45 @@ Defined as custom properties at the top of `home.css`.
 
 ## Page structure
 
-Hero → the daily habit (01) → inside the devotional (02) → Couples Mode (03) → where this fits → FAQ → download.
+Opener (`.hero`) → Couples Mode (`#couples`) → FAQ → download.
 
-"Where this fits" links into three guides, which is the homepage's only in-content path to the guide cluster.
+The opener is one section (`.hero`, `#screenshots`) doing two jobs:
+
+```
+      ── THE BIBLE APP BLOCKER FOR IPHONE ──
+             Faith over Distraction.          .hero-content
+        You choose which apps go quiet, and when.
+                   [App Store]
+        Three minutes a morning · 3 days free…
+
+  ╭─────╮   A FEW MINUTES, FULLY PRESENT     .reading-layout
+  │  ▢  │   The one thing on your phone…
+  │     │   01 Scripture          ↗
+  ╰─────╯   02 The devotional     ↗
+  caption   03 A real question    ↗
+            04 A moment of prayer ↗
+```
+
+It used to be a centred hero with three angled phones and then a separate raised band holding the walkthrough, which put the app's actual purpose second on the page. Now the promise and its proof are one section, with the phone pushed left out of its track so it breaks the page's gutter rather than sitting inside it.
+
+Deleted with the old hero and not referenced anywhere now: the three-phone showcase, its arc, the scroll parallax that drove it, and all three hand-drawn ring paths (`r-a`/`r-b`/`r-c`). The remaining `.reading-aura` is a true circle by deliberate choice — the note above that rule explains why, and it predates the showcase being removed.
+
+Two layouts were tried on top of this and reverted: a split opener (headline left, phone right, steps in a row) and a raised `.walk-panel`. Neither is in the CSS any more.
+
+Two consequences worth knowing:
+
+- `.hero` now runs the full height of the walkthrough, so the sticky mobile download bar watches `.hero-content`, not `.hero` — otherwise it would stay hidden for most of the page. What it is really tracking is the App Store badge.
+- The homepage no longer uses the raised `--surface-2` band. Elevation now runs recessed opener → base (Couples, FAQ) → recessed closing, with a hairline between the opener and Couples in place of the old band edges.
+
+The guide cluster is reachable from the footer only; the homepage has no in-content path to it.
 
 `data-download` attributes mark CTA placements for future measurement; no analytics service is wired up.
 
 ## Content rules
 
-Copy avoids promising a particular trial length or price, since introductory access and paid locking are configurable in the app — current terms are shown in the app before purchase. No ratings, download counts, testimonials, or performance claims are invented anywhere on the site.
+**Positioning.** DuoFaith is an individual Bible app blocker. Couples Mode is an optional feature on top of it, and copy should never imply a partner is required — no "until you've both read", no "together" as the default closing note. The pattern throughout: state the solo behaviour first, then introduce Couples Mode as something you can switch on. The homepage FAQ leads with "Do I need a partner to use DuoFaith?" for the same reason, and the JSON-LD `FAQPage` mirrors the visible list in the same order. The `#couples` section does that work in its own heading rather than in a separate band: a gold pill badge reading "AN OPTIONAL FEATURE", then an `h2` that names Couples Mode outright, then a line saying everything else works on your own. Keep the badge visible if you restyle the section — the eyebrow treatment used elsewhere is too quiet for the one section describing something the reader may not need.
+
+No ratings, download counts, testimonials, performance claims, or claims about how many people use a given mode are invented anywhere on the site.
 
 ## Known cleanup
 
