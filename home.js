@@ -111,15 +111,12 @@ if (readingSection && readingButtons.length > 1 && !prefersReduced && 'Intersect
   tourWatch.observe(readingSection);
 }
 // A clearly labeled, local-only illustration of the shared-reflection reveal.
-// Scroll position drives it while the card is pinned; the button is an override
-// for anyone who would rather just press it. Both write the same --reveal value.
+// Scroll position alone drives it while the card is pinned.
 const demo = document.querySelector('.reflection-demo');
 const demoTrack = document.querySelector('.demo-track');
-const reveal = document.querySelector('#reveal-button');
 const streakBox = document.querySelector('#demo-streak');
 const streakNum = document.querySelector('#streak-num');
 const explainSteps = [...document.querySelectorAll('.couples-explanation li')];
-let revealOverride = null;   // null = follow the scroll
 
 // p drives the card; stageAt (when given) decides which point is lit, so the copy
 // can hold on step one for the whole reveal and only then move on.
@@ -129,7 +126,7 @@ function paintReveal(p, stageAt) {
   demo.style.setProperty('--reveal', p.toFixed(3));
   const yours = document.querySelector('#your-answer');
   yours.textContent = open
-    ? '“A few months ago. It felt like failing, so I didn’t.”'
+    ? '“My phone. Screen time said six hours yesterday. Six.”'
     : 'Your answer goes here first.';
   yours.classList.toggle('is-blank', !open);
   document.querySelector('#your-answer-status').textContent = open ? 'ANSWER SHARED' : 'NOT WRITTEN YET';
@@ -137,10 +134,6 @@ function paintReveal(p, stageAt) {
   document.querySelector('#demo-note').textContent = open
     ? 'Both answered. Both reflections revealed. One more day in your shared streak.'
     : 'An example from the app. Your actual reflections are written in DuoFaith.';
-  if (reveal) {
-    reveal.setAttribute('aria-expanded', String(open));
-    reveal.firstChild.textContent = open ? 'Replay the reflection reveal ' : 'See what happens when you both answer ';
-  }
   // the streak follows the same progress, settling at 12
   const streakP = Math.min(1, Math.max(0, (p - 0.5) / 0.4));
   if (streakBox && streakNum) {
@@ -157,17 +150,11 @@ function paintReveal(p, stageAt) {
   }
 }
 
-if (reveal) reveal.addEventListener('click', () => {
-  revealOverride = (revealOverride === 1) ? 0 : 1;
-  paintReveal(revealOverride);
-});
-
 // Scroll drives the seal only while the card is actually pinned.
 if (demo && demoTrack && !prefersReduced) {
   let queued = false;
   const readProgress = () => {
     queued = false;
-    if (revealOverride !== null) return;
     // No pinning on a phone, so the card's own travel up the viewport drives it —
     // sealed as it enters from the bottom, read by the time it is properly up.
     if (getComputedStyle(demo).position !== 'sticky') {
@@ -194,7 +181,11 @@ if (demo && demoTrack && !prefersReduced) {
   addEventListener('resize', onScrollReveal);
   readProgress();
 } else if (demo && prefersReduced) {
-  paintReveal(0);
+  // Painted open, not sealed. The scroll driver is the only thing that can break
+  // the seal now that the button is gone, so leaving this at 0 would show anyone
+  // on reduced motion a permanently blanked-out card — the one state that does
+  // not explain the feature.
+  paintReveal(1);
 }
 // Native <details> snaps open, and its content is hidden by the UA while closed,
 // so CSS transitions cannot reach it. Drive the height ourselves instead, and let
@@ -237,44 +228,20 @@ faqItems.forEach(item => {
 
 const mobileDownload = document.querySelector('.mobile-download');
 if (mobileDownload && 'IntersectionObserver' in window) {
-  let heroVisible = true, closingVisible = false;
+  // Watches .hero-content, not .hero: the hero now runs the full length of the
+  // devotional walkthrough, so observing the section would keep the bar hidden
+  // for most of the page. What it is really tracking is the badge — while the
+  // real App Store button is on screen, the sticky one is noise.
+  let openerVisible = true, closingVisible = false;
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.target.matches('.hero')) heroVisible = entry.isIntersecting;
+      if (entry.target.matches('.hero-content')) openerVisible = entry.isIntersecting;
       else closingVisible = entry.isIntersecting;
     });
-    mobileDownload.hidden = heroVisible || closingVisible;
+    mobileDownload.hidden = openerVisible || closingVisible;
   });
-  observer.observe(document.querySelector('.hero'));
+  observer.observe(document.querySelector('.hero-content'));
   observer.observe(document.querySelector('#download'));
-}
-// Depth. The phones sit at different distances, so they should not travel at the
-// same rate — that difference is the only thing that reads as real space. Written
-// to a custom property so the CSS keeps ownership of each phone's resting pose.
-const showcase = document.querySelector('.hero-showcase');
-if (showcase && allowMotion && matchMedia('(min-width: 801px)').matches) {
-  const layers = [
-    [document.querySelector('.phone-left'), 0.16],
-    [document.querySelector('.phone-main'), -0.07],
-    [document.querySelector('.phone-right'), 0.11],
-    [document.querySelector('.showcase-arc'), 0.05]
-  ].filter(([el]) => el);
-  let ticking = false;
-  const place = () => {
-    const rect = showcase.getBoundingClientRect();
-    if (rect.bottom > 0 && rect.top < innerHeight) {
-      // 0 when the showcase sits centred, negative above, positive below
-      const travel = (rect.top + rect.height / 2 - innerHeight / 2) / innerHeight;
-      layers.forEach(([el, rate]) => {
-        el.style.setProperty('--py', (travel * rate * 150).toFixed(1) + 'px');
-      });
-    }
-    ticking = false;
-  };
-  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } };
-  addEventListener('scroll', onScroll, {passive: true});
-  addEventListener('resize', onScroll);
-  place();
 }
 
 // Hold the smoke still while the page scrolls past it. The veil is the masked
@@ -304,6 +271,31 @@ if (veils.length) {
   addEventListener('scroll', onScroll, {passive: true});
   addEventListener('resize', onScroll);
   hold();
+}
+
+// Each block arrives the way the opener does, once, as it reaches the viewport.
+// Unobserved on first hit — a section that has arrived is not going to un-arrive.
+const reveals = [...document.querySelectorAll('.reveal')];
+if (reveals.length) {
+  const show = el => el.classList.add('in');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(show);
+  } else {
+    const watch = new IntersectionObserver((entries, self) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        show(entry.target);
+        self.unobserve(entry.target);
+      });
+    }, {rootMargin: '0px 0px -10% 0px'});
+    reveals.forEach(el => watch.observe(el));
+    // Nothing here may depend on an observer to become readable. If the callback
+    // has not run by now — a stalled observer, a page restored from bfcache, a
+    // tab that was never painted — show everything regardless. The cost of being
+    // wrong in this direction is a missed animation; the other direction is a
+    // blank page.
+    setTimeout(() => reveals.forEach(show), 2500);
+  }
 }
 
 const year = document.querySelector('#year');
