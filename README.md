@@ -28,9 +28,41 @@ Guides under `guides/` share `home.css` with the homepage.
 
 Defined as custom properties at the top of `home.css`.
 
+**Type.** Display is **Fraunces**, self-hosted, SIL OFL (`fonts/LICENSE-Fraunces.txt`). It replaced `ui-serif`, which resolves to New York on Apple platforms — Apple's *UI* serif, engineered to be neutral and invisible at interface sizes. Showing it at `clamp(78px,9.1vw,127px)` meant displaying a face designed to have no opinion.
+
+Two files: the roman carries all four axes (121KB), the italic is the `wght`+`WONK` subset (46KB) because italic here is only emphasis and the demo answers, where `opsz` buys little. Unknown axes are ignored, so one set of settings is safe on both.
+
+Two cuts, and the split is the whole point of using a variable face:
+
+| | `opsz` | `SOFT` | `WONK` |
+|---|---|---|---|
+| Display (`h1`, `h2`) | 144 | 24 | 1 |
+| Every other serif element | 26 | 44 | 0 |
+
+`opsz` is the axis a static font cannot fake: as it drops, x-height rises, spacing opens and letterforms widen, so the 127px headline and the 19px reflection answer get different cuts rather than one cut scaled. `WONK` swaps in leaning, hand-cut forms — on for display, off below it, where it reads as a wobble rather than as character.
+
+Two things to know before editing it:
+
+- **`wght` is never named in `font-variation-settings`.** Naming an axis there takes it away from `font-weight`, and `.logo` (700) and `.couples-explanation h3` (600) still need `font-weight` to work. Only the other three axes are ever set.
+- **The small-cut selector list is explicit, not inherited.** Add a new serif element and it will take the 144 display cut at text size until you add it to that list.
+
+Tracking history, since it needs retuning per face: Georgia wanted -.055em, New York went muddy under that and dropped to -.022em, and Fraunces at `opsz 144` holds at -.022em because the optical-size axis is doing the closing-up that negative tracking used to do by hand.
+
+`refresh.css` redeclares both `@font-face` rules and `--serif`, because `privacy.html` and `terms.html` load it *instead of* `home.css`. Every page preloads the roman — the homepage hides the swap behind the hero's 500ms fade, but the guides and legal pages have no fade, so they need the preload more, not less.
+
 **Elevation.** Five surfaces (`--surface-0` … `--surface-4`), each roughly 35% lighter than the last. Sections alternate recessed → base → raised so the page reads as distinct planes. On a dark page this, not shadow, is what carries depth — black shadow on a near-black background does nothing. Raised elements get `--lift-1` / `--lift-2`, which pair a 1px warm top highlight with a real shadow beneath.
 
 **Borders** come in three tiers: `--line-faint` inside a card, `--line` for section edges, `--line-strong` for lit card edges.
+
+**Hero atmosphere.** `.hero-light` is five layers, painted top-down. The bottom four are the app's own sources — cool counter-light top right, amber candlelight from above the top edge, gold floor light from below the fold, and the violet mass they all land on. On top of them sits a **vignette**, and it is there because without it every source fades to `transparent` and the band ends at its own flat `--surface-0` evenly on all four sides, which is what makes a lit scene read as a rectangle of gradient.
+
+Three more things carry that band, and each fixes a specific failure:
+
+- `.hero:before` — **the shaft.** Every source in `.hero-light` is a soft ellipse with no hard edge anywhere, which is fog with no beam in it. This is the one shaped light: a steep linear gradient (close stops, so there is a real edge), `filter: blur(15px)` to make that edge volumetric, and a radial mask so the beam only exists near its source. Off-axis at 101deg on purpose — the centred symmetrical version behind a hero headline is the most-copied dark-page move going.
+- `.hero:after` — a second, coarser grain field at `baseFrequency='.32'`. The global layer on `body:after` is a 160px tile, and across this much open gradient the repeat is findable; a second field at a very different frequency beats against it and the tiling stops being perceptible.
+- `.smoke-veil` — the opener now gets the plume as well. It was the emptiest band on the page and the only one with nothing in the air; the component existed and was spent on the two sections that needed it least. Third crop (`14% 14%`), a little more opacity, and `home.js` picks it up and pins it automatically because that loop queries every `.smoke-veil`.
+
+Both pseudo-elements sit at `z-index:-1`, not `1`. Negative-z-index descendants paint **above** the element's own background but **below** its in-flow content, so they land on the light layer without ever covering the headline or the phone. At `z-index:1` they would sit on top of `.reading-layout`, which is unpositioned and therefore paints lower.
 
 **Device frame.** `.device` renders an iPhone from a single `--w` variable — bezel, corner radius, Dynamic Island, home indicator, status bar and side buttons are all ratios of it, taken from iPhone 15/16 Pro dimensions. Set `--w` and the whole device scales.
 

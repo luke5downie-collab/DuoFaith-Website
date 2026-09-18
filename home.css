@@ -1,3 +1,27 @@
+/* Fraunces, self-hosted, SIL OFL (see fonts/LICENSE-Fraunces.txt).
+   Replaces ui-serif. `ui-serif` resolves to New York on Apple platforms, which is
+   Apple's *UI* serif — a face engineered to be neutral and invisible at interface
+   sizes. Setting it at clamp(78px,9.1vw,127px) meant displaying, at 127px, a
+   typeface designed to have no opinion, and that was most of why this page read
+   as a competent template. Fraunces has one: four axes, including WONK, which
+   swaps in leaning, hand-cut letterforms, and opsz, so a 127px headline and a
+   19px answer get genuinely different cuts rather than one cut scaled.
+   Roman carries all four axes (121KB). Italic is the wght+WONK subset (46KB) —
+   it appears only as emphasis and in the demo answers, where opsz buys little and
+   the extra 100KB is not worth it. Unknown axes are ignored, so the settings
+   below are safe on both files.
+   font-display:swap, and the swap is invisible: .hero-content holds at opacity 0
+   for the first 500ms, which is longer than this font takes to arrive. */
+@font-face{
+  font-family:'Fraunces';
+  src:url('/fonts/fraunces-latin-full-normal.woff2') format('woff2');
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Fraunces';
+  src:url('/fonts/fraunces-latin-wonk-italic.woff2') format('woff2');
+  font-weight:100 900;font-style:italic;font-display:swap;
+}
 :root {
   color-scheme:dark;
   /* Elevation ladder. Each step is ~35% lighter than the last, so a card reads as
@@ -24,11 +48,10 @@
   /* A light source above the page: lit top edge, then real shadow beneath. */
   --lift-1:inset 0 1px 0 rgba(255,238,210,.07),0 2px 6px rgba(0,0,0,.45),0 18px 38px -14px rgba(0,0,0,.7);
   --lift-2:inset 0 1px 0 rgba(255,238,210,.1),0 3px 8px rgba(0,0,0,.5),0 30px 58px -14px rgba(0,0,0,.8);
-  /* ui-serif resolves to New York on Apple platforms, which is the exact face the
-     app uses for its display type. Costs nothing to load; Georgia is the fallback
-     for Windows and Android. The sans already resolves to SF Pro on Apple, matching
-     the app's body face, with a proper chain behind it for everywhere else. */
-  --serif:ui-serif,'New York',Georgia,'Times New Roman',serif;
+  /* Fraunces first, with the old chain behind it as the fallback if the webfont
+     never arrives. The sans still resolves to SF Pro on Apple, matching the app's
+     body face, with a proper chain behind it for everywhere else. */
+  --serif:'Fraunces',ui-serif,'New York',Georgia,'Times New Roman',serif;
   --sans:-apple-system,BlinkMacSystemFont,system-ui,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
 }
 *{box-sizing:border-box}
@@ -45,10 +68,29 @@ body:after{content:'';position:fixed;inset:0;z-index:300;pointer-events:none;opa
   background-size:160px 160px}
 html{scroll-behavior:smooth;scroll-padding-top:110px}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6}
-h1,h2,h3,p,figure{margin:0}/* Bold, like the app's display type. Georgia needed heavy negative tracking to
-   close up at display sizes; New York is already tightly fitted and goes muddy
-   under it, so the tracking drops from -.055em to -.022em. */
+h1,h2,h3,p,figure{margin:0}/* Tracking history, since it keeps being the thing that needs retuning per face:
+   Georgia needed -.055em to close up at display sizes; New York is tightly
+   fitted already and went muddy under it, so it dropped to -.022em. Fraunces at
+   opsz 144 is fitted tighter still — the optical-size axis is doing the closing
+   up that negative tracking used to do by hand — so it holds at -.022em rather
+   than needing more. Check this if the face ever changes again. */
 h1,h2{font-family:var(--serif);font-weight:400;letter-spacing:-.022em;line-height:1.08;color:var(--cream)}h2{font-size:clamp(38px,4.5vw,64px)}
+/* The two cuts. Display takes the largest optical size, softened corners and
+   WONK on — the leaning, hand-carved letterforms that are the reason this face
+   is here rather than any other.
+   `wght` is deliberately NOT listed: naming an axis in font-variation-settings
+   takes it away from font-weight, and .logo (700) and .couples-explanation h3
+   (600) still need font-weight to work. Only the other three axes are ever set. */
+h1,h2{font-variation-settings:'opsz' 144,'SOFT' 24,'WONK' 1}
+/* Serif under ~36px takes a low optical size instead: x-height rises, spacing
+   opens, letterforms widen. That is the whole point of an opsz axis, and it is
+   the one thing a single scaled cut cannot do. WONK goes off down here — at text
+   size the leaning forms stop reading as character and start reading as a wobble.
+   This list is every serif element on the page that is not an h1/h2. If you add
+   another, add it here too, or it will inherit the 144 display cut at 19px. */
+.logo,.reflection-question,.avatar,.reflection-answer>p,#revealed-answer,
+.streak-num,.couples-explanation h3,.mobile-download strong{
+  font-variation-settings:'opsz' 26,'SOFT' 44,'WONK' 0}
 /* Most display type here carries an authored <br>, so balance only does anything
    at the widths where those breaks are suppressed — which is exactly where a
    headline would otherwise orphan a word. `pretty` earns its place everywhere:
@@ -134,6 +176,54 @@ body,p,li,figcaption{letter-spacing:.015em}em{font-weight:inherit;color:inherit}
    scroll container, which means any future scroll()/view() timeline inside the
    hero would attach to it, find nothing scrolls, and silently animate nothing. */
 .hero{position:relative;isolation:isolate;overflow:clip;padding:40px 0 84px;background:var(--surface-0);border-bottom:1px solid var(--line)}
+/* THE SHAFT. Everything in .hero-light is a soft broad ellipse fading out at
+   70-76% — four of them, and not one hard edge among them. That is fog with no
+   beam in it, and fog with no beam in it reads as a wash rather than as air,
+   which is the whole reason this band looks bare.
+   Three parts, all load-bearing:
+     · a steep linear gradient with its stops close together, so the beam has an
+       actual edge instead of being another gradient;
+     · filter:blur, which turns that edge from a printed stripe into something
+       volumetric;
+     · a radial mask, so the beam exists only near its source and dies out before
+       it reaches a border — unmasked it reads as a decal laid on the page.
+   Off-axis at 101deg deliberately. The centred symmetrical version behind a hero
+   headline is the most-copied dark-page move of the last two years; the one that
+   still works is the one you notice second, not first.
+   z-index:-1, not 1. Negative z-index descendants paint above this element's own
+   background but below its in-flow content, so the beam lands on the light layer
+   without ever covering the headline or the phone. At z-index:1 it would sit on
+   top of .reading-layout, which is unpositioned and therefore paints lower. */
+.hero:before{content:'';position:absolute;inset:-18% -10% auto -10%;height:118%;
+  z-index:-1;pointer-events:none;mix-blend-mode:screen;opacity:.55;
+  background:linear-gradient(101deg,
+    transparent 36%,rgba(232,171,74,.10) 43%,rgba(245,208,137,.17) 47%,
+    rgba(232,171,74,.07) 52%,transparent 58%);
+  background:linear-gradient(101deg in oklab,
+    transparent 36%,rgba(232,171,74,.10) 43%,rgba(245,208,137,.17) 47%,
+    rgba(232,171,74,.07) 52%,transparent 58%);
+  filter:blur(15px);
+  -webkit-mask-image:radial-gradient(ellipse 66% 52% at 44% 10%,#000 8%,transparent 70%);
+          mask-image:radial-gradient(ellipse 66% 52% at 44% 10%,#000 8%,transparent 70%)}
+/* A second, coarser grain over the opener only, above the plume. The global
+   layer on body:after is a 160px tile, and across this much open gradient the
+   repeat is findable if you look for it; a second field at a very different
+   frequency beats against the first and the tiling stops being perceptible. */
+.hero:after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  opacity:.03;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.32' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23m)'/%3E%3C/svg%3E");
+  background-size:320px 320px}
+/* The beam is sized for a wide band. At phone width 66% of the viewport is about
+   250px, so a 15px blur is proportionally much softer and the mask sits over
+   most of the column — it stops being a beam and goes back to being a wash.
+   Narrower, tighter, further off-centre, and the plume eases off too: there is
+   far less bare gradient to fill here and the texture crowds a single column. */
+@media(max-width:700px){
+  .hero:before{opacity:.5;filter:blur(10px);inset:-12% -14% auto -14%;
+    -webkit-mask-image:radial-gradient(ellipse 92% 34% at 34% 8%,#000 6%,transparent 66%);
+            mask-image:radial-gradient(ellipse 92% 34% at 34% 8%,#000 6%,transparent 66%)}
+  .hero .smoke-veil{opacity:.15}
+}
 /* Midnight and candlelight, which is the app's own phrase for this. Four layers,
    painted top-down (first listed sits on top):
      1. counter-light — the cool purple the app puts in a top corner (#B8A9D4).
@@ -158,12 +248,20 @@ body,p,li,figcaption{letter-spacing:.015em}em{font-weight:inherit;color:inherit}
    let the cascade choose. The extra midpoints are for the same reason: each one
    is free, and each one is a band that never forms. */
 .hero-light{position:absolute;inset:0;z-index:-2;
+/* Layer 0, added on top of the four below: a vignette. Without it every one of
+   these sources fades to `transparent` and the band therefore ends at its own
+   flat --surface-0 on all four sides, evenly — which is what makes a lit scene
+   read as a rectangle of gradient. Darkening the corners is what tells the eye
+   the light has a centre and falls off from it. Centred a third of the way down,
+   where the headline sits, not at 50%. */
   background:
+    radial-gradient(ellipse 78% 64% at 50% 34%,transparent 40%,rgba(8,6,15,.58) 100%),
     radial-gradient(circle 420px at 100% 0%,rgba(184,169,212,.07),transparent 72%),
     radial-gradient(ellipse 66% 44% at 50% -2%,rgba(201,148,74,.13) 0%,rgba(201,148,74,.045) 44%,transparent 76%),
     radial-gradient(ellipse 104% 44% at 50% 104%,rgba(224,180,80,.10),transparent 70%),
     radial-gradient(ellipse 80% 52% at 50% 28%,#3a2a4e 0%,#2f2340 32%,#241b32 54%,#160f21 78%,transparent 100%);
   background:
+    radial-gradient(ellipse 78% 64% at 50% 34% in oklab,transparent 40%,rgba(8,6,15,.58) 100%),
     radial-gradient(circle 420px at 100% 0% in oklab,rgba(184,169,212,.07),transparent 72%),
     radial-gradient(ellipse 66% 44% at 50% -2% in oklab,rgba(201,148,74,.13) 0%,rgba(201,148,74,.045) 44%,transparent 76%),
     radial-gradient(ellipse 104% 44% at 50% 104% in oklab,rgba(224,180,80,.10),transparent 70%),
@@ -403,6 +501,13 @@ body,p,li,figcaption{letter-spacing:.015em}em{font-weight:inherit;color:inherit}
    the same noise. Same effect, but the two bands don't read as one texture
    photocopied twice down the page. */
 .faq-section .smoke-veil>span{background-position:74% 22%}
+/* The opener gets the plume too. It is the emptiest band on the page and it was
+   the one with nothing in the air — the veil existed and was spent on the two
+   sections that needed it least. A third crop so it doesn't read as the same
+   texture three times, and a little more of it, because there is more bare
+   gradient here for it to do something to. */
+.hero .smoke-veil{opacity:.19}
+.hero .smoke-veil>span{background-position:14% 14%}
 .faq-heading .eyebrow{margin-bottom:24px}
 .faq-heading h2{font-size:clamp(42px,4.6vw,62px);line-height:1.08}.faq-list{max-width:860px;margin-inline:auto}
 .faq-list details{border-top:1px solid var(--line-faint)}
@@ -438,16 +543,37 @@ body,p,li,figcaption{letter-spacing:.015em}em{font-weight:inherit;color:inherit}
    text below it, and the extra track height is pure dead scrolling. */
 .demo-track{min-height:0}.demo-track .reflection-demo{position:static;top:auto}.couples-explanation{position:static;top:auto;padding-top:0}.faq-section{padding-block:66px 56px}.reading-copy h2{font-size:40px}.reading-copy .section-description{font-size:13px}.reading-copy .eyebrow{margin-bottom:22px}.reading-tabs{grid-template-columns:1fr 1fr;gap:0 17px}.reading-tabs button{font-size:11px;gap:9px;min-height:54px}.reading-tabs button>span:first-child{font-size:8px}.reading-tabs button>span:last-child{font-size:14px}.reading-copy .quiet-link{font-size:11px}.product-screen{--w:234px}.preview-caption{font-size:10px}.couples-heading{margin-bottom:35px;text-align:left}.couples-heading>.eyebrow{justify-content:flex-start;margin-bottom:23px}.couples-heading h2{font-size:45px;line-height:1.05}.couples-heading>p:last-child{font-size:13px}.couples-heading>p:last-child br{display:none}.couples-section{grid-template-columns:1fr;gap:0}.couples-heading{grid-column:1;grid-row:1}.demo-track{grid-column:1;grid-row:2;margin-right:0}.couples-explanation{grid-column:1;grid-row:3;margin-top:38px}.reflection-demo{padding:23px}.demo-heading{flex-wrap:nowrap}.reflection-question{font-size:26px}.reflection-answer{padding:17px}.reflection-answer>p{font-size:19px}.answer-label>span:last-child{font-size:6px}.demo-note{font-size:8px}.couples-explanation h3{font-size:35px}.couples-explanation strong{font-size:14px}.couples-explanation li p{font-size:13px}.guides-cta{margin-top:50px;padding-top:38px}.guides-cta h2{font-size:32px}.guides-cta>p{font-size:13px}.faq-heading{text-align:left;margin-bottom:34px}.faq-heading h2{font-size:40px}.faq-list summary{font-size:15px;padding-block:22px;min-height:74px;gap:18px}.faq-mark{width:20px;height:20px}.faq-mark .icon{width:17px;height:17px}.faq-body>p{font-size:14px;padding-right:26px;padding-bottom:26px}.faq-foot{text-align:left;font-size:13px;margin-top:32px}.download-section{padding:30px 0 65px}.download-section h2{font-size:min(12.4vw,56px)}.download-section p:not(.eyebrow):not(.download-note){font-size:13px}.footer-top{padding-block:26px;gap:17px}.footer-top>p{font-size:9px}.footer-top nav{justify-content:space-between;gap:20px}.footer-top nav a{font-size:11px;min-height:44px;display:inline-flex;align-items:center}.footer-bottom{flex-direction:column;gap:7px;font-size:8px;padding-bottom:96px}.mobile-download:not([hidden]){position:fixed;bottom:0;left:0;right:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:rgba(21,14,37,.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-top:1px solid #9c80c640}.mobile-download>span{display:flex;flex-direction:column;gap:2px}.mobile-download strong{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--cream)}.mobile-download small{font-size:8px;color:var(--muted)}.article-main{padding-top:35px}.article-heading h1{font-size:42px}.article-layout{margin-top:30px}.article-body{font-size:15px}.article-body h2{font-size:31px}.article-note{padding:17px 20px;font-size:14px}.guide-grid{grid-template-columns:1fr;gap:0}.guide-entry h2{font-size:29px}}
 @media(max-width:360px){.container{width:calc(100% - 32px)}.logo{font-size:20px;gap:7px}.logo img{width:26px;height:26px}.header-inner{gap:8px}.nav-download{font-size:11px;padding:0 13px;gap:7px}.store-badge{--h:45px}.reading-copy h2{font-size:35px}.couples-heading h2{font-size:41px}.reflection-demo{padding:18px}.reflection-question{font-size:24px}.answer-label{gap:6px;font-size:7px}.faq-heading h2{font-size:36px}.footer-top>p{width:100%;margin:0}}
-/* Display emphasis is roman to italic, not colour. Every calm-branded serif hero
-   worth measuring does it this way — Dwell marks a single word italic and spends
-   its one accent colour somewhere else entirely — and the reason holds up: gold on
-   the headline AND the eyebrow AND the CTA AND the badge rim leaves nothing for
-   gold to mean. It now marks only what you can act on, and the emphasis is carried
-   by the letterforms, which costs no colour and survives at any size.
-   The gradient-clipped gold this replaces is in git if the accent is wanted back —
-   it was five stops of --gold-light/--gold-glow/--gold at 100deg, guarded by
-   @supports because clipped text with no support renders invisible. */
+/* Display emphasis is roman to italic, not colour — everywhere except one word.
+   The argument for keeping colour off headlines still holds and still applies to
+   every h2 on the page: gold on the headline AND the eyebrow AND the CTA AND the
+   badge rim leaves nothing for gold to mean, so below it marks only what you can
+   act on and the emphasis is carried by the letterforms instead.
+   The exception is the hero's "Distraction." — the one brand moment the earlier
+   note always allowed for, now taken. It is the app's own amber, and not by
+   eye: sampling img/current/*.jpg for its dominant amber pixels returns
+   #d08828-#e09828 across the Begin Reading button, the prayer glyph and the
+   streak ring, which is --gold (#cf8c28) to within a couple of values. The ramp
+   was already the app's; this just spends it in the one place it earns.
+   A gradient rather than a flat fill, because at 127px a single value goes dead
+   across the width of a long word — this lets the light run through it the way
+   the app's own button does. */
 h1 em,h2 em{font-style:italic;color:var(--cream)}
+/* Guarded. A clipped background with no support renders the text invisible, and
+   the fallback above — italic cream — is a perfectly good headline on its own. */
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+  .hero h1 em{
+    background:linear-gradient(100deg,var(--gold-light),var(--gold-glow) 42%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    /* Insurance for older WebKit, where `color` alone does not always clear the
+       fill under background-clip:text. Current engines do not need it — checked,
+       the computed fill is already transparent without this line. */
+    -webkit-text-fill-color:transparent;
+  }
+  /* The page's ::selection sets `color`, which a transparent text-fill wins
+     against — so selecting this word would paint a gold highlight over invisible
+     letters. Restore a real fill for the selected state only. */
+  .hero h1 em::selection{-webkit-text-fill-color:var(--bg);color:var(--bg)}
+}
 /* One slow entrance, and then the page never animates itself again. Half a second
    of stillness, then a second to arrive — the only genuinely slow motion on any of
    the calm references, and it is a page entrance rather than a per-element reveal.

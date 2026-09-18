@@ -1,4 +1,17 @@
 /* Legal-page styling, matched to the current DuoFaith website. */
+/* privacy.html and terms.html load only this file, not home.css, so the display
+   face has to be declared again here or they would be the one corner of the site
+   still set in the system serif. Same two files, same cache entry. */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-latin-full-normal.woff2') format('woff2');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-latin-wonk-italic.woff2') format('woff2');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
 :root {
   color-scheme: dark;
   --bg: #0f0a1a;
@@ -10,8 +23,13 @@
   --line-soft: rgba(219,203,238,.1);
   --gold: #e8ab4a;
   --font: -apple-system,BlinkMacSystemFont,system-ui,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-  --serif: ui-serif,'New York',Georgia,'Times New Roman',serif;
+  --serif: 'Fraunces',ui-serif,'New York',Georgia,'Times New Roman',serif;
 }
+/* These headings are set at 700, which in a variable face is a real weight rather
+   than a synthesised one — but they still want the display optical size and the
+   softened corners the rest of the site uses. `wght` is left out of the settings
+   so the 700 above keeps working. */
+.brand span, .legal h1, .legal h2 { font-variation-settings: 'opsz' 144, 'SOFT' 24, 'WONK' 1; }
 html, body { background: var(--bg); color: var(--white); }
 .nav { top: 0; left: 0; transform: none; width: 100%; max-width: none; background: rgba(15,10,26,.95); border-bottom: 1px solid var(--line); }
 .nav-inner { max-width: 1160px; margin: auto; padding: 20px 24px; min-height: 82px; background: none; border: 0; border-radius: 0; }

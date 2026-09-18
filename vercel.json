@@ -5,6 +5,10 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
     },
     {
+      "source": "/fonts/(.*)\\.woff2",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
       "source": "/(home\\.css|home\\.js|refresh\\.css)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     }
