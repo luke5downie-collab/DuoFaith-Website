@@ -118,9 +118,16 @@ const streakBox = document.querySelector('#demo-streak');
 const streakNum = document.querySelector('#streak-num');
 const explainSteps = [...document.querySelectorAll('.couples-explanation li')];
 
-// p drives the card; stageAt (when given) decides which point is lit, so the copy
-// can hold on step one for the whole reveal and only then move on.
-function paintReveal(p, stageAt) {
+// p drives the seal; stageAt (when given) decides which point is lit; streakAt
+// (when given) drives the counter independently of the seal.
+//
+// The counter used to be derived from p, which desynced it from its own caption:
+// it finished counting to 12 at ~43% of the pin while "Build a streak together"
+// did not light until 44-60%, so the explanation always arrived after the thing
+// it explained had already happened. The two are separate inputs now, and the
+// scroll driver below lines them up. Left derived from p when streakAt is not
+// passed, which is the phone path and the reduced-motion path.
+function paintReveal(p, stageAt, streakAt) {
   if (!demo) return;
   const open = p > 0.55;
   demo.style.setProperty('--reveal', p.toFixed(3));
@@ -134,8 +141,10 @@ function paintReveal(p, stageAt) {
   document.querySelector('#demo-note').textContent = open
     ? 'Both answered. Both reflections revealed. One more day in your shared streak.'
     : 'An example from the app. Your actual reflections are written in DuoFaith.';
-  // the streak follows the same progress, settling at 12
-  const streakP = Math.min(1, Math.max(0, (p - 0.5) / 0.4));
+  // the streak settles at 12, on its own clock when the caller supplies one
+  const streakP = (streakAt === undefined)
+    ? Math.min(1, Math.max(0, (p - 0.5) / 0.4))
+    : Math.min(1, Math.max(0, streakAt));
   if (streakBox && streakNum) {
     const days = Math.round(12 * streakP);
     streakBox.classList.toggle('is-on', streakP > 0);
@@ -169,12 +178,19 @@ if (demo && demoTrack && !prefersReduced) {
     if (travel <= 0) return;
     const moved = Math.min(Math.max(0, stick - track.top), travel);
     const raw = moved / travel;
-    // Three phases across the pin. The seal breaks entirely inside the first, so
-    // point one is still lit while it happens; only once the card has settled do
-    // points two and three take their turn, and the pin releases after the third.
-    const rev = Math.min(1, Math.max(0, (raw - 0.05) / 0.33));
-    const at  = raw < 0.44 ? 0 : (raw < 0.71 ? 1 : 2);
-    paintReveal(rev, at);
+    // Three phases across the pin, each one carrying something the card actually
+    // does. The old split spent the whole card on the first 38% and then held a
+    // frozen card for the remaining 62%, which is what made the section feel like
+    // it was over long before it let go of the scroll.
+    //   0.00-0.06  settle, card sealed
+    //   0.06-0.46  the seal breaks            — point one lit
+    //   0.50-0.72  the counter runs to 12     — point two lit, in step with it
+    //   0.76-1.00  nothing left to animate    — point three lit, and it is the
+    //              one point that is pure copy, so it is the right one to sit on
+    const rev    = Math.min(1, Math.max(0, (raw - 0.06) / 0.40));
+    const streak = (raw - 0.50) / 0.22;
+    const at     = raw < 0.50 ? 0 : (raw < 0.76 ? 1 : 2);
+    paintReveal(rev, at, streak);
   };
   const onScrollReveal = () => { if (!queued) { queued = true; requestAnimationFrame(readProgress); } };
   addEventListener('scroll', onScrollReveal, {passive: true});
