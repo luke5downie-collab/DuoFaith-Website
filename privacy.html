@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy - DuoFaith</title>
-  <meta name="description" content="How DuoFaith handles app settings, first-party usage measurement, subscriptions, and shared Couples Mode reflections.">
+  <meta name="description" content="How DuoFaith handles app settings, first-party usage measurement, advertising measurement with Meta, subscriptions, and shared Couples Mode reflections.">
   <link rel="icon" href="/img/dove.svg" type="image/svg+xml"><link rel="icon" type="image/png" href="/icon-128.png" sizes="any">
   <link rel="canonical" href="https://duofaith.com/privacy.html">
   <meta name="theme-color" content="#0f0a1a">
@@ -157,7 +157,7 @@
 
   <main class="legal">
     <h1>Privacy Policy</h1>
-    <p class="effective">Effective Date: September 15, 2026</p>
+    <p class="effective">Effective Date: September 24, 2026</p>
 
     <p class="intro">DuoFaith ("the App") is developed by Luke Downie ("we," "us," or "our"). This Privacy Policy explains what the App stores, what it sends to our servers, and what it never touches at all. We use information to operate and improve the App, and we never sell your data.</p>
 
@@ -167,7 +167,7 @@
       <li>Your profile and settings are stored on your device. Couples Mode shares your display name and written reflections with your partner, and the App sends usage events to our server.</li>
       <li>Every install is given a random anonymous ID, which is what lets the App load each day's devotional, redeem access codes and pair you with a partner.</li>
       <li>We never see which apps you choose to shield. Apple's frameworks are built so that we cannot.</li>
-      <li>There are no adverts in the App. We use first-party usage measurement stored through Supabase, without a third-party analytics SDK.</li>
+      <li>There are no adverts inside the App. We use first-party usage measurement through Supabase, and Meta's SDK to measure our own advertising. The App asks your permission before that measurement is linked to you.</li>
     </ul>
 
     <h2>Information Stored on Your Device</h2>
@@ -214,11 +214,14 @@
     <p>DuoFaith uses Apple's Screen Time API (Family Controls and Managed Settings) to shield selected apps until you complete your daily devotional. Your app selections are handled entirely inside Apple's on-device frameworks, which are deliberately designed so that the App is never told which apps you picked. We never see, store or transmit that list. You can revoke Screen Time authorization at any time in your device's Settings.</p>
 
     <h2>Subscriptions</h2>
-    <p>DuoFaith uses RevenueCat to manage in-app subscriptions. RevenueCat receives an anonymous app user identifier and your subscription status from Apple's App Store. It does not receive your name or any other personal information from DuoFaith. For more information, see <a href="https://www.revenuecat.com/privacy">RevenueCat's Privacy Policy</a>.</p>
+    <p>DuoFaith uses RevenueCat to manage in-app subscriptions. RevenueCat receives an anonymous app user identifier and your subscription status from Apple's App Store. It does not receive your name or any other personal information from DuoFaith. For more information, see <a href="https://www.revenuecat.com/privacy">RevenueCat's Privacy Policy</a>. Where you have allowed tracking, RevenueCat may also pass subscription events to Meta for the advertising measurement described below.</p>
 
     <h2>Advertising Measurement</h2>
-    <p>If you installed DuoFaith after tapping one of our adverts in the App Store, the App passes Apple's AdServices attribution token to RevenueCat. This tells us which advert or search term led to the install, so we can see which adverts are worth paying for.</p>
-    <p>This is first-party measurement of our own adverts on Apple's platform, provided by Apple. It does not follow you across other companies' apps or websites, it is not shared with any advertising network, and no advert is ever shown inside DuoFaith. It is also why the App does not show an App Tracking Transparency prompt: it is not tracking as Apple defines it.</p>
+    <p>If you installed DuoFaith after tapping one of our adverts in the App Store, the App passes Apple's AdServices attribution token to RevenueCat. This tells us which advert or search term led to the install, so we can see which adverts are worth paying for. This part is first-party measurement of our own adverts on Apple's platform, provided by Apple.</p>
+    <p>We also advertise DuoFaith on Facebook and Instagram. To know whether those adverts work, the App includes Meta's SDK. It reports a short list of events to Meta: that the App was installed and opened, that the paywall was shown, that onboarding was finished, that a devotional was completed, and that a trial or subscription started, including the amount and currency.</p>
+    <p>Meta is never told your name, your written reflections, the devotionals you read, or which apps you chose to shield.</p>
+    <p>Before any of this can be connected to you as a person, iOS asks your permission using Apple's App Tracking Transparency prompt. If you allow it, Meta can match these events to the advert you saw. If you decline, Meta receives only anonymous, aggregated measurement and cannot connect it to your device. You can change your answer at any time in your device's Settings, under Privacy and Security, then Tracking.</p>
+    <p>No advert is ever shown inside DuoFaith.</p>
 
     <h2>Access Codes</h2>
     <p>If you redeem an access code to unlock Pro, the redemption is recorded on our server against your anonymous identifier so that the same code cannot be used twice. The App also notes locally that your Pro access came from a code, so it still works offline. Nothing else is collected when you redeem.</p>
@@ -227,17 +230,15 @@
     <p>DuoFaith does not:</p>
     <ul>
       <li>Ask you to create an account with an email address, phone number or password</li>
-      <li>Use third-party analytics SDKs</li>
-      <li>Contain adverts or any advertising network SDK</li>
-      <li>Track you across other companies' apps or websites</li>
+      <li>Sell your data to anyone</li>
+      <li>Track you across other companies' apps or websites without asking your permission first</li>
       <li>Collect your location</li>
-      <li>Sell or share your data with third parties for advertising or marketing</li>
       <li>Use cookies or web tracking inside the App</li>
       <li>See or record which apps you choose to shield</li>
     </ul>
 
     <h2>Where Your Data Is Stored</h2>
-    <p>Server-side data is held by Supabase, our hosting provider, and by RevenueCat for subscription status. Both act as processors on our behalf and neither is given your name or contact details. Depending on where you live, this may mean your anonymous identifier is stored outside your own country.</p>
+    <p>Server-side data is held by Supabase, our hosting provider, and by RevenueCat for subscription status. Both act as processors on our behalf. Advertising measurement events are sent to Meta, as described above. None of these are given your name or contact details. Depending on where you live, this may mean your anonymous identifier is stored outside your own country.</p>
 
     <h2>Data Retention and Deletion</h2>
     <p>On-device data is kept for as long as the App is installed. You can clear your progress at any time with "Reset Progress" in Settings, and deleting the App removes everything stored locally.</p>
