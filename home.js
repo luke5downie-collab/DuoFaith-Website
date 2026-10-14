@@ -1,9 +1,9 @@
 'use strict';
 const screens = {
-  scripture: {alt: "DuoFaith's Scripture reading screen with numbered verses from Psalm 139", caption: 'Scripture, with room to slow down.'},
-  lesson: {alt: 'DuoFaith devotional: Fully Known, Still Wanted', caption: 'A teaching that connects the passage to everyday life.'},
-  reflect: {alt: 'DuoFaith reflection question and a timed pause', caption: 'One question. A moment to be honest with yourself.'},
-  pray: {alt: 'DuoFaith prayer screen with a Finish & Unlock button', caption: 'Pray. Finish your devotional. Unlock your apps.'}
+  read: {alt: "DuoFaith's reading screen: Galatians 6:7-9 set on a cream page, with numbered verses", caption: 'Scripture, set on a page with room to slow down.'},
+  learn: {alt: 'DuoFaith devotional teaching titled Most People Quit in the Gap', caption: 'A short teaching that carries the passage into your day.'},
+  reflect: {alt: 'DuoFaith reflection question, shown with Couples Mode on and a partner answer waiting', caption: 'One honest question. Shown here with Couples Mode on.'},
+  pray: {alt: 'DuoFaith prayer screen with a Finish & Unlock button', caption: 'Pray, then Finish & Unlock. Your apps open.'}
 };
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const readingButtons = [...document.querySelectorAll('[data-reading]')];
@@ -11,7 +11,7 @@ const readingBase = document.querySelector('#reading-image');
 const readingNext = document.querySelector('#reading-next');
 const readingCaption = document.querySelector('#reading-caption');
 let readingToken = 0;
-let readingCurrent = 'scripture';
+let readingCurrent = 'read';
 
 // Cross-dissolve rather than swap. The incoming screen is decoded before it is
 // shown, so the fade never starts against a half-painted image; once it is fully
@@ -258,35 +258,6 @@ if (mobileDownload && 'IntersectionObserver' in window) {
   });
   observer.observe(document.querySelector('.hero-content'));
   observer.observe(document.querySelector('#download'));
-}
-
-// Hold the smoke still while the page scrolls past it. The veil is the masked
-// band and moves with its section; the plume inside is pushed back by exactly
-// the veil's viewport offset, which parks the texture at a fixed spot on screen.
-// Script rather than a CSS view() timeline because the veil clips, and a clipping
-// ancestor is what view() measures the plume against — see the note in home.css.
-// Cheap either way: two rect reads and two property writes per frame, driving a
-// transform on an already-promoted layer.
-const veils = [...document.querySelectorAll('.smoke-veil')];
-if (veils.length) {
-  let ticking = false;
-  const hold = () => {
-    // Every rect read before any write, so the custom property one veil sets
-    // cannot force a fresh layout for the next veil's measurement.
-    const rects = veils.map(veil => veil.getBoundingClientRect());
-    veils.forEach((veil, i) => {
-      const rect = rects[i];
-      // Offscreen bands keep their last value; nobody can see them drift.
-      if (rect.bottom > 0 && rect.top < innerHeight) {
-        veil.style.setProperty('--smoke-y', (-rect.top).toFixed(1) + 'px');
-      }
-    });
-    ticking = false;
-  };
-  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(hold); } };
-  addEventListener('scroll', onScroll, {passive: true});
-  addEventListener('resize', onScroll);
-  hold();
 }
 
 // Each block arrives the way the opener does, once, as it reaches the viewport.

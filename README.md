@@ -18,9 +18,9 @@ Open http://localhost:8080. Serve the folder rather than opening `index.html` di
 
 - `index.html` — homepage, plus search and social metadata.
 - `home.css` — the whole design system: surfaces, device frame, layout, responsive rules.
-- `home.js` — the devotional screenshot switcher (and its self-playing tour), the FAQ open/close animation, the Couples Mode reveal demo, the held smoke, and the mobile download bar.
+- `home.js` — the devotional screenshot switcher (and its self-playing tour), the FAQ open/close animation, the Couples Mode reveal demo, and the mobile download bar.
 - `refresh.css` — theme overlay for `privacy.html` and `terms.html`, which keep their own inline styles.
-- `img/current/` — the app screenshots used across the site.
+- `img/current/` — the app screenshots used across the site: 660×1434 JPEGs made from the simulator captures in `App Store Screenshots/In-App Photos/` (the Oct 13 set). They are full-screen captures, so they already carry the status bar and Dynamic Island, and the device frame no longer draws its own.
 
 Guides under `guides/` share `home.css` with the homepage.
 
@@ -50,23 +50,27 @@ Tracking history, since it needs retuning per face: Georgia wanted -.055em, New 
 
 `refresh.css` redeclares both `@font-face` rules and `--serif`, because `privacy.html` and `terms.html` load it *instead of* `home.css`. Every page preloads the roman — the homepage hides the swap behind the hero's 500ms fade, but the guides and legal pages have no fade, so they need the preload more, not less.
 
-**Elevation.** Five surfaces (`--surface-0` … `--surface-4`), each roughly 35% lighter than the last. Sections alternate recessed → base → raised so the page reads as distinct planes. On a dark page this, not shadow, is what carries depth — black shadow on a near-black background does nothing. Raised elements get `--lift-1` / `--lift-2`, which pair a 1px warm top highlight with a real shadow beneath.
+**Colour.** The app's coral look, value for value: `Clean` and `Depth` in `DuoFaith/Theme.swift`. A coral page (`--page`, `#FF7A6B`), deep red-brown words (`--ink`, `--muted`), and white for anything you act on or anything that is "done" (buttons, the Couples badge, the active tour step, the open FAQ chevron). Three rules come from measured contrast, and they decide where things can go:
 
-**Borders** come in three tiers: `--line-faint` inside a card, `--line` for section edges, `--line-strong` for lit card edges.
+- `--ink` is 6.6:1 on the coral and `--muted` 5.2:1, but both drop under 4.5:1 once the page deepens past `#EE5444`. So every band with words stays at `--page` or lighter.
+- White is 2.4:1 on the coral, so white is only ever a fill, never words on the coral. That is why the hero's "Distraction." is italic ink rather than coloured.
+- `--on-accent` (`#C73A2C`) is the red for words sitting on white or `--paper`. It is 2:1 on the coral itself, so never put it there.
 
-**Hero atmosphere.** `.hero-light` is five layers, painted top-down. The bottom four are the app's own sources — cool counter-light top right, amber candlelight from above the top edge, gold floor light from below the fold, and the violet mass they all land on. On top of them sits a **vignette**, and it is there because without it every source fades to `transparent` and the band ends at its own flat `--surface-0` evenly on all four sides, which is what makes a lit scene read as a rectangle of gradient.
+Long reading (the Couples demo card, guide side cards, the legal pages) goes on `--paper`, the cream inside the app's book, where the ink is 15:1.
 
-Three more things carry that band, and each fixes a specific failure:
+The page ends the way the app's week does: the closing band is the full-week sunset (`--sunset-*`) and the footer is a step deeper (`--night`), both with cream words.
 
-- `.hero:before` — **the shaft.** Every source in `.hero-light` is a soft ellipse with no hard edge anywhere, which is fog with no beam in it. This is the one shaped light: a steep linear gradient (close stops, so there is a real edge), `filter: blur(15px)` to make that edge volumetric, and a radial mask so the beam only exists near its source. Off-axis at 101deg on purpose — the centred symmetrical version behind a hero headline is the most-copied dark-page move going.
-- `.hero:after` — a second, coarser grain field at `baseFrequency='.32'`. The global layer on `body:after` is a 160px tile, and across this much open gradient the repeat is findable; a second field at a very different frequency beats against it and the tiling stops being perceptible.
-- `.smoke-veil` — the opener now gets the plume as well. It was the emptiest band on the page and the only one with nothing in the air; the component existed and was spent on the two sections that needed it least. Third crop (`14% 14%`), a little more opacity, and `home.js` picks it up and pins it automatically because that loop queries every `.smoke-veil`.
+**Depth.** Depth's rule from the app: anything raised gets a thin light line along its top edge, a tight shadow where it touches the page and a wide soft one, all in the ink colour (`--lift-1` / `--lift-2`). Black or grey shadows turn coral muddy.
 
-Both pseudo-elements sit at `z-index:-1`, not `1`. Negative-z-index descendants paint **above** the element's own background but **below** its in-flow content, so they land on the light layer without ever covering the headline or the phone. At `z-index:1` they would sit on top of `.reading-layout`, which is unpositioned and therefore paints lower.
+**Borders** come in three tiers, also in the ink: `--line-faint` inside a card, `--line` for section edges, `--line-strong` for card edges.
 
-**Device frame.** `.device` renders an iPhone from a single `--w` variable — bezel, corner radius, Dynamic Island, home indicator, status bar and side buttons are all ratios of it, taken from iPhone 15/16 Pro dimensions. Set `--w` and the whole device scales.
+**Hero.** `.hero-light` is the app's page background: light coral at the top running into the page coral, with a soft white light in the top-left corner. `.hero:after` adds a second, coarser grain field on top of the global one on `body:after`, so the 160px grain tile doesn't visibly repeat across the open gradient.
 
-**App Store badge.** `.store-badge` is a vector recreation at Apple's 120×40 proportions, in the white variant Apple specifies for dark backgrounds. Apple's guidelines ask you to use their supplied artwork; swap it in before any wide launch.
+The dark site's atmosphere (candlelight layers, the off-axis light shaft, and the drifting smoke veils pinned by `home.js`) was removed in the coral reskin. A white haze over coral washes it out to salmon, and the app's look is a single bold colour.
+
+**Device frame.** `.device` renders an iPhone from a single `--w` variable — bezel, corner radius and side buttons are all ratios of it, taken from iPhone 15/16 Pro dimensions. Set `--w` and the whole device scales. The screenshots supply their own status bar and Dynamic Island.
+
+**App Store badge.** `.store-badge` is a vector recreation at Apple's 120×40 proportions: the black variant on the coral, which is a light ground, and the white one in the dark closing band. Apple's guidelines ask you to use their supplied artwork; swap it in before any wide launch.
 
 ## Page structure
 
@@ -75,18 +79,18 @@ Opener (`.hero`) → Couples Mode (`#couples`) → FAQ → download.
 The opener is one section (`.hero`, `#screenshots`) doing two jobs:
 
 ```
-      ── THE BIBLE APP BLOCKER FOR IPHONE ──
+  ── THE BIBLE APP BLOCKER FOR IPHONE AND IPAD ──
              Faith over Distraction.          .hero-content
         You choose which apps go quiet, and when.
                    [App Store]
         Three minutes a morning · 3 days free…
 
-  ╭─────╮   A FEW MINUTES, FULLY PRESENT     .reading-layout
+  ╭─────╮   READ · LEARN · REFLECT · PRAY    .reading-layout
   │  ▢  │   The one thing on your phone…
-  │     │   01 Scripture          ↗
-  ╰─────╯   02 The devotional     ↗
-  caption   03 A real question    ↗
-            04 A moment of prayer ↗
+  │     │   01 Read     ↗
+  ╰─────╯   02 Learn    ↗
+  caption   03 Reflect  ↗
+            04 Pray     ↗
 ```
 
 It used to be a centred hero with three angled phones and then a separate raised band holding the walkthrough, which put the app's actual purpose second on the page. Now the promise and its proof are one section, with the phone pushed left out of its track so it breaks the page's gutter rather than sitting inside it.
@@ -98,7 +102,9 @@ Two layouts were tried on top of this and reverted: a split opener (headline lef
 Two consequences worth knowing:
 
 - `.hero` now runs the full height of the walkthrough, so the sticky mobile download bar watches `.hero-content`, not `.hero` — otherwise it would stay hidden for most of the page. What it is really tracking is the App Store badge.
-- The homepage no longer uses the raised `--surface-2` band. Elevation now runs recessed opener → base (Couples, FAQ) → recessed closing, with a hairline between the opener and Couples in place of the old band edges.
+- The bands run lit coral opener → page coral (Couples, FAQ) → sunset closing → night footer, with a hairline between the opener and Couples.
+
+The four tour steps use the app's own names for them (Read, Learn, Reflect, Pray), and the keys in `home.js` match the image names in `img/current/`.
 
 The guide cluster is reachable from the footer only; the homepage has no in-content path to it.
 
