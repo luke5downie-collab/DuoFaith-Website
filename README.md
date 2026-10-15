@@ -23,7 +23,8 @@ The site is three pages: the homepage, `privacy.html` and `terms.html`.
 - `main.js`: the nav shadow, scroll reveals and stripe drawing, the card deck, and the phone-only download bar.
 - `refresh.css`: the coral theme for `privacy.html` and `terms.html`, which keep their own inline styles and load only this file.
 - `img/current/`: app screenshots, 660×1434 JPEGs made from the simulator captures in `App Store Screenshots/In-App Photos/Oct-13`. They are full-screen captures with their own status bar and Dynamic Island, so the CSS phone frame draws neither.
-- `img/app-icon-*.png`, `img/apple-touch-icon.png`, `icon-*.png`, `app-icon.png`: all made from the app's own `AppIcon.png`. `img/dove.svg` is the favicon, drawn to match it.
+- `img/duofaith-icon-256.png` (the logo in every page header), `img/duofaith-touch-icon.png`, `img/app-icon-1024.png`, `icon-*.png`, `app-icon.png`: all made from the app's own `AppIcon.png`. `img/dove.svg` is the favicon, drawn to match it.
+  Images are cached for 30 days (`vercel.json`), so a changed image needs a new file name or browsers keep showing the old one. That is why the logo and touch icon got new names when the icon changed.
 
 The guide pages were removed. `vercel.json` sends `/guides` and everything under it to the homepage with a permanent redirect, so links and search results that still point at them land somewhere.
 
