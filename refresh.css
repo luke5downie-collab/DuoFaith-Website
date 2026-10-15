@@ -44,7 +44,7 @@ body { background: linear-gradient(180deg, #FF8A7A, var(--bg) 600px) var(--bg); 
 .nav { top: 0; left: 0; transform: none; width: 100%; max-width: none; background: rgba(255,128,113,.9); border-bottom: 1px solid var(--line); }
 .nav-inner { max-width: 1160px; margin: auto; padding: 20px 24px; min-height: 82px; background: none; border: 0; border-radius: 0; }
 .brand span { font-family: var(--serif); font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--cream); }
-.brand img { width: 34px; height: 34px; border-radius: 9px; }
+.brand img { width: 34px; height: 34px; border-radius: 9px; box-shadow: 0 1px 2px rgba(58,13,10,.2), 0 6px 14px -6px rgba(58,13,10,.45); }
 .nav-cta { padding: 11px 18px; font-size: 12px; font-weight: 650; border-radius: 999px; background: linear-gradient(180deg, #fff, var(--paper-low)); color: var(--gold); box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(58,13,10,.18), 0 6px 14px -6px rgba(58,13,10,.3); }
 .nav-cta:hover { box-shadow: inset 0 1px 0 #fff, 0 2px 4px rgba(58,13,10,.2), 0 12px 24px -8px rgba(58,13,10,.4); }
 .legal { max-width: 780px; margin: 124px auto 64px; padding: 60px 60px 48px; background: linear-gradient(180deg, var(--paper), var(--paper-low)); border-radius: 24px;
